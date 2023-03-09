@@ -1,0 +1,18 @@
+﻿@page "/Chat"
+@using CinemaCoursework.Data
+@inject PagesList pageList
+
+<h3>Chat</h3>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await GetPageName();
+    }
+
+    public async Task GetPageName()
+    {
+        pageList.PageName = "Chat";
+        await base.OnInitializedAsync();
+    }
+}

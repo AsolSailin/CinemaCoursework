@@ -1,0 +1,18 @@
+﻿@page "/movie_info"
+@using CinemaCoursework.Data
+@inject PagesList pageList
+
+<h3>Movie info</h3>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await GetPageName();
+    }
+
+    public async Task GetPageName()
+    {
+        pageList.PageName = "MovieInfo";
+        await base.OnInitializedAsync();
+    }
+}

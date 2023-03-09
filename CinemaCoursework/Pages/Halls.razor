@@ -1,0 +1,18 @@
+﻿@page "/halls"
+@using CinemaCoursework.Data
+@inject PagesList pageList
+
+<h3>Halls</h3>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await GetPageName();
+    }
+
+    public async Task GetPageName()
+    {
+        pageList.PageName = "Halls";
+        await base.OnInitializedAsync();
+    }
+}

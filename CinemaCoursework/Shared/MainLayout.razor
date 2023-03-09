@@ -1,0 +1,52 @@
+﻿@inherits LayoutComponentBase
+@using CinemaCoursework.Services
+@inject DataBase dataBase
+
+<PageTitle>CinemaCoursework</PageTitle>
+
+<div style="background-image:none;background-color:#A68EFE;" class="page">
+    <div style="background-image:none;background-color:black;" class="sidebar">
+        <NavMenu @ref="@_navMenu"/>
+    </div>
+
+    <main>
+        <div style="background-image:none;background-color:#A68EFE;" class="top-row px-4">
+            @if (dataBase.CurrentUser != null)
+            {
+                if (dataBase.CurrentUser.Role == "Client")
+                {
+                    <a href="/client_account" target="_blank">
+                        <span class="oi oi-person" aria-hidden="true"></span>
+                    </a>
+                }
+                else if (dataBase.CurrentUser.Role == "Admin")
+                {
+                    <a href="/admin_account" target="_blank">
+                        <span class="oi oi-person" aria-hidden="true"></span>
+                    </a>
+                }
+            }
+            else
+            {
+                <a href="/authorization" target="_blank">
+                    <span class="oi oi-person" aria-hidden="true"></span>
+                </a>
+            }
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+@code {
+    private NavMenu? _navMenu;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (_navMenu is not null)
+            _navMenu.Update = true;
+        await base.OnAfterRenderAsync(firstRender);
+    }
+}

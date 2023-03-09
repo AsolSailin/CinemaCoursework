@@ -1,0 +1,18 @@
+﻿@page "/client_account"
+@using CinemaCoursework.Data
+@inject PagesList pageList
+
+<h3>Client account</h3>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await GetPageName();
+    }
+
+    public async Task GetPageName()
+    {
+        pageList.PageName = "ClientAccount";
+        await base.OnInitializedAsync();
+    }
+}

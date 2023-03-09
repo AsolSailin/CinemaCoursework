@@ -1,0 +1,18 @@
+﻿@page "/for_children"
+@using CinemaCoursework.Data
+@inject PagesList pageList
+
+<h3>For children</h3>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await GetPageName();
+    }
+
+    public async Task GetPageName()
+    {
+        pageList.PageName = "ForChildren";
+        await base.OnInitializedAsync();
+    }
+}

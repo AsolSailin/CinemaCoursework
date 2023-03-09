@@ -1,0 +1,211 @@
+﻿@using CinemaCoursework.Data
+@inject PagesList pageList
+
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">CinemaCoursework</a>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        @if (pageList.PageName == "Registration")
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/authorization" Match="NavLinkMatch.All">
+                    <span class="oi oi-person" aria-hidden="true"></span> Авторизация
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-book" aria-hidden="true"></span> Каталог
+                </NavLink>
+            </div>
+                <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
+                    <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
+                </NavLink>
+            </div>
+        }
+        else if (pageList.PageName == "Authorization" || 
+        pageList.PageName == "MovieInfo" || 
+        pageList.PageName == "HallOne" || 
+        pageList.PageName == "HallTwo" || 
+        pageList.PageName == "HallThree" || 
+        pageList.PageName == "Tickets" || 
+        pageList.PageName == "TicketBuy" || 
+        pageList.PageName == "TicketRefund" || 
+        pageList.PageName == "Cinema")
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-book" aria-hidden="true"></span> Каталог
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
+                    <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
+                </NavLink>
+            </div>
+        }
+        else if (pageList.PageName == "ClientAccount")
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/tickets" Match="NavLinkMatch.All">
+                    <span class="oi oi-credit-card" aria-hidden="true"></span> Мои билеты
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/ticket_refund" Match="NavLinkMatch.All">
+                    <span class="oi oi-credit-card" aria-hidden="true"></span> Возврат билетов
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-book" aria-hidden="true"></span> Каталог
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
+                    <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
+                </NavLink>
+            </div>
+        }
+        else if (pageList.PageName == "Tickets")
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-book" aria-hidden="true"></span> Каталог
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
+                    <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
+                </NavLink>
+            </div>
+        }
+        else if (pageList.PageName == "AdminAccount")
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/cinema" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Кинотеатр
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-book" aria-hidden="true"></span> Каталог
+                </NavLink>
+            </div>
+                <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
+                    <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
+                </NavLink>
+            </div>
+        }
+        else if (pageList.PageName == "CinemaInfo")
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/halls" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Залы
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-book" aria-hidden="true"></span> Каталог
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
+                    <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
+                </NavLink>
+            </div>
+        }
+        else if (pageList.PageName == "Halls")
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/hall_one" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Зал 1
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/hall_two" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Зал 2
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/hall_three" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Зал 3
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/cinema" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Кинотеатр
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-book" aria-hidden="true"></span> Каталог
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
+                    <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
+                </NavLink>
+            </div>
+        }
+        else if (pageList.PageName == "ForChildren")
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/cinema" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Кинотеатры
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-book" aria-hidden="true"></span> Каталог
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
+                    <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
+                </NavLink>
+            </div>
+        }
+        else
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/cinema" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Кинотеатры
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/for_children" Match="NavLinkMatch.All">
+                    <span class="oi oi-people" aria-hidden="true"></span> Детям
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
+                    <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
+                </NavLink>
+            </div>
+        }
+    </nav>
+</div>
+
+@code {
+
+    public bool Update
+    {
+        get => true;
+        set => StateHasChanged();
+    }
+
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}
