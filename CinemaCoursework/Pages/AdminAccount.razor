@@ -1,10 +1,135 @@
 ﻿@page "/admin_account"
 @using CinemaCoursework.Data
+@using CinemaCoursework.Services
 @inject PagesList pageList
+@inject DataBase dataBase
+@inject IJSRuntime JS
+@inject NavigationManager navigation
 
-<h3>Admin account</h3>
+<PageTitle>Admin account</PageTitle>
+
+<style type="text/css">
+    .lblOne {
+        text-decoration: underline;
+        width: 100px;
+        white-space: nowrap;
+        font-weight: 700;
+        font-size: 23px;
+    }
+
+    .lblTwo {
+        font-size: 23px;
+    }
+
+    .field {
+        width: 85%;
+        background: #9F4FF9;
+        border-radius: 20px;
+        font-size: 20px;
+    }
+
+    .tableOne {
+        display: inline-table;
+        position: absolute;
+        left: 30%;
+        top: 25%;
+    }
+
+    .tableTwo {
+        display: inline-table;
+        position: absolute;
+        left: 63%;
+        top: 25%;
+    }
+
+    .button {
+        position: absolute;
+        right: 30%;
+        height: 20%;
+        width: 50%;
+        background: #9F4FF9;
+        border-radius: 15px;
+        font-size: 23px;
+    }
+</style>
+
+<form>
+    <fieldset>
+        <div class="tableOne">
+            <table>
+                <tr>
+                    <td><label class="lblOne">ЛИЧНЫЕ ДАННЫЕ:</label></td>
+                </tr>
+                <tr>
+                    <td><label class="lblTwo">Фамилия:</label></td>
+                    <td><input class="field" id="surname" type="text" value="@dataBase.CurrentUser?.Surname"></td>
+                </tr>
+                <tr>
+                    <td><label> </label></td>
+                </tr>
+                <tr>
+                    <td><label class="lblTwo">Имя:</label></td>
+                    <td><input class="field" id="name" type="text" value="@dataBase.CurrentUser?.Name"></td>
+                </tr>
+                <tr>
+                    <td><label> </label></td>
+                </tr>
+                <tr>
+                    <td><label class="lblTwo">Отчество:</label></td>
+                    <td><input class="field" id="patronymic" type="text" value="@dataBase.CurrentUser?.Patronymic"></td>
+                </tr>
+                <tr>
+                    <td><label class="lblTwo"> </label></td>
+                </tr>
+                <tr>
+                    <td><label class="lblTwo">Номер телефона:</label></td>
+                    <td><input class="field" id="phone_number" type="text" value="@dataBase.CurrentUser?.PhoneNumber"></td>
+                </tr>
+                <tr>
+                    <td><label> </label></td>
+                </tr>
+                <tr>
+                    <td><label class="lblTwo">E-mail:</label></td>
+                    <td><input class="field" id="mail" type="text" value="@dataBase.CurrentUser?.EMail"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="tableTwo">
+            <table>
+                <tr>
+                    <td><label class="lblOne">ДАННЫЕ ДЛЯ ВХОДА:</label></td>
+                </tr>
+                <tr>
+                    <td><label class="lblTwo">Логин:</label></td>
+                    <td><input class="field" id="login" type="text" value="@dataBase.CurrentUser?.Login"></td>
+                </tr>
+                <tr>
+                    <td><label> </label></td>
+                </tr>
+                <tr>
+                    <td><label class="lblTwo">Пароль:</label></td>
+                    <td><input class="field" id="password" type="password" value="@dataBase.CurrentUser?.Password"></td>
+                </tr>
+                <tr>
+                    <td><label> </label></td>
+                </tr>
+                <tr>
+                    <td><button class="button" @onclick="Red">Редактировать</button><br /></td>
+                </tr>
+            </table>
+        </div>
+    </fieldset>
+</form>
 
 @code {
+    private User user = new User();
+
+    public void Red()
+    {
+        navigation.NavigateTo("/editing");
+    }
+
     protected override async Task OnInitializedAsync()
     {
         await GetPageName();
