@@ -1,10 +1,167 @@
 ﻿@page "/ticket_refund"
 @using CinemaCoursework.Data
+@using CinemaCoursework.Services
 @inject PagesList pageList
+@inject DataBase dataBase
+@inject IJSRuntime JS
 
-<h3>Ticket refund</h3>
+<PageTitle>Ticket refund</PageTitle>
+
+<style type="text/css">
+    .lblOne {
+        text-decoration: underline;
+        width: 100px;
+        white-space: nowrap;
+        font-weight: 700;
+        font-size: 23px;
+    }
+
+    .lblTwo {
+        font-size: 23px;
+    }
+
+    .field {
+        width: 85%;
+        background: #9F4FF9;
+        border-radius: 20px;
+        font-size: 20px;
+    }
+
+    .tableOne {
+        display: inline-table;
+        position: absolute;
+        left: 30%;
+        top: 18%;
+    }
+
+    .tableTwo {
+        display: inline-table;
+        position: absolute;
+        left: 63%;
+        top: 18%;
+    }
+
+    .button {
+        position: absolute;
+        right: 5%;
+        height: 20%;
+        width: 50%;
+        background: #9F4FF9;
+        border-radius: 15px;
+        font-size: 23px;
+    }
+</style>
+
+<div class="tableOne">
+    <table>
+        <tr>
+            <td><label class="lblOne">ДАННЫЕ БИЛЕТА:</label></td>
+        </tr>
+        <tr>
+            <td><label class="lblTwo">Номер билета:</label></td>
+            <td><input class="field" id="surname" type="text" @bind-value="@user.Surname"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lblTwo">Название показа:</label></td>
+            <td><input class="field" id="name" type="text" @bind-value="@user.Name"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lblTwo">Номер зала:</label></td>
+            <td><input class="field" id="patronymic" type="text" @bind-value="@user.Patronymic"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lblTwo">Номер ряда:</label></td>
+            <td><input class="field" id="phone_number" type="text" @bind-value="@user.PhoneNumber"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lblTwo">Номер места:</label></td>
+            <td><input class="field" id="" type="text"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lblTwo">Дата показа:</label></td>
+            <td><input class="field" id="m" type="text"></td>
+        </tr>
+    </table>
+</div>
+
+<div class="tableTwo">
+    <table>
+        <tr>
+            <td><label class="lblOne">ЛИЧНЫЕ ДАННЫЕ:</label></td>
+        </tr>
+        <tr>
+            <td><label class="lblTwo">Фамилия:</label></td>
+            <td><input class="field" id="surname" type="text" @bind-value="@user.Surname"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lblTwo">Имя:</label></td>
+            <td><input class="field" id="name" type="text" @bind-value="@user.Name"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lblTwo">Отчество:</label></td>
+            <td><input class="field" id="patronymic" type="text" @bind-value="@user.Patronymic"></td>
+        </tr>
+        <tr>
+            <td><label class="lblTwo"> </label></td>
+        </tr>
+        <tr>
+            <td><label class="lblTwo">Номер телефона:</label></td>
+            <td><input class="field" id="phone_number" type="text" @bind-value="@user.PhoneNumber"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lblTwo">E-mail:</label></td>
+            <td><input class="field" id="mail" type="text" @bind-value="@user.EMail"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><button class="button" @onclick="Refund">Оформить возврат</button><br /></td>
+        </tr>
+    </table>
+</div>
+
+<div class="tableOne">
+    <table>
+        <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lblTwo">Дата приобретения билета:</label></td>
+            <td><input class="field" id="" type="text"></td>
+        </tr>
+    </table>
+</div>
 
 @code {
+    private User user = new User();
+    bool btn = false;
+
+    public void Refund()
+    {
+
+    }
+
     protected override async Task OnInitializedAsync()
     {
         await GetPageName();
