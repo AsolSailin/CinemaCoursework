@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "fCySH5DIFuz/MbxejUy+cHFP/V6LJkQ61DrikbFbmZ0=",
+  "Hash": "NO1vsAosEdk+qQl7cFueD6H9Xa57our+ascC7HFAD0A=",
   "Source": "CinemaCoursework",
   "BasePath": "_content/CinemaCoursework",
   "Mode": "Default",
@@ -270,6 +270,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\Руслана\\source\\repos\\CinemaCoursework\\CinemaCoursework\\wwwroot\\js-interopt.js",
+      "SourceId": "CinemaCoursework",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Руслана\\source\\repos\\CinemaCoursework\\CinemaCoursework\\wwwroot\\",
+      "BasePath": "_content/CinemaCoursework",
+      "RelativePath": "js-interopt.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js-interopt.js"
     }
   ]
 }
