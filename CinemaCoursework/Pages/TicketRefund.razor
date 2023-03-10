@@ -41,6 +41,12 @@
         top: 18%;
     }
 
+    .tableThree {
+        position: absolute;
+        left: 30%;
+        top: 83%;
+    }
+
     .button {
         position: absolute;
         right: 5%;
@@ -59,22 +65,22 @@
         </tr>
         <tr>
             <td><label class="lblTwo">Номер билета:</label></td>
-            <td><input class="field" id="ticket_number" type="text" @bind-value="@user.Surname"></td>
+            <td><input class="field" id="ticket_number" type="text"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Название показа:</label></td>
-            <td><input class="field" id="movie_name" type="text" @bind-value="@user.Name"></td>
+            <td><input class="field" id="movie_name" type="text"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Номер зала:</label></td>
-            <td><input class="field" id="hall_number" type="text" @bind-value="@user.Patronymic"></td>
+            <td><input class="field" id="hall_number" type="text"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Номер ряда:</label></td>
-            <td><input class="field" id="row_number" type="text" @bind-value="@user.PhoneNumber"></td>
+            <td><input class="field" id="row_number" type="text"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
@@ -96,29 +102,29 @@
         </tr>
         <tr>
             <td><label class="lblTwo">Фамилия:</label></td>
-            <td><input class="field" id="surname" type="text" @bind-value="@user.Surname"></td>
+            <td><input class="field" id="surname" type="text"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Имя:</label></td>
-            <td><input class="field" id="name" type="text" @bind-value="@user.Name"></td>
+            <td><input class="field" id="name" type="text"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Отчество:</label></td>
-            <td><input class="field" id="patronymic" type="text" @bind-value="@user.Patronymic"></td>
+            <td><input class="field" id="patronymic" type="text"></td>
         </tr>
         <tr>
             <td><label class="lblTwo"> </label></td>
         </tr>
         <tr>
             <td><label class="lblTwo">Номер телефона:</label></td>
-            <td><input class="field" id="phone_number" type="text" @bind-value="@user.PhoneNumber"></td>
+            <td><input class="field" id="phone_number" type="text"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">E-mail:</label></td>
-            <td><input class="field" id="mail" type="text" @bind-value="@user.EMail"></td>
+            <td><input class="field" id="mail" type="text"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr><td><label></label></td></tr>
@@ -128,27 +134,11 @@
     </table>
 </div>
 
-<div class="tableOne">
+<div class="tableThree">
     <table>
-        <tr><td><label></label></td></tr>
-        <tr><td><label></label></td></tr>
-        <tr><td><label></label></td></tr>
-        <tr><td><label></label></td></tr>
-        <tr><td><label></label></td></tr>
-        <tr><td><label></label></td></tr>
-        <tr><td><label></label></td></tr>
-        <tr><td><label></label></td></tr>
-        <tr><td><label></label></td></tr>
-        <tr><td><label></label></td></tr>
-        <tr><td><label></label></td></tr>
-        <tr><td><label></label></td></tr>
-        <tr><td><label></label></td></tr>
-        <tr><td><label></label></td></tr>
-        <tr><td><label></label></td></tr>
-        <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Дата приобретения билета:</label></td>
-            <td><input class="field" id="" type="text"></td>
+            <td><input class="field" id="date" type="text"></td>
         </tr>
     </table>
 </div>

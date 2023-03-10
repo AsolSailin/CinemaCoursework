@@ -1,10 +1,137 @@
 ﻿@page "/cinema_info"
 @using CinemaCoursework.Data
+@using CinemaCoursework.Services
 @inject PagesList pageList
+@inject DataBase dataBase
+@inject IJSRuntime JS
 
-<h3>Cinema info</h3>
+<PageTitle>Cinema info</PageTitle>
+
+<style type="text/css">
+    .lblOne {
+        text-decoration: underline;
+        width: 100px;
+        white-space: nowrap;
+        font-weight: 700;
+        font-size: 23px;
+    }
+
+    .lblTwo {
+        font-size: 23px;
+    }
+
+    .field {
+        width: 85%;
+        background: #9F4FF9;
+        border-radius: 20px;
+        font-size: 20px;
+    }
+
+    .tableOne {
+        display: inline-table;
+        position: absolute;
+        left: 30%;
+        top: 18%;
+    }
+
+    .tableTwo {
+        display: inline-table;
+        position: absolute;
+        left: 63%;
+        top: 18%;
+    }
+
+    .tableThree {
+        position: absolute;
+        left: 48%;
+        top: 65%;
+    }
+
+    .button {
+        position: absolute;
+        right: 5%;
+        height: 20%;
+        width: 50%;
+        background: #9F4FF9;
+        border-radius: 15px;
+        font-size: 23px;
+    }
+</style>
+
+<div class="tableOne">
+    <table>
+        <tr>
+            <td><label class="lblOne">ДАННЫЕ КИНОТЕАТРА:</label></td>
+        </tr>
+        <tr>
+            <td><label class="lblTwo">Юр. лицо:</label></td>
+            <td><input class="field" id="cinema_name" type="text"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lblTwo">ИНН:</label></td>
+            <td><input class="field" id="inn" type="text"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lblTwo">КПП:</label></td>
+            <td><input class="field" id="kpp" type="text"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lblTwo">ОГРН:</label></td>
+            <td><input class="field" id="ogrn" type="text"></td>
+        </tr>
+    </table>
+</div>
+
+<div class="tableTwo">
+    <table>
+        <tr>
+            <td><label class="lblOne">АДРЕС:</label></td>
+        </tr>
+        <tr>
+            <td><label class="lblTwo">Индекс:</label></td>
+            <td><input class="field" id="index" type="text"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lblTwo">Город:</label></td>
+            <td><input class="field" id="city" type="text"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lblTwo">Улица, дом:</label></td>
+            <td><input class="field" id="street_house" type="text"></td>
+        </tr>
+    </table>
+</div>
+
+<div class="tableThree">
+    <table>
+        <tr>
+            <td><label class="lblOne">КОНТАКТНАЯ ИНФОРМАЦИЯ:</label></td>
+        </tr>
+        <tr>
+            <td><label class="lblTwo">Телефон:</label></td>
+            <td><input class="field" id="phone" type="text"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lblTwo">E-mail:</label></td>
+            <td><input class="field" id="mail" type="text"></td>
+        </tr>
+    </table>
+</div>
 
 @code {
+    private User user = new User();
+
+    public void Refund()
+    {
+
+    }
+
     protected override async Task OnInitializedAsync()
     {
         await GetPageName();
