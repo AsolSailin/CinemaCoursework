@@ -2,7 +2,151 @@
 @using CinemaCoursework.Data
 @inject PagesList pageList
 
-<h3>Hall one</h3>
+<PageTitle>Hall one</PageTitle>
+
+<style>
+    .button {
+        position: absolute;
+        left: 50%;
+        top: 82%;
+        height: 10%;
+        width: 20%;
+        background: #9F4FF9;
+        border-radius: 15px;
+        font-size: 23px;
+    }
+
+    .buttonOne, .placeOne {
+        position: relative;
+        display: inline-block;
+        background: #9F4FF9;
+        width: 3em;
+        height: 3em;
+        line-height: 2em;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        border-radius: 5px;
+    }
+
+    .buttonTwo, .placeTwo {
+        position: relative;
+        display: inline-block;
+        background: #902DFF;
+        width: 3em;
+        height: 3em;
+        line-height: 2em;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        border-radius: 5px;
+    }
+
+        .buttonOne:hover, .buttonTwo:hover {
+            background: #6921BB;
+        }
+
+        .buttonOne:active, .buttonTwo:active {
+            background: none;
+        }
+
+    .block {
+        position: absolute;
+        left: 41%;
+        top: 25%;
+    }
+</style>
+
+<div class="table">
+    <table>
+        <tr>
+            <td><button class="button" @*@onclick="LogIn" *@>Купить билет</button></td>
+            <td><button class="placeOne" disabled></button></td>
+            <td><label> - место</label></td>
+            <td><button class="placeTwo" disabled></button></td>
+            <td><label> - комфорт</label></td>
+        </tr>
+    </table>
+</div>
+
+<div class="block">
+    <table>
+        <tr>
+            <td><label>1</label></td>
+            <td><button class="buttonOne">1</button></td>
+            <td><button class="buttonOne">2</button></td>
+            <td><button class="buttonOne">3</button></td>
+            <td><button class="buttonOne">4</button></td>
+            <td><button class="buttonOne">5</button></td>
+            <td><button class="buttonOne">6</button></td>
+            <td><button class="buttonOne">7</button></td>
+            <td><button class="buttonOne">8</button></td>
+            <td><button class="buttonOne">9</button></td>
+            <td><button class="buttonOne">10</button></td>
+            <td><label>1</label></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label>2</label></td>
+            <td><button class="buttonOne">1</button></td>
+            <td><button class="buttonOne">2</button></td>
+            <td><button class="buttonOne">3</button></td>
+            <td><button class="buttonOne">4</button></td>
+            <td><button class="buttonOne">5</button></td>
+            <td><button class="buttonOne">6</button></td>
+            <td><button class="buttonOne">7</button></td>
+            <td><button class="buttonOne">8</button></td>
+            <td><button class="buttonOne">9</button></td>
+            <td><button class="buttonOne">10</button></td>
+            <td><label>2</label></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label>3</label></td>
+            <td><button class="buttonOne">1</button></td>
+            <td><button class="buttonOne">2</button></td>
+            <td><button class="buttonTwo">3</button></td>
+            <td><button class="buttonTwo">4</button></td>
+            <td><button class="buttonTwo">5</button></td>
+            <td><button class="buttonTwo">6</button></td>
+            <td><button class="buttonTwo">7</button></td>
+            <td><button class="buttonTwo">8</button></td>
+            <td><button class="buttonOne">9</button></td>
+            <td><button class="buttonOne">10</button></td>
+            <td><label>3</label></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label>4</label></td>
+            <td><button class="buttonOne">1</button></td>
+            <td><button class="buttonOne">2</button></td>
+            <td><button class="buttonTwo">3</button></td>
+            <td><button class="buttonTwo">4</button></td>
+            <td><button class="buttonTwo">5</button></td>
+            <td><button class="buttonTwo">6</button></td>
+            <td><button class="buttonTwo">7</button></td>
+            <td><button class="buttonTwo">8</button></td>
+            <td><button class="buttonOne">9</button></td>
+            <td><button class="buttonOne">10</button></td>
+            <td><label>4</label></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label>5</label></td>
+            <td><button class="buttonOne">1</button></td>
+            <td><button class="buttonOne">2</button></td>
+            <td><button class="buttonTwo">3</button></td>
+            <td><button class="buttonTwo">4</button></td>
+            <td><button class="buttonTwo">5</button></td>
+            <td><button class="buttonTwo">6</button></td>
+            <td><button class="buttonTwo">7</button></td>
+            <td><button class="buttonTwo">8</button></td>
+            <td><button class="buttonOne">9</button></td>
+            <td><button class="buttonOne">10</button></td>
+            <td><label>5</label></td>
+        </tr>
+    </table>
+</div>
 
 @code {
     protected override async Task OnInitializedAsync()
