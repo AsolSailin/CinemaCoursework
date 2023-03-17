@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿@page "/adding_movie"
 @using CinemaCoursework.Data
 @using CinemaCoursework.Services
 @inject PagesList pageList
@@ -70,7 +70,7 @@
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Описание:</label></td>
-            <td><textarea rows="10" class="field" id="description" type="text" @bind="@movie.Description"/></td>
+            <td><textarea rows="10" class="field" id="description" type="text" @bind="@movie.Description" /></td>
         </tr>
         <tr>
             <td><button class="button" @onclick="Save">Сохранить</button><br /></td>
@@ -83,16 +83,16 @@
 
     public void Save()
     {
-        dataBase.CurrentMovie = new Movie() 
-        {
-            Name = movie.Name,
-            Genre = movie.Genre,
-            Regisseur = movie.Regisseur,
-            Roles = movie.Roles,
-            Country = movie.Country,
-            Duration = movie.Duration,
-            Description = movie.Description
-        };
+        dataBase.CurrentMovie = new Movie()
+            {
+                Name = movie.Name,
+                Genre = movie.Genre,
+                Regisseur = movie.Regisseur,
+                Roles = movie.Roles,
+                Country = movie.Country,
+                Duration = movie.Duration,
+                Description = movie.Description
+            };
 
         dataBase.AddMovieToDataBase(dataBase.CurrentMovie);
     }
