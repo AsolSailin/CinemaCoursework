@@ -114,7 +114,6 @@
 
 @code {
     private User user = new User();
-    bool btn = false;
 
     public void Reg()
     {
@@ -134,7 +133,6 @@
         if (dataBase.CurrentUser.Password == dataBase.CurrentUser.PasswordRepeat)
         {
             dataBase.AddUserToDataBase(dataBase.CurrentUser);
-            btn = true;
         }
         else
         {

@@ -1,18 +1,107 @@
 ﻿@page "/cinema"
 @using CinemaCoursework.Data
+@using CinemaCoursework.Services
 @inject PagesList pageList
+@inject DataBase dataBase
+@inject Movie movie
 
-<h3>Cinema</h3>
+<PageTitle>Movie info</PageTitle>
+
+<style type="text/css">
+    .tableOne {
+        display: inline-table;
+        position: absolute;
+        left: 25%;
+        top: 10%;
+    }
+
+    .tableTwo {
+        display: inline-table;
+        position: absolute;
+        left: 49%;
+        top: 10%;
+    }
+
+    .tableThree {
+        display: inline-table;
+        position: absolute;
+        left: 73%;
+        top: 10%;
+    }
+
+    .lblOne {
+        position: absolute;
+        text-decoration: underline;
+        font-weight: 700;
+        font-size: 23px;
+        flex-grow: 1;
+        text-align: center;
+    }
+
+    .imgOne {
+        width: 26%;
+        border-radius: 10%;
+    }
+
+    .imgTwo {
+        width: 38.5%;
+        border-radius: 10%;
+    }
+
+    .imgThree {
+        width: 73%;
+        border-radius: 10%;
+    }
+</style>
+
+@*@for(int i = 0; i <= 5; i++)
+{
+
+}*@
+<div class="tableOne">
+    <table>
+        <tr>
+            <td><img class="imgOne" src="/images/cheburashka.jpeg" /></td>
+        </tr>
+        <tr>
+            <td><label class="lblOne">@dataBase.CurrentMovie?.Name</label></td>
+        </tr>
+    </table>
+</div>
+
+<div class="tableTwo">
+    <table>
+        <tr>
+            <td><img class="imgTwo" src="/images/cheburashka.jpeg" /></td>
+        </tr>
+        <tr>
+            <td><label class="lblOne">@dataBase.CurrentMovie?.Name</label></td>
+        </tr>
+    </table>
+</div>
+
+<div class="tableThree">
+    <table>
+        <tr>
+            <td><img class="imgThree" src="/images/cheburashka.jpeg" /></td>
+        </tr>
+        <tr>
+            <td><label class="lblOne">@dataBase.CurrentMovie?.Name</label></td>
+        </tr>
+    </table>
+</div>
 
 @code {
     protected override async Task OnInitializedAsync()
     {
+        movie.Name = "Чебурашка";
+        dataBase.CurrentMovie = dataBase.FindByMovieName(movie.Name);
         await GetPageName();
     }
 
     public async Task GetPageName()
     {
-        pageList.PageName = "Cinema";
+        pageList.PageName = "MovieInfo";
         await base.OnInitializedAsync();
     }
 }

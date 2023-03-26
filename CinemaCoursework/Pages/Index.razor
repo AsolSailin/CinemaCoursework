@@ -1,129 +1,106 @@
 ﻿@page "/"
-@using CinemaCoursework.Data
-@using CinemaCoursework.Services
-@inject PagesList pageList
-@inject DataBase dataBase
-@inject Movie movie
+@using Microsoft.AspNetCore.SignalR.Client
+@inject NavigationManager Navigation
+@implements IAsyncDisposable
 
-<PageTitle>Movie info</PageTitle>
+<PageTitle>Index</PageTitle>
 
 <style type="text/css">
-    .tableOne {
-        display: inline-table;
-        position: absolute;
-        left: 23%;
-        top: 10%;
-    }
-
-    .tableTwo {
-        display: inline-table;
-        position: absolute;
-        left: 47%;
-        top: 10%;
-    }
-
-    .tableThree {
-        position: absolute;
-        left: 23%;
-        top: 55%;
-    }
-
-    .lblOne {
-        text-decoration: underline;
-        width: 100px;
-        white-space: nowrap;
-        font-weight: 700;
+    .lblTwo, .message {
         font-size: 23px;
     }
 
-    .lblTwo {
-        font-size: 23px;
+    .field {
+        width: 85%;
+        background: #9F4FF9;
+        border-radius: 20px;
+        font-size: 20px;
     }
 
-    .button {
+    button {
+        position: absolute;
+        height: 5%;
+        width: 7%;
         background: #9F4FF9;
         border-radius: 15px;
-        font-size: 23px;
-        height: 20%;
-    }
-
-    img {
-        width: 26%;
-        height: 20%;
-        border-radius: 10%;
+        font-size: 20px;
     }
 </style>
 
-<div class="tableOne">
+<div class="form-group">
     <table>
         <tr>
-            <td><img src="/images/cheburashka.jpeg" /></td>
+            <td>
+                <label class="lblTwo">
+                    User:
+                    <input class="field" @bind="userInput" size="100" />
+                </label>
+            </td>
         </tr>
+        <tr>
+            <td>
+                <label class="lblTwo">
+                    Message:
+                    <input class="field" @bind="messageInput" size="100" />
+                </label>
+            </td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><button @onclick="Send" disabled="@(!IsConnected)">Send</button></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
     </table>
 </div>
 
-<div class="tableTwo">
-    <table>
-        <tr>
-            <td><label class="lblOne">@dataBase.CurrentMovie?.Name</label></td>
-        </tr>
-        <tr>
-            <td><label class="lblTwo">Жанр:</label></td>
-            <td><label class="lblTwo">@dataBase.CurrentMovie?.Genre</label></td>
-        </tr>
-        <tr><td><label></label></td></tr>
-        <tr>
-            <td><label class="lblTwo">Режиссер:</label></td>
-            <td><label class="lblTwo">@dataBase.CurrentMovie?.Regisseur</label></td>
-        </tr>
-        <tr><td><label></label></td></tr>
-        <tr>
-            <td><label class="lblTwo">В ролях:</label></td>
-            <td><label class="lblTwo">@dataBase.CurrentMovie?.Roles</label></td>
-        </tr>
-        <tr><td><label></label></td></tr>
-        <tr>
-            <td><label class="lblTwo">Страна:</label></td>
-            <td><label class="lblTwo">@dataBase.CurrentMovie?.Country</label></td>
-        </tr>
-        <tr><td><label></label></td></tr>
-        <tr>
-            <td><label class="lblTwo">Продолжительность:   </label></td>
-            <td><label class="lblTwo">@dataBase.CurrentMovie?.Duration</label></td>
-        </tr>
-    </table>
-</div>
-
-<div class="tableThree">
-    <table>
-        <tr>
-            <td><button class="button" @onclick="Buy">Купить билет</button><br /></td>
-        </tr>
-        <tr>
-            <td><label class="lblTwo">Описание:</label></td>
-        </tr>
-        <tr>
-            <td><label class="lblTwo">@dataBase.CurrentMovie?.Description</label></td>
-        </tr>
-    </table>
-</div>
+<ul id="messagesList">
+    @foreach (var message in messages)
+    {
+        <li class="message">@message</li>
+        <hr>
+    }
+</ul>
 
 @code {
-    public void Buy()
-    {
-        
-    }
+    private HubConnection? hubConnection;
+    private List<string> messages = new List<string>();
+    private string? userInput;
+    private string? messageInput;
 
     protected override async Task OnInitializedAsync()
     {
-        movie.Name = "Чебурашка";
-        dataBase.CurrentMovie = dataBase.FindByMovieName(movie.Name);
-        await GetPageName();
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(Navigation.ToAbsoluteUri("/chathub"))
+            .Build();
+
+        hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
+        {
+            var encodedMsg = $"{user}: {message}";
+            messages.Add(encodedMsg);
+            InvokeAsync(StateHasChanged);
+        });
+
+        await hubConnection.StartAsync();
     }
 
-    public async Task GetPageName()
+    private async Task Send()
     {
-        pageList.PageName = "MovieInfo";
-        await base.OnInitializedAsync();
+        if (hubConnection is not null)
+        {
+            await hubConnection.SendAsync("SendMessage", userInput, messageInput);
+        }
+    }
+
+    public bool IsConnected =>
+        hubConnection?.State == HubConnectionState.Connected;
+
+    public async ValueTask DisposeAsync()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.DisposeAsync();
+        }
     }
 }
