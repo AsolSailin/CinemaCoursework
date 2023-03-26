@@ -11,6 +11,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<PagesList>();
 builder.Services.AddSingleton<DataBase>();
 builder.Services.AddScoped<ILocalStorageService, LocalStorageService>();
+builder.Services.AddSingleton<Movie>();
 
 var app = builder.Build();
 

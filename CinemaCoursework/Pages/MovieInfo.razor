@@ -1,12 +1,123 @@
 ﻿@page "/movie_info"
 @using CinemaCoursework.Data
+@using CinemaCoursework.Services
 @inject PagesList pageList
+@inject DataBase dataBase
+@inject Movie movie
 
-<h3>Movie info</h3>
+<PageTitle>Movie info</PageTitle>
+
+<style type="text/css">
+    .tableOne {
+        display: inline-table;
+        position: absolute;
+        left: 23%;
+        top: 10%;
+    }
+
+    .tableTwo {
+        display: inline-table;
+        position: absolute;
+        left: 47%;
+        top: 10%;
+    }
+
+    .tableThree {
+        position: absolute;
+        left: 23%;
+        top: 55%;
+    }
+
+    .lblOne {
+        text-decoration: underline;
+        width: 100px;
+        white-space: nowrap;
+        font-weight: 700;
+        font-size: 23px;
+    }
+
+    .lblTwo {
+        font-size: 23px;
+    }
+
+    .button {
+        background: #9F4FF9;
+        border-radius: 15px;
+        font-size: 23px;
+        height: 20%;
+    }
+
+    img {
+        width: 26%;
+        height: 20%;
+        border-radius: 10%;
+    }
+</style>
+
+<div class="tableOne">
+    <table>
+        <tr>
+            <td><img src="/images/cheburashka.jpeg" /></td>
+        </tr>
+    </table>
+</div>
+
+<div class="tableTwo">
+    <table>
+        <tr>
+            <td><label class="lblOne">@dataBase.CurrentMovie?.Name</label></td>
+        </tr>
+        <tr>
+            <td><label class="lblTwo">Жанр:</label></td>
+            <td><label class="lblTwo">@dataBase.CurrentMovie?.Genre</label></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lblTwo">Режиссер:</label></td>
+            <td><label class="lblTwo">@dataBase.CurrentMovie?.Regisseur</label></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lblTwo">В ролях:</label></td>
+            <td><label class="lblTwo">@dataBase.CurrentMovie?.Roles</label></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lblTwo">Страна:</label></td>
+            <td><label class="lblTwo">@dataBase.CurrentMovie?.Country</label></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lblTwo">Продолжительность:   </label></td>
+            <td><label class="lblTwo">@dataBase.CurrentMovie?.Duration</label></td>
+        </tr>
+    </table>
+</div>
+
+<div class="tableThree">
+    <table>
+        <tr>
+            <td><button class="button" @onclick="Buy">Купить билет</button><br /></td>
+        </tr>
+        <tr>
+            <td><label class="lblTwo">Описание:</label></td>
+        </tr>
+        <tr>
+            <td><label class="lblTwo">@dataBase.CurrentMovie?.Description</label></td>
+        </tr>
+    </table>
+</div>
 
 @code {
+    public void Buy()
+    {
+        
+    }
+
     protected override async Task OnInitializedAsync()
     {
+        movie.Name = "Чебурашка";
+        dataBase.CurrentMovie = dataBase.FindByMovieName(movie.Name);
         await GetPageName();
     }
 

@@ -3,10 +3,31 @@
 @using CinemaCoursework.Services
 @inject PagesList pageList
 @inject DataBase dataBase
+@inject Movie movie
 
-<PageTitle>Registration</PageTitle>
+<PageTitle>Movie info</PageTitle>
 
 <style type="text/css">
+    .tableOne {
+        display: inline-table;
+        position: absolute;
+        left: 23%;
+        top: 10%;
+    }
+
+    .tableTwo {
+        display: inline-table;
+        position: absolute;
+        left: 47%;
+        top: 10%;
+    }
+
+    .tableThree {
+        position: absolute;
+        left: 23%;
+        top: 55%;
+    }
+
     .lblOne {
         text-decoration: underline;
         width: 100px;
@@ -19,81 +40,90 @@
         font-size: 23px;
     }
 
-    .field {
-        width: 85%;
-        background: #9F4FF9;
-        border-radius: 20px;
-        font-size: 20px;
-    }
-
     .button {
         background: #9F4FF9;
         border-radius: 15px;
         font-size: 23px;
+        height: 20%;
+    }
+
+    img {
+        width: 26%;
+        height: 20%;
+        border-radius: 10%;
     }
 </style>
 
-<div>
-    <table width="100%">
+<div class="tableOne">
+    <table>
         <tr>
-            <td><label class="lblOne">ДАННЫЕ:</label></td>
+            <td><img src="/images/cheburashka.jpeg" /></td>
         </tr>
+    </table>
+</div>
+
+<div class="tableTwo">
+    <table>
         <tr>
-            <td><label class="lblTwo">Название:</label></td>
-            <td><input class="field" id="movie_name" type="text" @bind-value="@movie.Name"></td>
+            <td><label class="lblOne">@dataBase.CurrentMovie?.Name</label></td>
         </tr>
-        <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Жанр:</label></td>
-            <td><input class="field" id="genre" type="text" @bind-value="@movie.Genre"></td>
+            <td><label class="lblTwo">@dataBase.CurrentMovie?.Genre</label></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Режиссер:</label></td>
-            <td><input class="field" id="regisseur" type="text" @bind-value="@movie.Regisseur"></td>
+            <td><label class="lblTwo">@dataBase.CurrentMovie?.Regisseur</label></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">В ролях:</label></td>
-            <td><input class="field" id="roles" type="text" @bind-value="@movie.Roles"></td>
+            <td><label class="lblTwo">@dataBase.CurrentMovie?.Roles</label></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Страна:</label></td>
-            <td><input class="field" id="country" type="text" @bind-value="@movie.Country"></td>
+            <td><label class="lblTwo">@dataBase.CurrentMovie?.Country</label></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
-            <td><label class="lblTwo">Продолжительность:</label></td>
-            <td><input class="field" id="duration" type="text" @bind-value="@movie.Duration"></td>
+            <td><label class="lblTwo">Продолжительность:   </label></td>
+            <td><label class="lblTwo">@dataBase.CurrentMovie?.Duration</label></td>
         </tr>
-        <tr><td><label></label></td></tr>
+    </table>
+</div>
+
+<div class="tableThree">
+    <table>
+        <tr>
+            <td><button class="button" @onclick="Buy">Купить билет</button><br /></td>
+        </tr>
         <tr>
             <td><label class="lblTwo">Описание:</label></td>
-            <td><textarea rows="10" class="field" id="description" type="text" @bind="@movie.Description"/></td>
         </tr>
         <tr>
-            <td><button class="button" @onclick="Save">Сохранить</button><br /></td>
+            <td><label class="lblTwo">@dataBase.CurrentMovie?.Description</label></td>
         </tr>
     </table>
 </div>
 
 @code {
-    private Movie movie = new Movie();
-
-    public void Save()
+    public void Buy()
     {
-        dataBase.CurrentMovie = new Movie() 
-        {
-            Name = movie.Name,
-            Genre = movie.Genre,
-            Regisseur = movie.Regisseur,
-            Roles = movie.Roles,
-            Country = movie.Country,
-            Duration = movie.Duration,
-            Description = movie.Description
-        };
+        
+    }
 
-        dataBase.AddMovieToDataBase(dataBase.CurrentMovie);
+    protected override async Task OnInitializedAsync()
+    {
+        movie.Name = "Чебурашка";
+        dataBase.CurrentMovie = dataBase.FindByMovieName(movie.Name);
+        await GetPageName();
+    }
+
+    public async Task GetPageName()
+    {
+        pageList.PageName = "MovieInfo";
+        await base.OnInitializedAsync();
     }
 }
