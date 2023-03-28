@@ -1,13 +1,111 @@
-﻿@page "/Chat"
+﻿@page "/chat"
+@using Microsoft.AspNetCore.SignalR.Client
 @using CinemaCoursework.Data
 @inject PagesList pageList
+@inject NavigationManager Navigation
+@implements IAsyncDisposable
 
-<h3>Chat</h3>
+<PageTitle>Chat</PageTitle>
+
+<style type="text/css">
+    .lblTwo, .message {
+        font-size: 23px;
+    }
+
+    .field {
+        width: 85%;
+        background: #9F4FF9;
+        border-radius: 20px;
+        font-size: 20px;
+    }
+
+    button {
+        position: absolute;
+        height: 5%;
+        width: 7%;
+        background: #9F4FF9;
+        border-radius: 15px;
+        font-size: 20px;
+    }
+</style>
+
+<div class="form-group">
+    <table>
+        <tr>
+            <td>
+                <label class="lblTwo">
+                    User:
+                    <input class="field" @bind="userInput" />
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="lblTwo">
+                    Message:
+                    <input class="field" @bind="messageInput" />
+                </label>
+            </td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><button @onclick="Send" disabled="@(!IsConnected)">Send</button></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
+    </table>
+</div>
+
+<ul id="messagesList">
+    @foreach (var message in messages)
+    {
+        <li class="message">@message</li>
+        <hr>
+    }
+</ul>
 
 @code {
+    private HubConnection? hubConnection;
+    private List<string> messages = new List<string>();
+    private string? userInput;
+    private string? messageInput;
+
     protected override async Task OnInitializedAsync()
     {
+
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(Navigation.ToAbsoluteUri("/chathub"))
+            .Build();
+
+        hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
+        {
+            var encodedMsg = $"- {user}: \"{message}\"";
+            messages.Add(encodedMsg);
+            InvokeAsync(StateHasChanged);
+        });
+
         await GetPageName();
+        await hubConnection.StartAsync();
+    }
+
+    private async Task Send()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.SendAsync("SendMessage", userInput, messageInput);
+        }
+    }
+
+    public bool IsConnected =>
+        hubConnection?.State == HubConnectionState.Connected;
+
+    public async ValueTask DisposeAsync()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.DisposeAsync();
+        }
     }
 
     public async Task GetPageName()

@@ -29,6 +29,13 @@
         top: 10%;
     }
 
+    .tableThree {
+        display: inline-table;
+        position: absolute;
+        left: 73%;
+        top: 70%;
+    }
+
     .lblOne {
         position: absolute;
         text-decoration: underline;
@@ -84,6 +91,17 @@
     <table>
         <tr>
             <td><img class="imgThree" src="/images/cheburashka.jpeg" /></td>
+        </tr>
+        <tr>
+            <td><label class="lblOne">@dataBase.CurrentMovie?.Name</label></td>
+        </tr>
+    </table>
+</div>
+
+<div class="tableFour">
+    <table>
+        <tr>
+            <td><img class="imgOne" src="/images/cheburashka.jpeg" /></td>
         </tr>
         <tr>
             <td><label class="lblOne">@dataBase.CurrentMovie?.Name</label></td>
