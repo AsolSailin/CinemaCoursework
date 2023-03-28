@@ -1,18 +1,121 @@
 ﻿@page "/for_children"
 @using CinemaCoursework.Data
+@using CinemaCoursework.Services
 @inject PagesList pageList
+@inject DataBase dataBase
+@inject Movie movie
 
-<h3>For children</h3>
+<PageTitle>For children</PageTitle>
+
+<style type="text/css">
+    .imgOne {
+        width: 90%;
+        border-radius: 15%;
+        display: block;
+    }
+
+    p {
+        text-align: center;
+        font-weight: 700;
+        font-size: 23px;
+        color: black;
+    }
+</style>
+
+<MudGrid Spacing="@spacing" Justify="Justify.Center">
+    <MudItem>
+        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
+            <a href="/">
+                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
+                <p>@dataBase.CurrentMovie?.Name</p>
+            </a>
+        </MudPaper>
+    </MudItem>
+    <MudItem>
+        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
+            <a href="/">
+                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
+                <p>@dataBase.CurrentMovie?.Name</p>
+            </a>
+        </MudPaper>
+    </MudItem>
+    <MudItem>
+        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
+            <a href="/">
+                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
+                <p>@dataBase.CurrentMovie?.Name</p>
+            </a>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+<MudGrid Spacing="@spacing" Justify="Justify.Center">
+    <MudItem>
+        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
+            <a href="/">
+                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
+                <p>@dataBase.CurrentMovie?.Name</p>
+            </a>
+        </MudPaper>
+    </MudItem>
+    <MudItem>
+        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
+            <a href="/">
+                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
+                <p>@dataBase.CurrentMovie?.Name</p>
+            </a>
+        </MudPaper>
+    </MudItem>
+    <MudItem>
+        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
+            <a href="/">
+                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
+                <p>@dataBase.CurrentMovie?.Name</p>
+            </a>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+<MudGrid Spacing="@spacing" Justify="Justify.Center">
+    <MudItem>
+        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
+            <a href="/">
+                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
+                <p>@dataBase.CurrentMovie?.Name</p>
+            </a>
+        </MudPaper>
+    </MudItem>
+    <MudItem>
+        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
+            <a href="/">
+                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
+                <p>@dataBase.CurrentMovie?.Name</p>
+            </a>
+        </MudPaper>
+    </MudItem>
+    <MudItem>
+        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
+            <a href="/">
+                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
+                <p>@dataBase.CurrentMovie?.Name</p>
+            </a>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
 
 @code {
+    public int spacing { get; set; } = 5;
+
     protected override async Task OnInitializedAsync()
     {
+        movie.Name = "Чебурашка";
+        dataBase.CurrentMovie = dataBase.FindByMovieName(movie.Name);
         await GetPageName();
     }
 
     public async Task GetPageName()
     {
-        pageList.PageName = "ForChildren";
+        pageList.PageName = "MovieInfo";
         await base.OnInitializedAsync();
     }
 }

@@ -5,111 +5,107 @@
 @inject DataBase dataBase
 @inject Movie movie
 
-<PageTitle>Movie info</PageTitle>
+<PageTitle>Cinema</PageTitle>
 
 <style type="text/css">
-    .tableOne {
-        display: inline-table;
-        position: absolute;
-        left: 25%;
-        top: 10%;
+    .imgOne {
+        width: 90%;
+        border-radius: 15%;
+        display: block;
     }
 
-    .tableTwo {
-        display: inline-table;
-        position: absolute;
-        left: 49%;
-        top: 10%;
-    }
-
-    .tableThree {
-        display: inline-table;
-        position: absolute;
-        left: 73%;
-        top: 10%;
-    }
-
-    .tableThree {
-        display: inline-table;
-        position: absolute;
-        left: 73%;
-        top: 70%;
-    }
-
-    .lblOne {
-        position: absolute;
-        text-decoration: underline;
+    p {
+        text-align: center;
         font-weight: 700;
         font-size: 23px;
-        flex-grow: 1;
-        text-align: center;
-    }
-
-    .imgOne {
-        width: 26%;
-        border-radius: 10%;
-    }
-
-    .imgTwo {
-        width: 38.5%;
-        border-radius: 10%;
-    }
-
-    .imgThree {
-        width: 73%;
-        border-radius: 10%;
+        color: black;
     }
 </style>
 
-@*@for(int i = 0; i <= 5; i++)
-{
+<MudGrid Spacing="@spacing" Justify="Justify.Center">
+    <MudItem>
+        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
+            <a href="/">
+                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
+                <p>@dataBase.CurrentMovie?.Name</p>
+            </a>
+        </MudPaper>
+    </MudItem>
+    <MudItem>
+        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
+            <a href="/">
+                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
+                <p>@dataBase.CurrentMovie?.Name</p>
+            </a>
+        </MudPaper>
+    </MudItem>
+    <MudItem>
+        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
+            <a href="/">
+                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
+                <p>@dataBase.CurrentMovie?.Name</p>
+            </a>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
 
-}*@
-<div class="tableOne">
-    <table>
-        <tr>
-            <td><img class="imgOne" src="/images/cheburashka.jpeg" /></td>
-        </tr>
-        <tr>
-            <td><label class="lblOne">@dataBase.CurrentMovie?.Name</label></td>
-        </tr>
-    </table>
-</div>
+<MudGrid Spacing="@spacing" Justify="Justify.Center">
+    <MudItem>
+        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
+            <a href="/">
+                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
+                <p>@dataBase.CurrentMovie?.Name</p>
+            </a>
+        </MudPaper>
+    </MudItem>
+    <MudItem>
+        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
+            <a href="/">
+                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
+                <p>@dataBase.CurrentMovie?.Name</p>
+            </a>
+        </MudPaper>
+    </MudItem>
+    <MudItem>
+        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
+            <a href="/">
+                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
+                <p>@dataBase.CurrentMovie?.Name</p>
+            </a>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
 
-<div class="tableTwo">
-    <table>
-        <tr>
-            <td><img class="imgTwo" src="/images/cheburashka.jpeg" /></td>
-        </tr>
-        <tr>
-            <td><label class="lblOne">@dataBase.CurrentMovie?.Name</label></td>
-        </tr>
-    </table>
-</div>
-
-<div class="tableThree">
-    <table>
-        <tr>
-            <td><img class="imgThree" src="/images/cheburashka.jpeg" /></td>
-        </tr>
-        <tr>
-            <td><label class="lblOne">@dataBase.CurrentMovie?.Name</label></td>
-        </tr>
-    </table>
-</div>
-
-<div class="tableFour">
-    <table>
-        <tr>
-            <td><img class="imgOne" src="/images/cheburashka.jpeg" /></td>
-        </tr>
-        <tr>
-            <td><label class="lblOne">@dataBase.CurrentMovie?.Name</label></td>
-        </tr>
-    </table>
-</div>
+<MudGrid Spacing="@spacing" Justify="Justify.Center">
+    <MudItem>
+        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
+            <a href="/">
+                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
+                <p>@dataBase.CurrentMovie?.Name</p>
+            </a>
+        </MudPaper>
+    </MudItem>
+    <MudItem>
+        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
+            <a href="/">
+                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
+                <p>@dataBase.CurrentMovie?.Name</p>
+            </a>
+        </MudPaper>
+    </MudItem>
+    <MudItem>
+        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
+            <a href="/">
+                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
+                <p>@dataBase.CurrentMovie?.Name</p>
+            </a>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
 
 @code {
+    public int spacing { get; set; } = 5;
+
     protected override async Task OnInitializedAsync()
     {
         movie.Name = "Чебурашка";
