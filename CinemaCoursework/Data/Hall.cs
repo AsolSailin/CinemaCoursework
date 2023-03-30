@@ -14,5 +14,11 @@ namespace CinemaCoursework.Data
         [BsonIgnoreIfDefault]
         [BsonIgnoreIfNull]
         public List<Place>? Places { get; set; }
+        [BsonIgnoreIfDefault]
+        [BsonIgnoreIfNull]
+        public Movie? Movie { get; set; }
+        [BsonIgnoreIfDefault]
+        [BsonIgnoreIfNull]
+        public DateTime Time { get; set; }
     }
 }

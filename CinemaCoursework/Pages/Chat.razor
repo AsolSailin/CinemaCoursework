@@ -20,7 +20,6 @@
     }
 
     button {
-        position: absolute;
         height: 5%;
         width: 7%;
         background: #9F4FF9;
@@ -48,14 +47,10 @@
             </td>
         </tr>
         <tr><td><label></label></td></tr>
-        <tr>
-            <td><button @onclick="Send" disabled="@(!IsConnected)">Send</button></td>
-        </tr>
-        <tr><td><label></label></td></tr>
-        <tr><td><label></label></td></tr>
-        <tr><td><label></label></td></tr>
     </table>
 </div>
+
+<button @onclick="Send" disabled="@(!IsConnected)">Send</button>
 
 <ul id="messagesList">
     @foreach (var message in messages)

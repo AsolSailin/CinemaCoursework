@@ -1,121 +1,79 @@
 ﻿@page "/"
 @using CinemaCoursework.Data
-@using CinemaCoursework.Services
 @inject PagesList pageList
-@inject DataBase dataBase
-@inject Movie movie
 
-<PageTitle>Cinema</PageTitle>
+<PageTitle>Movie session</PageTitle>
 
 <style type="text/css">
-    .imgOne {
-        width: 90%;
-        border-radius: 15%;
-        display:block;
+    .lbl {
+        font-size: 23px;
     }
 
-    p {
-        text-align: center;
-        font-weight: 700;
+    .field {
+        width: 85%;
+        background: #9F4FF9;
+        border-radius: 20px;
+        font-size: 20px;
+    }
+
+    .button {
+        position: absolute;
+        left: 27%;
+        height: 25%;
+        width: 35%;
+        background: #9F4FF9;
+        border-radius: 15px;
         font-size: 23px;
-        color: black;
+    }
+
+    .href {
+        color: #9F4FF9;
+    }
+
+    .alignment {
+        position: absolute;
+        left: 10%;
+    }
+
+    .block {
+        position: absolute;
+        left: 48%;
+        top: 40%;
     }
 </style>
 
-<MudGrid Spacing="@spacing" Justify="Justify.Center">
-    <MudItem>
-        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;" >
-            <a href="/">
-                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
-                <p>@dataBase.CurrentMovie?.Name</p>
-            </a>
-        </MudPaper>
-    </MudItem>
-    <MudItem>
-        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
-            <a href="/">
-                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
-                <p>@dataBase.CurrentMovie?.Name</p>
-            </a>
-        </MudPaper>
-    </MudItem>
-    <MudItem>
-        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
-            <a href="/">
-                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
-                <p>@dataBase.CurrentMovie?.Name</p>
-            </a>
-        </MudPaper>
-    </MudItem>
-</MudGrid>
-
-<MudGrid Spacing="@spacing" Justify="Justify.Center">
-    <MudItem>
-        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
-            <a href="/">
-                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
-                <p>@dataBase.CurrentMovie?.Name</p>
-            </a>
-        </MudPaper>
-    </MudItem>
-    <MudItem>
-        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
-            <a href="/">
-                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
-                <p>@dataBase.CurrentMovie?.Name</p>
-            </a>
-        </MudPaper>
-    </MudItem>
-    <MudItem>
-        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
-            <a href="/">
-                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
-                <p>@dataBase.CurrentMovie?.Name</p>
-            </a>
-        </MudPaper>
-    </MudItem>
-</MudGrid>
-
-<MudGrid Spacing="@spacing" Justify="Justify.Center">
-    <MudItem>
-        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
-            <a href="/">
-                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
-                <p>@dataBase.CurrentMovie?.Name</p>
-            </a>
-        </MudPaper>
-    </MudItem>
-    <MudItem>
-        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
-            <a href="/">
-                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
-                <p>@dataBase.CurrentMovie?.Name</p>
-            </a>
-        </MudPaper>
-    </MudItem>
-    <MudItem>
-        <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
-            <a href="/">
-                <img class="imgOne" src="/images/cheburashka.jpeg" alt="Text" />
-                <p>@dataBase.CurrentMovie?.Name</p>
-            </a>
-        </MudPaper>
-    </MudItem>
-</MudGrid>
+<div class="block">
+    <table>
+        <tr>
+            <td><label class="lbl">Название фильма:</label></td>
+            <td><input class="field" id="name" type="text" @bind-value="@movie.Name"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lbl">Дата показа:</label></td>
+            <td><input class="field" id="date" type="text" @bind-value="@hall.Time"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><button class="button" @onclick="Create">Создать киносеанс</button><br /></td>
+        </tr>
+    </table>
+</div>
 
 @code {
-    public int spacing { get; set; } = 5;
+    private Movie movie = new Movie();
+    private Hall hall = new Hall();
+
+    public void Create(){}
 
     protected override async Task OnInitializedAsync()
     {
-        movie.Name = "Чебурашка";
-        dataBase.CurrentMovie = dataBase.FindByMovieName(movie.Name);
         await GetPageName();
     }
 
     public async Task GetPageName()
     {
-        pageList.PageName = "MovieInfo";
+        pageList.PageName = "TicketRefund";
         await base.OnInitializedAsync();
     }
 }

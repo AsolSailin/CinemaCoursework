@@ -81,6 +81,7 @@
             if (dataBase.CurrentUser != null && dataBase.CurrentUser.Password == user.Password)
             {
                 localStorageService.SetAsync<User>("Authorization", dataBase.CurrentUser);
+
                 if (dataBase.CurrentUser.Role == "Client")
                 {
                     navigation.NavigateTo("/client_account");
