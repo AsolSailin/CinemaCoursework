@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿@page "/adding_hall"
 @using CinemaCoursework.Data
 @using CinemaCoursework.Services
 @inject PagesList pageList
@@ -22,7 +22,7 @@
     .button {
         position: absolute;
         left: 27%;
-        height: 2em;
+        height: 25%;
         width: 35%;
         background: #9F4FF9;
         border-radius: 15px;
@@ -44,7 +44,7 @@
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
-            <td><button class="button" @onclick="Create">Создать зал</button><br /></td>
+            <td><button class="button" @onclick="Create">Создать киносеанс</button><br /></td>
         </tr>
     </table>
 </div>
@@ -55,12 +55,12 @@
 
     public void Create()
     {
-        if(hallName != "")
+        if (hallName != "")
         {
             dataBase.CurrentHall = new Hall()
-            {
-                Name = hallName
-            };
+                {
+                    Name = hallName
+                };
 
             dataBase.AddHallToDataBase(dataBase.CurrentHall);
         }
@@ -77,7 +77,7 @@
 
     public async Task GetPageName()
     {
-        pageList.PageName = "TicketRefund";
+        pageList.PageName = "AddingHall";
         await base.OnInitializedAsync();
     }
 }

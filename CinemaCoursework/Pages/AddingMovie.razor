@@ -72,6 +72,12 @@
             <td><label class="lblTwo">Описание:</label></td>
             <td><textarea rows="10" class="field" id="description" type="text" @bind="@movie.Description" /></td>
         </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lblTwo">Цена билета:</label></td>
+            <td><input class="field" id="duration" type="text" @bind-value="@movie.Price"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
         <tr>
             <td><button class="button" @onclick="Save">Сохранить</button><br /></td>
         </tr>
@@ -91,7 +97,8 @@
                 Roles = movie.Roles,
                 Country = movie.Country,
                 Duration = movie.Duration,
-                Description = movie.Description
+                Description = movie.Description,
+                Price = movie.Price
             };
 
         dataBase.AddMovieToDataBase(dataBase.CurrentMovie);

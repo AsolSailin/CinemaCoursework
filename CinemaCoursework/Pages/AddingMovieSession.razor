@@ -1,0 +1,107 @@
+﻿@page "/adding_movie_session"
+@using CinemaCoursework.Data
+@using CinemaCoursework.Services
+@inject PagesList pageList
+@inject DataBase dataBase
+@inject IJSRuntime JS
+
+<PageTitle>Adding movie session</PageTitle>
+
+<style type="text/css">
+    .lbl {
+        font-size: 23px;
+    }
+
+    .field {
+        width: 85%;
+        background: #9F4FF9;
+        border-radius: 20px;
+        font-size: 20px;
+    }
+
+    .button {
+        position: absolute;
+        left: 27%;
+        height: 25%;
+        width: 35%;
+        background: #9F4FF9;
+        border-radius: 15px;
+        font-size: 23px;
+    }
+
+    .block {
+        position: absolute;
+        left: 48%;
+        top: 40%;
+    }
+</style>
+
+<div class="block">
+    <table>
+        <tr>
+            <td><label class="lbl">Номер сеанса:</label></td>
+            <td><input class="field" id="name" type="text" @bind-value="@number"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lbl">Название фильма:</label></td>
+            <td><input class="field" id="name" type="text" @bind-value="@movieName"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lbl">Название зала:</label></td>
+            <td><input class="field" id="hall" type="text" @bind-value="@hallName"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lbl">Дата показа:</label></td>
+            <td><input class="field" type="datetime" @bind-value="@time"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><button class="button" @onclick="Create">Создать киносеанс</button><br /></td>
+        </tr>
+    </table>
+</div>
+
+@code {
+    private Session session = new Session();
+    private DateTime time;
+    private string number = "";
+    private string movieName = "";
+    private string hallName = "";
+
+    public void Create()
+    {
+        session.Movie = dataBase.FindByMovieName(movieName);
+        session.Hall = dataBase.FindByHallName(hallName);
+        if (session.Movie != null && session.Hall != null && number != "")
+        {
+            dataBase.CurrentSession = new Session()
+            {
+                SessionNumber = int.Parse(number),
+                Time = time,
+                Movie = session.Movie,
+                Hall = session.Hall,
+            };
+
+            dataBase.AddSessionToDataBase(dataBase.CurrentSession);
+        }
+        else
+        {
+            JS.InvokeVoidAsync("alert", "Данные введены неверно");
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetPageName();
+        time = DateTime.Now;
+    }
+
+    public async Task GetPageName()
+    {
+        pageList.PageName = "AddingMovieSession";
+        await base.OnInitializedAsync();
+    }
+}

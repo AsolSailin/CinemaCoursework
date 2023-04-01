@@ -29,5 +29,8 @@ namespace CinemaCoursework.Data
         [BsonIgnoreIfDefault]
         [BsonIgnoreIfNull]
         public string? Description { get; set; }
+        [BsonIgnoreIfDefault]
+        [BsonIgnoreIfNull]
+        public int Price { get; set; }
     }
 }
