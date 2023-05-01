@@ -4,6 +4,7 @@
 @inject PagesList pageList
 @inject DataBase dataBase
 @inject Session session
+@inject IJSRuntime JS
 
 <PageTitle>2D hall</PageTitle>
 
@@ -61,13 +62,13 @@
         border-radius: 5px;
     }
 
-        .buttonOne:hover, .buttonTwo:hover, .buttonOne:focus, .buttonTwo:focus {
-            background: #6921BB;
-        }
+    .buttonOne:hover, .buttonTwo:hover, .buttonOne:focus, .buttonTwo:focus {
+        background: #6921BB;
+    }
 
-        .buttonOne:active, .buttonTwo:active {
-            background: none;
-        }
+    .buttonOne:active, .buttonTwo:active {
+        background: none;
+    }
 
     .block {
         position: absolute;
@@ -76,22 +77,18 @@
     }
 </style>
 
-<div class="table">
-    <table>
-        <tr>
-            <td><button class="button" @onclick="Buy">Купить билет</button></td>
-            <td><button class="placeOne"></button></td>
-            <td><label> - место</label></td>
-            <td><button class="placeTwo"></button></td>
-            <td><label> - комфорт</label></td>
-        </tr>
-    </table>
-</div>
-
 <div class="block">
-    @foreach (var place in session.Hall.Places)
+    @foreach (var p in session.Hall.Places)
     {
-        <button class="buttonOne" @onclick="() => Place(place.Key)">@place.Key</button>
+        @if (p.Value == "false")
+        {
+            <button class="buttonOne" @onclick="() => Place(p.Key)">@p.Key</button>
+        }
+        else
+        {
+            <button class="buttonTwo" @onclick="() => OccupiedPlace()">@p.Key</button>
+        }
+
         count++;
         @if (count == 10)
         {
@@ -101,44 +98,32 @@
     }
 </div>
 
+<button class="button" @onclick="Buy">Купить билет</button>
+
 <label>Ваше место: @place</label>
 
-@*<div class="block">
-    @foreach ( var place in hall.Places)
-    {
-        @if(GetCount() == 0)
-        {
-            <label>@place.Row</label>
-        }
-        <button class="buttonOne" @onclick="() => Place(place.Row, place.PlaceNumber)">@place.PlaceNumber</button>
-        @if(GetCount() == 19)
-        {
-            <label>@place.Row</label>
-            <br/><br/>
-            count = 0;
-        }
-    }
-</div>*@
-
 @code {
-    int count = 0, rowCount = 0; 
+    int count = 0; 
     string place = "";
-
-    public int GetCount()
-    {
-        return count++;
-    }
 
     public void Buy()
     {
-        session.Hall.Places[place] = "true";
-        Console.WriteLine(session.Id);
+        if (place != "")
+        {
+            session.Hall.Places[place] = "true";
+        }
+        
         dataBase.SessionReplace(session.Id, session);
     }
 
     public void Place(string placeNumber)
     {
         place = placeNumber;
+    }
+
+    public void OccupiedPlace()
+    {
+        JS.InvokeVoidAsync("alert", "Вы не можете выбрать это место, так как оно уже занято");
     }
 
     protected override async Task OnInitializedAsync()

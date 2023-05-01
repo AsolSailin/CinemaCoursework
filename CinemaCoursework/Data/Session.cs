@@ -10,9 +10,6 @@ namespace CinemaCoursework.Data
         public ObjectId Id { get; set; }
         [BsonIgnoreIfDefault]
         [BsonIgnoreIfNull]
-        public string? SessionNumber { get; set; }
-        [BsonIgnoreIfDefault]
-        [BsonIgnoreIfNull]
         public DateTime Time { get; set; }
 
         [BsonIgnoreIfDefault]

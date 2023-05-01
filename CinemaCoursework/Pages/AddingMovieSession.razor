@@ -39,11 +39,6 @@
 <div class="block">
     <table>
         <tr>
-            <td><label class="lbl">Номер сеанса:</label></td>
-            <td><input class="field" id="name" type="text" @bind-value="@number"></td>
-        </tr>
-        <tr><td><label></label></td></tr>
-        <tr>
             <td><label class="lbl">Название фильма:</label></td>
             <td><input class="field" id="name" type="text" @bind-value="@movieName"></td>
         </tr>
@@ -67,7 +62,6 @@
 @code {
     private Session session = new Session();
     private DateTime time;
-    private string number = "";
     private string movieName = "";
     private string hallName = "";
 
@@ -75,11 +69,10 @@
     {
         session.Movie = dataBase.FindByMovieName(movieName);
         session.Hall = dataBase.FindByHallName(hallName);
-        if (session.Movie != null && session.Hall != null && number != "")
+        if (session.Movie != null && session.Hall != null)
         {
             dataBase.CurrentSession = new Session()
             {
-                SessionNumber = number,
                 Time = time,
                 Movie = session.Movie,
                 Hall = session.Hall,
@@ -89,14 +82,14 @@
         }
         else
         {
-            JS.InvokeVoidAsync("alert", "Данные введены неверно");
+            JS.InvokeVoidAsync("alert", "Для создания нового сеанса все поля должны быть заполнены");
         }
     }
 
     protected override async Task OnInitializedAsync()
     {
         await GetPageName();
-        time = DateTime.Now;
+        //time = DateTime.Now;
     }
 
     public async Task GetPageName()
