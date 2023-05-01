@@ -13,8 +13,10 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<PagesList>();
 builder.Services.AddSingleton<DataBase>();
-builder.Services.AddScoped<ILocalStorageService, LocalStorageService>();
 builder.Services.AddSingleton<Movie>();
+builder.Services.AddSingleton<Session>();
+builder.Services.AddScoped<ILocalStorageService, LocalStorageService>();
+builder.Services.AddSingleton<FileSystemService>();
 builder.Services.AddMudServices();
 builder.Services.AddResponseCompression(opts =>
 {

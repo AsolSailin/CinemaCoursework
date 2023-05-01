@@ -10,6 +10,9 @@ namespace CinemaCoursework.Data
         public ObjectId Id { get; set; }
         [BsonIgnoreIfDefault]
         [BsonIgnoreIfNull]
+        public string? Poster { get; set; }
+        [BsonIgnoreIfDefault]
+        [BsonIgnoreIfNull]
         public string? Name { get; set; }
         [BsonIgnoreIfDefault]
         [BsonIgnoreIfNull]
@@ -31,6 +34,12 @@ namespace CinemaCoursework.Data
         public string? Description { get; set; }
         [BsonIgnoreIfDefault]
         [BsonIgnoreIfNull]
-        public int Price { get; set; }
+        public int Price2D { get; set; }
+        [BsonIgnoreIfDefault]
+        [BsonIgnoreIfNull]
+        public int Price3D { get; set; }
+        [BsonIgnoreIfDefault]
+        [BsonIgnoreIfNull]
+        public int PriceVIP { get; set; }
     }
 }

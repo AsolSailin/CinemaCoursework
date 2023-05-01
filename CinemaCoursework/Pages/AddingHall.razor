@@ -22,7 +22,7 @@
     .button {
         position: absolute;
         left: 27%;
-        height: 25%;
+        height: 2em;
         width: 35%;
         background: #9F4FF9;
         border-radius: 15px;
@@ -40,11 +40,11 @@
     <table>
         <tr>
             <td><label class="lbl">Название зала:</label></td>
-            <td><input class="field" id="hall" type="text" @bind-value="@hallName"></td>
+            <td><input class="field" id="hall_name" type="text" @bind-value="@hallName"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
-            <td><button class="button" @onclick="Create">Создать киносеанс</button><br /></td>
+            <td><button class="button" @onclick="Create">Создать зал</button><br /></td>
         </tr>
     </table>
 </div>
@@ -77,7 +77,7 @@
 
     public async Task GetPageName()
     {
-        pageList.PageName = "AddingHall";
+        pageList.PageName = "TicketRefund";
         await base.OnInitializedAsync();
     }
 }

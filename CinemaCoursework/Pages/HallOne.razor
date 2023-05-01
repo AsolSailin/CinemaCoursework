@@ -1,6 +1,9 @@
 ﻿@page "/hall_one"
 @using CinemaCoursework.Data
+@using CinemaCoursework.Services
 @inject PagesList pageList
+@inject DataBase dataBase
+@inject Session session
 
 <PageTitle>2D hall</PageTitle>
 
@@ -76,99 +79,71 @@
 <div class="table">
     <table>
         <tr>
-            <td><button class="button" @*@onclick="LogIn" *@>Купить билет</button></td>
-            <td><button class="placeOne" disabled></button></td>
+            <td><button class="button" @onclick="Buy">Купить билет</button></td>
+            <td><button class="placeOne"></button></td>
             <td><label> - место</label></td>
-            <td><button class="placeTwo" disabled></button></td>
+            <td><button class="placeTwo"></button></td>
             <td><label> - комфорт</label></td>
         </tr>
     </table>
 </div>
 
 <div class="block">
-    <table>
-        <tr>
-            <td><label>1</label></td>
-            <td><button class="buttonOne">1</button></td>
-            <td><button class="buttonOne">2</button></td>
-            <td><button class="buttonOne">3</button></td>
-            <td><button class="buttonOne">4</button></td>
-            <td><button class="buttonOne">5</button></td>
-            <td><button class="buttonOne">6</button></td>
-            <td><button class="buttonOne">7</button></td>
-            <td><button class="buttonOne">8</button></td>
-            <td><button class="buttonOne">9</button></td>
-            <td><button class="buttonOne">10</button></td>
-            <td><label>1</label></td>
-        </tr>
-        <tr><td><label></label></td></tr>
-        <tr>
-            <td><label>2</label></td>
-            <td><button class="buttonOne">1</button></td>
-            <td><button class="buttonOne">2</button></td>
-            <td><button class="buttonOne">3</button></td>
-            <td><button class="buttonOne">4</button></td>
-            <td><button class="buttonOne">5</button></td>
-            <td><button class="buttonOne">6</button></td>
-            <td><button class="buttonOne">7</button></td>
-            <td><button class="buttonOne">8</button></td>
-            <td><button class="buttonOne">9</button></td>
-            <td><button class="buttonOne">10</button></td>
-            <td><label>2</label></td>
-        </tr>
-        <tr><td><label></label></td></tr>
-        <tr>
-            <td><label>3</label></td>
-            <td><button class="buttonOne">1</button></td>
-            <td><button class="buttonOne">2</button></td>
-            <td><button class="buttonTwo">3</button></td>
-            <td><button class="buttonTwo">4</button></td>
-            <td><button class="buttonTwo">5</button></td>
-            <td><button class="buttonTwo">6</button></td>
-            <td><button class="buttonTwo">7</button></td>
-            <td><button class="buttonTwo">8</button></td>
-            <td><button class="buttonOne">9</button></td>
-            <td><button class="buttonOne">10</button></td>
-            <td><label>3</label></td>
-        </tr>
-        <tr><td><label></label></td></tr>
-        <tr>
-            <td><label>4</label></td>
-            <td><button class="buttonOne">1</button></td>
-            <td><button class="buttonOne">2</button></td>
-            <td><button class="buttonTwo">3</button></td>
-            <td><button class="buttonTwo">4</button></td>
-            <td><button class="buttonTwo">5</button></td>
-            <td><button class="buttonTwo">6</button></td>
-            <td><button class="buttonTwo">7</button></td>
-            <td><button class="buttonTwo">8</button></td>
-            <td><button class="buttonOne">9</button></td>
-            <td><button class="buttonOne">10</button></td>
-            <td><label>4</label></td>
-        </tr>
-        <tr><td><label></label></td></tr>
-        <tr>
-            <td><label>5</label></td>
-            <td><button class="buttonOne">1</button></td>
-            <td><button class="buttonOne">2</button></td>
-            <td><button class="buttonTwo">3</button></td>
-            <td><button class="buttonTwo">4</button></td>
-            <td><button class="buttonTwo">5</button></td>
-            <td><button class="buttonTwo">6</button></td>
-            <td><button class="buttonTwo">7</button></td>
-            <td><button class="buttonTwo">8</button></td>
-            <td><button class="buttonOne">9</button></td>
-            <td><button class="buttonOne">10</button></td>
-            <td><label>5</label></td>
-        </tr>
-    </table>
+    @foreach (var place in session.Hall.Places)
+    {
+        <button class="buttonOne" @onclick="() => Place(place.Key)">@place.Key</button>
+        count++;
+        @if (count == 10)
+        {
+            <br /> <br />
+            count = 0;
+        }
+    }
 </div>
 
-@code {
+<label>Ваше место: @place</label>
 
+@*<div class="block">
+    @foreach ( var place in hall.Places)
+    {
+        @if(GetCount() == 0)
+        {
+            <label>@place.Row</label>
+        }
+        <button class="buttonOne" @onclick="() => Place(place.Row, place.PlaceNumber)">@place.PlaceNumber</button>
+        @if(GetCount() == 19)
+        {
+            <label>@place.Row</label>
+            <br/><br/>
+            count = 0;
+        }
+    }
+</div>*@
+
+@code {
+    int count = 0, rowCount = 0; 
+    string place = "";
+
+    public int GetCount()
+    {
+        return count++;
+    }
+
+    public void Buy()
+    {
+        session.Hall.Places[place] = "true";
+        Console.WriteLine(session.Id);
+        dataBase.SessionReplace(session.Id, session);
+    }
+
+    public void Place(string placeNumber)
+    {
+        place = placeNumber;
+    }
 
     protected override async Task OnInitializedAsync()
     {
+        session = dataBase.FindSessionByMovieName(dataBase.CurrentMovie);
         await GetPageName();
     }
 

@@ -1,5 +1,8 @@
 ﻿using CinemaCoursework.Data;
+using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB.Driver.GridFS;
+using static MudBlazor.Icons;
 
 namespace CinemaCoursework.Services
 {
@@ -74,14 +77,61 @@ namespace CinemaCoursework.Services
             return hall;
         }
 
-        public Session FindBySessionName(int number)
+        public Session FindSessionByMovieName(Movie movie)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
             var collection = database.GetCollection<Session>("SessionList");
-            var session = collection.Find(x => x.SessionNumber == number).FirstOrDefault();
+            var session = collection.Find(x => x.Movie == movie).FirstOrDefault();
 
             return session;
+        }
+
+        //Replace
+        public void UserReplace(string login, User user)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("CinemaCourseworkDatabase");
+            var collection = database.GetCollection<User>("UserList");
+            collection.ReplaceOne(x => x.Login == login, user);
+        }
+
+        public void MovieReplace(string poster, Movie movie)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("CinemaCourseworkDatabase");
+            var collection = database.GetCollection<Movie>("MovieList");
+            collection.ReplaceOne(x => x.Poster == poster, movie);
+        }
+
+        public void SessionReplace(ObjectId id, Session session)
+        {
+            /*var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("CinemaCourseworkDatabase");
+            var collection = database.GetCollection<Session>("SessionList");
+            var filter = Builders<Session>.Filter.Eq("Id", id);
+            collection.ReplaceOne(filter, session);*/
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("CinemaCourseworkDatabase");
+            var collection = database.GetCollection<Session>("SessionList");
+            collection.ReplaceOne(x => x.Id == id, session);
+        }
+
+        //Get
+        public List<Movie> GetMovieList()
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("CinemaCourseworkDatabase");
+            var collection = database.GetCollection<Movie>("MovieList");
+            var movies = collection.Find(x => true).ToList();
+            var movieList = new List<Movie>();
+
+            foreach (var m in movies)
+            {
+                movieList.Add(m);
+            }
+
+            return movieList;
         }
     }
 }

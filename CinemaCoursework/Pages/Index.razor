@@ -3,81 +3,59 @@
 @using CinemaCoursework.Services
 @inject PagesList pageList
 @inject DataBase dataBase
-@inject IJSRuntime JS
+@inject Movie movie
+@inject NavigationManager navigation
 
-<PageTitle>Adding hall</PageTitle>
+<PageTitle>Cinema</PageTitle>
 
 <style type="text/css">
-    .lbl {
+    .imgOne {
+        width: 90%;
+        border-radius: 15%;
+        display: block;
+    }
+
+    p {
+        text-align: center;
+        font-weight: 700;
         font-size: 23px;
-    }
-
-    .field {
-        width: 85%;
-        background: #9F4FF9;
-        border-radius: 20px;
-        font-size: 20px;
-    }
-
-    .button {
-        position: absolute;
-        left: 27%;
-        height: 2em;
-        width: 35%;
-        background: #9F4FF9;
-        border-radius: 15px;
-        font-size: 23px;
-    }
-
-    .block {
-        position: absolute;
-        left: 48%;
-        top: 40%;
+        color: black;
     }
 </style>
 
-<div class="block">
-    <table>
-        <tr>
-            <td><label class="lbl">Название зала:</label></td>
-            <td><input class="field" id="hall" type="text" @bind-value="@hallName"></td>
-        </tr>
-        <tr><td><label></label></td></tr>
-        <tr>
-            <td><button class="button" @onclick="Create">Создать зал</button><br /></td>
-        </tr>
-    </table>
-</div>
+<MudGrid Spacing="@spacing" Justify="Justify.Center">
+    @foreach (var m in movies)
+    {
+        <MudItem>
+            <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
+                <a href="/" @onclick="() => GetMovie(m)">
+                    <img class="imgOne" src="images/@m.Poster" />
+                    <p>@m.Name</p>
+                </a>
+            </MudPaper>
+        </MudItem>
+    }
+</MudGrid>
 
 @code {
-    private Hall hall = new Hall();
-    private string hallName = "";
+    public int spacing { get; set; } = 5;
+    public List<Movie> movies = new List<Movie>();
 
-    public void Create()
+    public void GetMovie(Movie m)
     {
-        if(hallName != "")
-        {
-            dataBase.CurrentHall = new Hall()
-            {
-                Name = hallName
-            };
-
-            dataBase.AddHallToDataBase(dataBase.CurrentHall);
-        }
-        else
-        {
-            JS.InvokeVoidAsync("alert", "Данные введены неверно");
-        }
+        dataBase.CurrentMovie = m;
+        navigation.NavigateTo("/movie_info");
     }
 
     protected override async Task OnInitializedAsync()
     {
+        movies = dataBase.GetMovieList();
         await GetPageName();
     }
 
     public async Task GetPageName()
     {
-        pageList.PageName = "TicketRefund";
+        pageList.PageName = "MovieInfo";
         await base.OnInitializedAsync();
     }
 }

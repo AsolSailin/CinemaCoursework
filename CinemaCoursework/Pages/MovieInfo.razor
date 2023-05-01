@@ -4,6 +4,7 @@
 @inject PagesList pageList
 @inject DataBase dataBase
 @inject Movie movie
+@inject NavigationManager navigation
 
 <PageTitle>Movie info</PageTitle>
 
@@ -57,7 +58,7 @@
 <div class="tableOne">
     <table>
         <tr>
-            <td><img src="/images/cheburashka.jpeg" /></td>
+            <td><img class="imgOne" src="images/@dataBase.CurrentMovie?.Poster" /></td>
         </tr>
     </table>
 </div>
@@ -111,13 +112,11 @@
 @code {
     public void Buy()
     {
-        
+        navigation.NavigateTo("/hall_one");
     }
 
     protected override async Task OnInitializedAsync()
     {
-        movie.Name = "Чебурашка";
-        dataBase.CurrentMovie = dataBase.FindByMovieName(movie.Name);
         await GetPageName();
     }
 

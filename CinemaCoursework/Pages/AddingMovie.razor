@@ -3,6 +3,7 @@
 @using CinemaCoursework.Services
 @inject PagesList pageList
 @inject DataBase dataBase
+@inject FileSystemService fss
 
 <PageTitle>Adding movie</PageTitle>
 
@@ -69,13 +70,28 @@
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
+            <td><label class="lblTwo">Цена билета 2D:</label></td>
+            <td><input class="field" id="price_2D" type="text" @bind-value="@movie.Price2D"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lblTwo">Цена билета 3D:</label></td>
+            <td><input class="field" id="price_3D" type="text" @bind-value="@movie.Price3D"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lblTwo">Цена билета VIP:</label></td>
+            <td><input class="field" id="price_VIP" type="text" @bind-value="@movie.PriceVIP"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
             <td><label class="lblTwo">Описание:</label></td>
             <td><textarea rows="10" class="field" id="description" type="text" @bind="@movie.Description" /></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
-            <td><label class="lblTwo">Цена билета:</label></td>
-            <td><input class="field" id="duration" type="text" @bind-value="@movie.Price"></td>
+            <td><label class="lblTwo">Постер:</label></td>
+            <InputFile OnChange="@(async(e) => await LoadFiles(e))" multiple />
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
@@ -86,6 +102,20 @@
 
 @code {
     private Movie movie = new Movie();
+    List<IBrowserFile> loadedFiles = new List<IBrowserFile>();
+
+    private async Task LoadFiles(InputFileChangeEventArgs e)
+    {
+        foreach (var file in e.GetMultipleFiles(e.FileCount))
+        {
+            loadedFiles.Add(file);
+            Stream stream = file.OpenReadStream(5000000000);
+            await fss.UploadImageToDbAsync(stream, file.Name);
+            movie.Poster = file.Name;
+            fss.DownloadToLocal(file.Name);
+            stream.Dispose();
+        }
+    }
 
     public void Save()
     {
@@ -98,7 +128,10 @@
                 Country = movie.Country,
                 Duration = movie.Duration,
                 Description = movie.Description,
-                Price = movie.Price
+                Price2D = movie.Price2D,
+                Price3D = movie.Price3D,
+                PriceVIP = movie.PriceVIP,
+                Poster = movie.Poster
             };
 
         dataBase.AddMovieToDataBase(dataBase.CurrentMovie);
