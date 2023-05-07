@@ -55,8 +55,13 @@
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
-            <td><label class="lblTwo">В ролях:</label></td>
-            <td><input class="field" id="roles" type="text" @bind-value="@movie.Roles"></td>
+            <td><label class="lblTwo">Продюсер:</label></td>
+            <td><input class="field" id="roles" type="text" @bind-value="@movie.Producer"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lblTwo">Сценарий:</label></td>
+            <td><input class="field" id="roles" type="text" @bind-value="@movie.Script"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
@@ -124,7 +129,7 @@
                 Name = movie.Name,
                 Genre = movie.Genre,
                 Regisseur = movie.Regisseur,
-                Roles = movie.Roles,
+                Producer = movie.Producer,
                 Country = movie.Country,
                 Duration = movie.Duration,
                 Description = movie.Description,
@@ -135,5 +140,16 @@
             };
 
         dataBase.AddMovieToDataBase(dataBase.CurrentMovie);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetPageName();
+    }
+
+    public async Task GetPageName()
+    {
+        pageList.PageName = "AddingMovie";
+        await base.OnInitializedAsync();
     }
 }

@@ -60,27 +60,27 @@
         </tr>
         <tr>
             <td><label class="lblTwo">Фамилия:</label></td>
-            <td><input class="field" id="surname" type="text" value="@dataBase.CurrentUser?.Surname"></td>
+            <td><input class="field" style="color: @color" id="surname" type="text" value="@dataBase.CurrentUser?.Surname" disabled="@isDisable"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Имя:</label></td>
-            <td><input class="field" id="name" type="text" value="@dataBase.CurrentUser?.Name"></td>
+            <td><input class="field" style="color: @color" id="name" type="text" value="@dataBase.CurrentUser?.Name" disabled="@isDisable"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Отчество:</label></td>
-            <td><input class="field" id="patronymic" type="text" value="@dataBase.CurrentUser?.Patronymic"></td>
+            <td><input class="field" style="color: @color" id="patronymic" type="text" value="@dataBase.CurrentUser?.Patronymic" disabled="@isDisable"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Номер телефона:</label></td>
-            <td><input class="field" id="phone_number" type="text" value="@dataBase.CurrentUser?.PhoneNumber"></td>
+            <td><input class="field" style="color: @color" id="phone_number" type="text" value="@dataBase.CurrentUser?.PhoneNumber" disabled="@isDisable"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">E-mail:</label></td>
-            <td><input class="field" id="mail" type="text" value="@dataBase.CurrentUser?.EMail"></td>
+            <td><input class="field" style="color: @color" id="mail" type="text" value="@dataBase.CurrentUser?.EMail" disabled="@isDisable"></td>
         </tr>
     </table>
 </div>
@@ -92,12 +92,12 @@
         </tr>
         <tr>
             <td><label class="lblTwo">Логин:</label></td>
-            <td><input class="field" id="login" type="text" value="@dataBase.CurrentUser?.Login"></td>
+            <td><input class="field" style="color: @color" id="login" type="text" value="@dataBase.CurrentUser?.Login" disabled="@isDisable"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Пароль:</label></td>
-            <td><input class="field" id="password" type="password" value="@dataBase.CurrentUser?.Password"></td>
+            <td><input class="field" style="color: @color" id="password" type="password" value="@dataBase.CurrentUser?.Password" disabled="@isDisable"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr><td><label></label></td></tr>
@@ -113,10 +113,13 @@
 
 @code {
     private User user = new User();
+    private bool isDisable = true;
+    private string color = "";
 
     public void Red()
     {
-        navigation.NavigateTo("/editing");
+        isDisable = false;
+        color = "#cccccc";
     }
 
     protected override async Task OnInitializedAsync()

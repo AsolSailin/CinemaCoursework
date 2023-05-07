@@ -40,17 +40,17 @@
     <table>
         <tr>
             <td><label class="lbl">Название фильма:</label></td>
-            <td><input class="field" id="name" type="text" @bind-value="@movieName"></td>
+            <td><input class="field" id="movie_name" type="text" @bind-value="@movieName"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lbl">Название зала:</label></td>
-            <td><input class="field" id="hall" type="text" @bind-value="@hallName"></td>
+            <td><input class="field" id="hall_name" type="text" @bind-value="@hallName"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lbl">Дата показа:</label></td>
-            <td><input class="field" type="datetime" @bind-value="@time"></td>
+            <td><input class="field" id="time"  type="datetime" @bind-value="@time"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
@@ -89,7 +89,7 @@
     protected override async Task OnInitializedAsync()
     {
         await GetPageName();
-        //time = DateTime.Now;
+        time = DateTime.Now;
     }
 
     public async Task GetPageName()

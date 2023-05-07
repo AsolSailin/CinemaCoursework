@@ -96,6 +96,10 @@
                 JS.InvokeVoidAsync("alert", "Неверный логин или пароль");
             }
         }
+        else
+        {
+            JS.InvokeVoidAsync("alert", "Для входа введите логин и пароль");
+        }
     }
 
     protected override async Task OnInitializedAsync()

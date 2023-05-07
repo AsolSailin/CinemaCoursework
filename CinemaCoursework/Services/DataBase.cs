@@ -106,11 +106,6 @@ namespace CinemaCoursework.Services
 
         public void SessionReplace(ObjectId id, Session session)
         {
-            /*var client = new MongoClient("mongodb://localhost");
-            var database = client.GetDatabase("CinemaCourseworkDatabase");
-            var collection = database.GetCollection<Session>("SessionList");
-            var filter = Builders<Session>.Filter.Eq("Id", id);
-            collection.ReplaceOne(filter, session);*/
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
             var collection = database.GetCollection<Session>("SessionList");

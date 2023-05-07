@@ -32,10 +32,10 @@
         pageList.PageName == "HallOne" || 
         pageList.PageName == "HallTwo" || 
         pageList.PageName == "HallThree" || 
-        pageList.PageName == "Tickets" || 
         pageList.PageName == "TicketBuy" || 
-        pageList.PageName == "TicketRefund" || 
-        pageList.PageName == "Cinema")
+        pageList.PageName == "TicketRefund" ||
+        pageList.PageName == "AddingMovie" ||
+        pageList.PageName == "AddingMovieSession")
         {
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
@@ -66,23 +66,10 @@
                 </NavLink>
             </div>
         }
-        else if (pageList.PageName == "Tickets")
-        {
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                    <span class="oi oi-book" aria-hidden="true"></span> Каталог
-                </NavLink>
-            </div>
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
-                    <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
-                </NavLink>
-            </div>
-        }
         else if (pageList.PageName == "AdminAccount")
         {
             <div class="nav-item px-3">
-                <NavLink class="nav-link" href="/cinema" Match="NavLinkMatch.All">
+                <NavLink class="nav-link" href="/cinema_info" Match="NavLinkMatch.All">
                     <span class="oi oi-home" aria-hidden="true"></span> Кинотеатр
                 </NavLink>
             </div>
@@ -100,8 +87,13 @@
         else if (pageList.PageName == "CinemaInfo")
         {
             <div class="nav-item px-3">
-                <NavLink class="nav-link" href="/halls" Match="NavLinkMatch.All">
-                    <span class="oi oi-home" aria-hidden="true"></span> Залы
+                <NavLink class="nav-link" href="/adding_movie" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Добавить фильм
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/adding_movie_session" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Добавить сеанс
                 </NavLink>
             </div>
             <div class="nav-item px-3">
@@ -115,51 +107,16 @@
                 </NavLink>
             </div>
         }
-        else if (pageList.PageName == "Halls")
+        else if (pageList.PageName == "Chat")
         {
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="/hall_2d" Match="NavLinkMatch.All">
-                    <span class="oi oi-home" aria-hidden="true"></span> Зал 1
-                </NavLink>
-            </div>
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="/hall_two" Match="NavLinkMatch.All">
-                    <span class="oi oi-home" aria-hidden="true"></span> Зал 2
-                </NavLink>
-            </div>
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="/hall_three" Match="NavLinkMatch.All">
-                    <span class="oi oi-home" aria-hidden="true"></span> Зал 3
-                </NavLink>
-            </div>
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="/cinema" Match="NavLinkMatch.All">
-                    <span class="oi oi-home" aria-hidden="true"></span> Кинотеатр
-                </NavLink>
-            </div>
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                     <span class="oi oi-book" aria-hidden="true"></span> Каталог
-                </NavLink>
-            </div>
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
-                    <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
                 </NavLink>
             </div>
         }
-        else if (pageList.PageName == "ForChildren")
+        else if (pageList.PageName == "MoviesList")
         {
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="/cinema" Match="NavLinkMatch.All">
-                    <span class="oi oi-home" aria-hidden="true"></span> Кинотеатры
-                </NavLink>
-            </div>
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                    <span class="oi oi-book" aria-hidden="true"></span> Каталог
-                </NavLink>
-            </div>
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
                     <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
@@ -169,18 +126,8 @@
         else
         {
             <div class="nav-item px-3">
-                <NavLink class="nav-link" href="/cinema" Match="NavLinkMatch.All">
-                    <span class="oi oi-home" aria-hidden="true"></span> Кинотеатры
-                </NavLink>
-            </div>
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="/for_children" Match="NavLinkMatch.All">
-                    <span class="oi oi-people" aria-hidden="true"></span> Детям
-                </NavLink>
-            </div>
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
-                    <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
+                <NavLink class="nav-link" Match="NavLinkMatch.All">
+                    <span class="oi oi-comment-square" aria-hidden="true"></span>
                 </NavLink>
             </div>
         }
