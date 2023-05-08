@@ -3,7 +3,7 @@
 @using CinemaCoursework.Services
 @inject PagesList pageList
 @inject DataBase dataBase
-@inject Session session
+@*@inject Session session*@
 @inject IJSRuntime JS
 
 <PageTitle>2D hall</PageTitle>
@@ -78,7 +78,7 @@
 </style>
 
 <div class="block">
-    @foreach (var p in session.Hall.Places)
+    @foreach (var p in dataBase.CurrentSession.Hall.Places)
     {
         @if (p.Value == "false")
         {
@@ -110,10 +110,10 @@
     {
         if (place != "")
         {
-            session.Hall.Places[place] = "true";
+            dataBase.CurrentSession.Hall.Places[place] = "true";
         }
         
-        dataBase.SessionReplace(session.Id, session);
+        dataBase.SessionReplace(dataBase.CurrentSession.Id, dataBase.CurrentSession);
     }
 
     public void Place(string placeNumber)
@@ -128,7 +128,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        session = dataBase.FindSessionByMovieName(dataBase.CurrentMovie);
+        dataBase.CurrentSession = dataBase.FindSessionByMovieName(dataBase.CurrentMovie);
         await GetPageName();
     }
 

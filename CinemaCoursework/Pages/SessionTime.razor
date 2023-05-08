@@ -1,0 +1,59 @@
+﻿@page "/session_time"
+@using CinemaCoursework.Data
+@using CinemaCoursework.Services
+@inject PagesList pageList
+@inject DataBase dataBase
+@inject Movie movie
+@inject NavigationManager navigation
+
+<PageTitle>Sessions time</PageTitle>
+
+<MudButtonGroup Style="border-color:#9F4FF9;" Size="Size.Large" Variant="Variant.Outlined">
+    @foreach (var d in dates.Distinct().ToList())
+    {
+        <MudButton @onclick="() => GetTime(d)">@d</MudButton>
+    }
+</MudButtonGroup>
+
+@foreach (var d in dates.Distinct().ToList())
+{
+    <a @onclick="() => GetTime(d)">
+        <p>@d</p>
+    </a>
+}
+
+@foreach (var t in times)
+{
+    <a href="/hall_one">
+        <p>@t</p>
+    </a>
+}
+
+@code {
+    public List<Session> sessions = new List<Session>();
+    public List<string> dates = new List<string>();
+    public List<string> times = new List<string>();
+
+    public void GetTime(string date)
+    {
+        times = dataBase.GetSessionTimeList(date);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        sessions = dataBase.GetSessionList(dataBase.CurrentMovie);
+
+        foreach(var s in sessions)
+        {
+            dates.Add(s.Time.ToString("dd.MM.yy"));
+        }
+
+        await GetPageName();
+    }
+
+    public async Task GetPageName()
+    {
+        pageList.PageName = "SessionTime";
+        await base.OnInitializedAsync();
+    }
+}

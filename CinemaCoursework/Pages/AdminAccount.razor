@@ -103,6 +103,14 @@
         <tr>
             <td><button class="button" @onclick="Red">Редактировать</button><br /></td>
         </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td>
+                <a @onclick="Color" target=" _blank" style="color: #9F4FF9">
+                    <span class="oi oi-person" aria-hidden="true"></span>
+                </a><br />
+            </td>
+        </tr>
     </table>
 </div>
 
@@ -114,6 +122,11 @@
     public void Red()
     {
         isDisable = false;
+        color = "#cccccc";
+    }
+
+    public void Color()
+    {
         color = "#cccccc";
     }
 

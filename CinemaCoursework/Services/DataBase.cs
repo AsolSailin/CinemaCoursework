@@ -12,6 +12,7 @@ namespace CinemaCoursework.Services
         public Movie? CurrentMovie { get; set; }
         public Hall? CurrentHall { get; set; }
         public Session? CurrentSession { get; set; }
+        
 
         //Add
         public void AddUserToDataBase(User user)
@@ -127,6 +128,38 @@ namespace CinemaCoursework.Services
             }
 
             return movieList;
+        }
+
+        public List<Session> GetSessionList(Movie movie)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("CinemaCourseworkDatabase");
+            var collection = database.GetCollection<Session>("SessionList");
+            var sessions = collection.Find(x => x.Movie == movie).ToList();
+            var sessionList = new List<Session>();
+
+            foreach (var s in sessions)
+            {
+                sessionList.Add(s);
+            }
+
+            return sessionList;
+        }
+
+        public List<string> GetSessionTimeList(string date)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("CinemaCourseworkDatabase");
+            var collection = database.GetCollection<Session>("SessionList");
+            var sessions = collection.Find(x => true).ToList().Where(x => x.Time.ToString("dd.MM.yy") == date);
+            var timeList = new List<string>();
+
+            foreach (var s in sessions)
+            {
+                timeList.Add(s.Time.ToShortTimeString());
+            }
+
+            return timeList;
         }
     }
 }

@@ -26,7 +26,7 @@
     .tableThree {
         position: absolute;
         left: 23%;
-        top: 55%;
+        top: 70%;
     }
 
     .lblOne {
@@ -49,16 +49,16 @@
     }
 
     img {
-        width: 26%;
-        height: 20%;
-        border-radius: 10%;
+        width: 20em;
+        height: 27em;
+        border-radius: 15%;
     }
 </style>
 
 <div class="tableOne">
     <table>
         <tr>
-            <td><img class="imgOne" src="images/@dataBase.CurrentMovie?.Poster" /></td>
+            <td><img src="images/@dataBase.CurrentMovie?.Poster" /></td>
         </tr>
     </table>
 </div>
@@ -79,12 +79,12 @@
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
-            <td><label class="lblTwo">В ролях:</label></td>
+            <td><label class="lblTwo">Продюсер:</label></td>
             <td><label class="lblTwo">@dataBase.CurrentMovie?.Producer</label></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
-            <td><label class="lblTwo">В ролях:</label></td>
+            <td><label class="lblTwo">Сценарий:</label></td>
             <td><label class="lblTwo">@dataBase.CurrentMovie?.Script</label></td>
         </tr>
         <tr><td><label></label></td></tr>
@@ -117,7 +117,7 @@
 @code {
     public void Buy()
     {
-        navigation.NavigateTo("/hall_one");
+        navigation.NavigateTo("/session_time");
     }
 
     protected override async Task OnInitializedAsync()
