@@ -53,6 +53,13 @@
         height: 27em;
         border-radius: 15%;
     }
+
+    .button {
+        background: #9F4FF9;
+        border-radius: 15px;
+        font-size: 23px;
+        height: 20%;
+    }
 </style>
 
 <div class="tableOne">
@@ -115,6 +122,20 @@
 </div>
 
 @code {
+    public List<Session> sessions = new List<Session>();
+    public List<string> dates = new List<string>();
+    public List<string> times = new List<string>();
+
+    public void GetTime(string date)
+    {
+        times = dataBase.GetSessionTimeList(date);
+    }
+
+    public void GetHall(string time)
+    {
+        navigation.NavigateTo("/hall_one");
+    }
+
     public void Buy()
     {
         navigation.NavigateTo("/session_time");
@@ -122,6 +143,13 @@
 
     protected override async Task OnInitializedAsync()
     {
+        sessions = dataBase.GetSessionList(dataBase.CurrentMovie);
+
+        foreach (var s in sessions)
+        {
+            dates.Add(s.Time.ToString("dd.MM.yy"));
+        }
+
         await GetPageName();
     }
 

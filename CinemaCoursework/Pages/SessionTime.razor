@@ -8,26 +8,40 @@
 
 <PageTitle>Sessions time</PageTitle>
 
-<MudButtonGroup Style="border-color:#9F4FF9;" Size="Size.Large" Variant="Variant.Outlined">
-    @foreach (var d in dates.Distinct().ToList())
-    {
-        <MudButton @onclick="() => GetTime(d)">@d</MudButton>
+<style>
+    img {
+        width: 30em;
+        height: 37em;
+        border-radius: 15%;
     }
-</MudButtonGroup>
 
-@foreach (var d in dates.Distinct().ToList())
-{
-    <a @onclick="() => GetTime(d)">
-        <p>@d</p>
-    </a>
-}
+    table td{
+        vertical-align:top;
+        font-weight: bold;
+        width: 70%;
+    }
+</style>
 
-@foreach (var t in times)
-{
-    <a href="/hall_one">
-        <p>@t</p>
-    </a>
-}
+<div class="tableOne">
+    <table>
+        <tr>
+            <td>
+                @foreach (var d in dates.Distinct().ToList())
+                {
+                    <label>@d</label> <br/>
+                    <MudButtonGroup Style="background:#9F4FF9;" Size="Size.Small" Variant="Variant.Outlined">
+                    @foreach (var t in dataBase.GetSessionTimeList(d))
+                    {
+                        <MudButton @onclick="() => GetHall(t)">@t</MudButton>
+                    }
+                    </MudButtonGroup>
+                    <br/><br/>
+                }
+            </td>
+            <td><img src="images/@dataBase.CurrentMovie?.Poster" /></td>
+        </tr>
+    </table>
+</div>
 
 @code {
     public List<Session> sessions = new List<Session>();
@@ -37,6 +51,11 @@
     public void GetTime(string date)
     {
         times = dataBase.GetSessionTimeList(date);
+    }
+
+    public void GetHall(string time)
+    {
+        navigation.NavigateTo("/hall_one");
     }
 
     protected override async Task OnInitializedAsync()

@@ -5,8 +5,8 @@
 
 <PageTitle>CinemaCoursework</PageTitle>
 
-@*<div style="background-image:none;background-color:#A68EFE;" class="page">
-    <div style="background-image:none;background-color:black;" class="sidebar">
+<div style="background-image:image(/images/logo.png);background-color:#A68EFE;" class="page">
+    <div style="background-image:none;background:black;" class="sidebar">
         <NavMenu @ref="@_navMenu"/>
     </div>
 
@@ -42,54 +42,23 @@
             @Body
         </article>
     </main>
-</div>*@
+</div>
 
-<MudLayout Style="background-color:#A68EFE">
-    <MudAppBar Style="background-color:#9F4FF9;" Elevation="1">
+@*<MudLayout>
+    <MudAppBar Color="Color.Primary" Elevation="1">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())"/>
         <MudSpacer/>
         <LoginTopBar/>
     </MudAppBar>
-    <MudDrawer Style="background-color:#000000" @bind-Open="@_drawerOpen" Elevation="2">
+    <MudDrawer @bind-Open="@_drawerOpen" Elevation="2">
         <NavMenu/>
     </MudDrawer>
     <MudMainContent>
         <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge">
-            <main>
-        <div style="background-image:none;background-color:#A68EFE;" class="top-row px-4">
-            @if (dataBase.CurrentUser != null)
-            {
-                if (dataBase.CurrentUser.Role == "Client")
-                {
-                    <a href="/client_account" target="_blank" style="color: #9F4FF9">
-                        <span class="oi oi-person" aria-hidden="true"></span>
-                    </a>
-                }
-                else if (dataBase.CurrentUser.Role == "Admin")
-                {
-                    <a href="/admin_account" target="_blank" style="color: #9F4FF9">
-                        <span class="oi oi-person" aria-hidden="true"></span>
-                    </a>
-                }
-                <a @onclick="LogOut" href="/" target=" _blank" style="color: #9F4FF9">
-                    <span class="oi oi-account-login" aria-hidden="true"></span>
-                </a>
-            }
-            else
-            {
-                <a href="/authorization" target="_blank" style="color: #9F4FF9">
-                    <span class="oi oi-person" aria-hidden="true"></span>
-                </a>
-            }
-        </div>
-
-        <article class="content px-4">
             @Body
-        </article>
-            </main>
         </MudContainer>
     </MudMainContent>
-</MudLayout>
+</MudLayout>*@
 
 <MudThemeProvider />
 <MudDialogProvider />
@@ -97,12 +66,12 @@
 
 @code {
     private NavMenu? _navMenu;
-    bool _drawerOpen = false;
+    //bool _drawerOpen = true;
 
-    void DrawerToggle()
-    {
-        _drawerOpen = !_drawerOpen;
-    }
+    //void DrawerToggle()
+    //{
+    //    _drawerOpen = !_drawerOpen;
+    //}
 
     public void LogOut()
     {
