@@ -32,13 +32,13 @@ namespace CinemaCoursework.Services
             collection.InsertOne(movie);
         }
 
-        /*public void AddHallToDataBase(Hall hall)
+        public void AddHallToDataBase(Hall hall)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
             var collection = database.GetCollection<Hall>("HallList");
             collection.InsertOne(hall);
-        }*/
+        }
 
         public void AddSessionToDataBase(Session session)
         {

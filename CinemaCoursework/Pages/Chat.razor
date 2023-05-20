@@ -15,15 +15,17 @@
     }
 
     .field {
-        width: 85%;
+        width: 700px;
+        height: 200px;
         background: #9F4FF9;
         border-radius: 20px;
         font-size: 20px;
+        padding: 7px;
     }
 
     button {
-        height: 5%;
-        width: 7%;
+        height: 50px;
+        width: 100px;
         background: #9F4FF9;
         border-radius: 15px;
         font-size: 20px;
@@ -34,10 +36,9 @@
     <table>
         <tr>
             <td>
-                <label class="lblTwo">
-                    Message:
-                    <input class="field" @bind="messageInput" />
-                </label>
+                <label class="lblTwo"> Message:</label>
+                <br/>
+                <textarea rows="10" class="field" id="description" type="text" @bind="messageInput" />
             </td>
         </tr>
         <tr><td><label></label></td></tr>
@@ -45,6 +46,7 @@
 </div>
 
 <button @onclick="Send" disabled="@(!IsConnected)">Send</button>
+<br/><br/>
 
 <ul id="messagesList">
     @foreach (var message in messages)

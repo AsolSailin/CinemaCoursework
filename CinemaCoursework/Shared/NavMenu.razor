@@ -1,5 +1,7 @@
 ﻿@using CinemaCoursework.Data
+@using CinemaCoursework.Services
 @inject PagesList pageList
+@inject DataBase dataBase
 
 <div class="bottom-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
@@ -21,11 +23,14 @@
                     <span class="oi oi-book" aria-hidden="true"></span> Каталог
                 </NavLink>
             </div>
+            @if (dataBase.CurrentUser != null)
+            {
                 <div class="nav-item px-3">
-                <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
-                    <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
-                </NavLink>
-            </div>
+                    <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
+                        <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
+                    </NavLink>
+                </div>
+            }
         }
         else if (pageList.PageName == "Authorization" || 
         pageList.PageName == "MovieInfo" || 
@@ -42,11 +47,14 @@
                     <span class="oi oi-book" aria-hidden="true"></span> Каталог
                 </NavLink>
             </div>
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
-                    <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
-                </NavLink>
-            </div>
+            @if (dataBase.CurrentUser != null)
+            {
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
+                        <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
+                    </NavLink>
+                </div>
+            }
         }
         else if (pageList.PageName == "ClientAccount")
         {
@@ -60,11 +68,14 @@
                     <span class="oi oi-book" aria-hidden="true"></span> Каталог
                 </NavLink>
             </div>
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
-                    <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
-                </NavLink>
-            </div>
+            @if (dataBase.CurrentUser != null)
+            {
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
+                        <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
+                    </NavLink>
+                </div>
+            }
         }
         else if (pageList.PageName == "AdminAccount")
         {
@@ -78,11 +89,14 @@
                     <span class="oi oi-book" aria-hidden="true"></span> Каталог
                 </NavLink>
             </div>
+            @if (dataBase.CurrentUser != null)
+            {
                 <div class="nav-item px-3">
-                <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
-                    <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
-                </NavLink>
-            </div>
+                    <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
+                        <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
+                    </NavLink>
+                </div>
+            }
         }
         else if (pageList.PageName == "CinemaInfo")
         {
@@ -101,11 +115,14 @@
                     <span class="oi oi-book" aria-hidden="true"></span> Каталог
                 </NavLink>
             </div>
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
-                    <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
-                </NavLink>
-            </div>
+            @if (dataBase.CurrentUser != null)
+            {
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
+                        <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
+                    </NavLink>
+                </div>
+            }
         }
         else if (pageList.PageName == "Chat")
         {
@@ -117,25 +134,30 @@
         }
         else if (pageList.PageName == "MoviesList")
         {
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
-                    <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
-                </NavLink>
-            </div>
+            @if (dataBase.CurrentUser != null)
+            {
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
+                        <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
+                    </NavLink>
+                </div>
+            }
         }
         else
         {
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" Match="NavLinkMatch.All">
-                    <span class="oi oi-comment-square" aria-hidden="true"></span>
-                </NavLink>
-            </div>
+            @if (dataBase.CurrentUser != null)
+            {
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
+                        <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
+                    </NavLink>
+                </div>
+            }
         }
     </nav>
 </div>
 
 @code {
-
     public bool Update
     {
         get => true;

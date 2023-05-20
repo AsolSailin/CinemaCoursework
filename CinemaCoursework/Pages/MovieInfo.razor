@@ -11,20 +11,17 @@
 <style type="text/css">
     .tableOne {
         display: inline-table;
-        position: absolute;
         left: 23%;
         top: 10%;
     }
 
     .tableTwo {
         display: inline-table;
-        position: absolute;
         left: 47%;
         top: 10%;
     }
 
     .tableThree {
-        position: absolute;
         left: 23%;
         top: 70%;
     }
@@ -58,51 +55,51 @@
         background: #9F4FF9;
         border-radius: 15px;
         font-size: 23px;
-        height: 20%;
+        height: 50px;
+        width: 200px;
     }
 </style>
-
-<div class="tableOne">
-    <table>
-        <tr>
-            <td><img src="images/@dataBase.CurrentMovie?.Poster" /></td>
-        </tr>
-    </table>
-</div>
 
 <div class="tableTwo">
     <table>
         <tr>
-            <td><label class="lblOne">@dataBase.CurrentMovie?.Name</label></td>
-        </tr>
-        <tr>
-            <td><label class="lblTwo">Жанр:</label></td>
-            <td><label class="lblTwo">@dataBase.CurrentMovie?.Genre</label></td>
-        </tr>
-        <tr><td><label></label></td></tr>
-        <tr>
-            <td><label class="lblTwo">Режиссер:</label></td>
-            <td><label class="lblTwo">@dataBase.CurrentMovie?.Regisseur</label></td>
-        </tr>
-        <tr><td><label></label></td></tr>
-        <tr>
-            <td><label class="lblTwo">Продюсер:</label></td>
-            <td><label class="lblTwo">@dataBase.CurrentMovie?.Producer</label></td>
-        </tr>
-        <tr><td><label></label></td></tr>
-        <tr>
-            <td><label class="lblTwo">Сценарий:</label></td>
-            <td><label class="lblTwo">@dataBase.CurrentMovie?.Script</label></td>
-        </tr>
-        <tr><td><label></label></td></tr>
-        <tr>
-            <td><label class="lblTwo">Страна:</label></td>
-            <td><label class="lblTwo">@dataBase.CurrentMovie?.Country</label></td>
-        </tr>
-        <tr><td><label></label></td></tr>
-        <tr>
-            <td><label class="lblTwo">Продолжительность:   </label></td>
-            <td><label class="lblTwo">@dataBase.CurrentMovie?.Duration</label></td>
+            <td><img src="images/@dataBase.CurrentMovie?.Poster" /></td>
+            <td>
+                <table style="margin: 23px;">
+                    <tr>
+                        <td><label class="lblOne">@dataBase.CurrentMovie?.Name</label></td>
+                    </tr>
+                    <tr>
+                        <td><label class="lblTwo">Жанр:</label></td>
+                        <td><label class="lblTwo">@dataBase.CurrentMovie?.Genre</label></td>
+                    </tr>
+                    <tr><td><label></label></td></tr>
+                    <tr>
+                        <td><label class="lblTwo">Режиссер:</label></td>
+                        <td><label class="lblTwo">@dataBase.CurrentMovie?.Regisseur</label></td>
+                    </tr>
+                    <tr><td><label></label></td></tr>
+                    <tr>
+                        <td><label class="lblTwo">Продюсер:</label></td>
+                        <td><label class="lblTwo">@dataBase.CurrentMovie?.Producer</label></td>
+                    </tr>
+                    <tr><td><label></label></td></tr>
+                    <tr>
+                        <td><label class="lblTwo">Сценарий:</label></td>
+                        <td><label class="lblTwo">@dataBase.CurrentMovie?.Script</label></td>
+                    </tr>
+                    <tr><td><label></label></td></tr>
+                    <tr>
+                        <td><label class="lblTwo">Страна:</label></td>
+                        <td><label class="lblTwo">@dataBase.CurrentMovie?.Country</label></td>
+                    </tr>
+                    <tr><td><label></label></td></tr>
+                    <tr>
+                        <td><label class="lblTwo">Продолжительность:   </label></td>
+                        <td><label class="lblTwo">@dataBase.CurrentMovie?.Duration</label></td>
+                    </tr>
+                </table>
+            </td>
         </tr>
     </table>
 </div>
@@ -110,8 +107,16 @@
 <div class="tableThree">
     <table>
         <tr>
-            <td><button class="button" @onclick="Buy">Сеансы</button><br /></td>
+            @if(dataBase.CurrentUser.Role == "Admin")
+            {
+                <td><button class="button" @onclick="Buy">Сеансы</button><br /></td>
+            }
+            else
+            {
+                <td><button class="button" @onclick="Buy">Купить билет</button><br /></td>                
+            }
         </tr>
+        <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Описание:</label></td>
         </tr>

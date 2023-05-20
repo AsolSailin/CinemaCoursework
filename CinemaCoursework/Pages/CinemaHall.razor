@@ -3,7 +3,7 @@
 @using CinemaCoursework.Services
 @inject PagesList pageList
 @inject DataBase dataBase
-@*@inject Session session*@
+@inject NavigationManager navigation
 @inject IJSRuntime JS
 
 <PageTitle>Hall</PageTitle>
@@ -11,7 +11,7 @@
 <style>
     .button {
         position: absolute;
-        left: 49%;
+        left: 50%;
         top: 75%;
         height: 10%;
         width: 20%;
@@ -72,7 +72,7 @@
 
     .block {
         position: absolute;
-        left: 43%;
+        left: 44.5%;
         top: 25%;
     }
 </style>
@@ -100,7 +100,7 @@
 
 <button class="button" @onclick="Buy">Купить билет</button>
 
-<label>Ваше место: @place</label>
+<label style="font-size: 30px">Ваше место: @place</label>
 
 @code {
     int count = 0;
@@ -114,6 +114,8 @@
         }
 
         dataBase.SessionReplace(dataBase.CurrentSession.Id, dataBase.CurrentSession);
+
+        navigation.NavigateTo("/ticket_buy");
     }
 
     public void Place(string placeNumber)
