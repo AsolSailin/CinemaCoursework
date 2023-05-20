@@ -107,13 +107,16 @@
 <div class="tableThree">
     <table>
         <tr>
-            @if(dataBase.CurrentUser.Role == "Admin")
+            @if (dataBase.CurrentUser != null)
             {
-                <td><button class="button" @onclick="Buy">Сеансы</button><br /></td>
-            }
-            else
-            {
-                <td><button class="button" @onclick="Buy">Купить билет</button><br /></td>                
+                @if (dataBase.CurrentUser.Role == "Admin")
+                {
+                    <td><button class="button" @onclick="Buy">Сеансы</button><br /></td>
+                }
+                else
+                {
+                    <td><button class="button" @onclick="Buy">Купить билет</button><br /></td>
+                }
             }
         </tr>
         <tr><td><label></label></td></tr>
@@ -121,7 +124,7 @@
             <td><label class="lblTwo">Описание:</label></td>
         </tr>
         <tr>
-            <td><label class="lblTwo">@dataBase.CurrentMovie?.Description</label></td>
+            <td><label class="lblTwo" style="margin-bottom: 23px;">@dataBase.CurrentMovie?.Description</label></td>
         </tr>
     </table>
 </div>

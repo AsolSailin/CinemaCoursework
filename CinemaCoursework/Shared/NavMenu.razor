@@ -11,36 +11,12 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">
-        @if (pageList.PageName == "Registration")
-        {
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="/authorization" Match="NavLinkMatch.All">
-                    <span class="oi oi-person" aria-hidden="true"></span> Авторизация
-                </NavLink>
-            </div>
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                    <span class="oi oi-book" aria-hidden="true"></span> Каталог
-                </NavLink>
-            </div>
-            @if (dataBase.CurrentUser != null)
-            {
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
-                        <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
-                    </NavLink>
-                </div>
-            }
-        }
-        else if (pageList.PageName == "Authorization" || 
+        @if (pageList.PageName == "Authorization" ||
+        pageList.PageName == "Hall" ||
         pageList.PageName == "MovieInfo" || 
-        pageList.PageName == "HallOne" || 
-        pageList.PageName == "HallTwo" || 
-        pageList.PageName == "HallThree" || 
+        pageList.PageName == "SessionTime" || 
         pageList.PageName == "TicketBuy" || 
-        pageList.PageName == "TicketRefund" ||
-        pageList.PageName == "AddingMovie" ||
-        pageList.PageName == "AddingMovieSession")
+        pageList.PageName == "TicketRefund")
         {
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
@@ -56,11 +32,32 @@
                 </div>
             }
         }
-        else if (pageList.PageName == "ClientAccount")
+        else if (pageList.PageName == "AddingMovie")
         {
             <div class="nav-item px-3">
-                <NavLink class="nav-link" href="/ticket_refund" Match="NavLinkMatch.All">
-                    <span class="oi oi-credit-card" aria-hidden="true"></span> Возврат билетов
+                <NavLink class="nav-link" href="/adding_movie_session" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Добавить сеанс
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-book" aria-hidden="true"></span> Каталог
+                </NavLink>
+            </div>
+            @if (dataBase.CurrentUser != null)
+            {
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
+                        <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
+                    </NavLink>
+                </div>
+            }
+        }
+        else if (pageList.PageName == "AddingMovieSession")
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/adding_movie" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Добавить фильм
                 </NavLink>
             </div>
             <div class="nav-item px-3">
@@ -98,6 +95,14 @@
                 </div>
             }
         }
+        else if (pageList.PageName == "Chat")
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-book" aria-hidden="true"></span> Каталог
+                </NavLink>
+            </div>
+        }
         else if (pageList.PageName == "CinemaInfo")
         {
             <div class="nav-item px-3">
@@ -124,16 +129,39 @@
                 </div>
             }
         }
-        else if (pageList.PageName == "Chat")
+        else if (pageList.PageName == "ClientAccount")
         {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/ticket_refund" Match="NavLinkMatch.All">
+                    <span class="oi oi-credit-card" aria-hidden="true"></span> Возврат билетов
+                </NavLink>
+            </div>
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                     <span class="oi oi-book" aria-hidden="true"></span> Каталог
                 </NavLink>
             </div>
+            @if (dataBase.CurrentUser != null)
+            {
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.All">
+                        <span class="oi oi-comment-square" aria-hidden="true"></span> Чат
+                    </NavLink>
+                </div>
+            }
         }
-        else if (pageList.PageName == "MoviesList")
+        else if (pageList.PageName == "Registration")
         {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/authorization" Match="NavLinkMatch.All">
+                    <span class="oi oi-person" aria-hidden="true"></span> Авторизация
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-book" aria-hidden="true"></span> Каталог
+                </NavLink>
+            </div>
             @if (dataBase.CurrentUser != null)
             {
                 <div class="nav-item px-3">
