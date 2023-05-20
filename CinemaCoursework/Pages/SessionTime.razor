@@ -32,7 +32,7 @@
                     <MudButtonGroup Style="background:#9F4FF9;" Size="Size.Small" Variant="Variant.Outlined">
                     @foreach (var t in dataBase.GetSessionTimeList(d))
                     {
-                        <MudButton @onclick="() => GetHall(t)">@t</MudButton>
+                        <MudButton @onclick="() => GetHall(t, d)">@t</MudButton>
                     }
                     </MudButtonGroup>
                     <br/><br/>
@@ -53,9 +53,11 @@
         times = dataBase.GetSessionTimeList(date);
     }
 
-    public void GetHall(string time)
+    public void GetHall(string time, string date)
     {
-        navigation.NavigateTo("/hall_one");
+        string dateTime = date + " " + time;
+        dataBase.CurrentSession = dataBase.FindSessionByDate(dateTime, dataBase.CurrentMovie);
+        navigation.NavigateTo("/hall");
     }
 
     protected override async Task OnInitializedAsync()
@@ -64,7 +66,7 @@
 
         foreach(var s in sessions)
         {
-            dates.Add(s.Time.ToString("dd.MM.yy"));
+            dates.Add(s.Time.ToString("d"));
         }
 
         await GetPageName();

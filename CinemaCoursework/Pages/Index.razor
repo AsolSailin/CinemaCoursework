@@ -3,7 +3,6 @@
 @using CinemaCoursework.Services
 @inject PagesList pageList
 @inject DataBase dataBase
-@inject Movie movie
 @inject NavigationManager navigation
 
 <PageTitle>Cinema</PageTitle>
@@ -44,9 +43,9 @@
     public int spacing { get; set; } = 5;
     public List<Movie> movies = new List<Movie>();
 
-    public void GetMovie(Movie m)
+    public void GetMovie(Movie movie)
     {
-        dataBase.CurrentMovie = m;
+        dataBase.CurrentMovie = movie;
         navigation.NavigateTo("/movie_info");
     }
 

@@ -9,13 +9,14 @@
 <PageTitle>Cinema</PageTitle>
 
 <style type="text/css">
-    .imgOne {
-        width: 90%;
+    img {
+        width: 20em;
+        height: 27em;
         border-radius: 15%;
-        display: block;
     }
 
     p {
+        height: 10em;
         text-align: center;
         font-weight: 700;
         font-size: 23px;
@@ -23,13 +24,15 @@
     }
 </style>
 
+<p style="height: 4.5em;"></p>
+
 <MudGrid Spacing="@spacing" Justify="Justify.Center">
     @foreach (var m in movies)
     {
         <MudItem>
             <MudPaper Height="400px" Width="300px" Class="d-flex align-center justify-center mud-width-full py-8" Style="background-color: #A68EFE; box-shadow: none;">
                 <a href="/" @onclick="() => GetMovie(m)">
-                    <img class="imgOne" src="images/@m.Poster" />
+                    <img src="images/@m.Poster" />
                     <p>@m.Name</p>
                 </a>
             </MudPaper>

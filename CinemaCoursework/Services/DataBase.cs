@@ -9,9 +9,10 @@ namespace CinemaCoursework.Services
     public class DataBase
     {
         public User? CurrentUser { get; set; }
-        public Movie? CurrentMovie { get; set; }
-        public Hall? CurrentHall { get; set; }
+        public Movie? CurrentMovie { get; set; }/*
+        public Hall? CurrentHall { get; set; }*/
         public Session? CurrentSession { get; set; }
+        public string? CurrentTime { get; set; }
         
 
         //Add
@@ -31,13 +32,13 @@ namespace CinemaCoursework.Services
             collection.InsertOne(movie);
         }
 
-        public void AddHallToDataBase(Hall hall)
+        /*public void AddHallToDataBase(Hall hall)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
             var collection = database.GetCollection<Hall>("HallList");
             collection.InsertOne(hall);
-        }
+        }*/
 
         public void AddSessionToDataBase(Session session)
         {
@@ -68,7 +69,7 @@ namespace CinemaCoursework.Services
             return movie;
         }
 
-        public Hall FindByHallName(string name)
+        /*public Hall FindByHallName(string name)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
@@ -84,6 +85,16 @@ namespace CinemaCoursework.Services
             var database = client.GetDatabase("CinemaCourseworkDatabase");
             var collection = database.GetCollection<Session>("SessionList");
             var session = collection.Find(x => x.Movie == movie).FirstOrDefault();
+
+            return session;
+        }*/ 
+
+        public Session FindSessionByDate(string date, Movie movie)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("CinemaCourseworkDatabase");
+            var collection = database.GetCollection<Session>("SessionList");
+            var session = collection.Find(x => x.Movie == movie).ToList().Where(x => x.Time.ToString("g") == date).FirstOrDefault();
 
             return session;
         }
@@ -151,12 +162,12 @@ namespace CinemaCoursework.Services
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
             var collection = database.GetCollection<Session>("SessionList");
-            var sessions = collection.Find(x => true).ToList().Where(x => x.Time.ToString("dd.MM.yy") == date);
+            var sessions = collection.Find(x => true).ToList().Where(x => x.Time.ToString("d") == date);
             var timeList = new List<string>();
 
             foreach (var s in sessions)
             {
-                timeList.Add(s.Time.ToShortTimeString());
+                timeList.Add(s.Time.ToString("t"));
             }
 
             return timeList;

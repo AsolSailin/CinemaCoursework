@@ -110,7 +110,7 @@
 <div class="tableThree">
     <table>
         <tr>
-            <td><button class="button" @onclick="Buy">Купить билет</button><br /></td>
+            <td><button class="button" @onclick="Buy">Сеансы</button><br /></td>
         </tr>
         <tr>
             <td><label class="lblTwo">Описание:</label></td>
@@ -129,11 +129,6 @@
     public void GetTime(string date)
     {
         times = dataBase.GetSessionTimeList(date);
-    }
-
-    public void GetHall(string time)
-    {
-        navigation.NavigateTo("/hall_one");
     }
 
     public void Buy()

@@ -5,13 +5,13 @@
 
 <PageTitle>CinemaCoursework</PageTitle>
 
-<div style="background-image:image(/images/logo.png);background-color:#A68EFE;" class="page">
-    <div style="background-image:none;background:black;" class="sidebar">
+<div style="background-image:image(/images/logo.png); background-color: #A68EFE;" class="page">
+    <div style="background-image:none;background:#1a1a1a;" class="sidebar">
         <NavMenu @ref="@_navMenu"/>
     </div>
 
     <main>
-        <div style="background-image:none;background-color:#A68EFE;" class="top-row px-4">
+        <div style="background-image:none;background-color:#1a1a1a;/* height: 6vh;*/" class="top-row px-4">
             @if (dataBase.CurrentUser != null)
             {
                 if (dataBase.CurrentUser.Role == "Client")

@@ -17,6 +17,7 @@
         background: #9F4FF9;
         border-radius: 20px;
         font-size: 20px;
+        padding: 5px;
     }
 
     .button {
@@ -39,43 +40,50 @@
 <div class="block">
     <table>
         <tr>
+            <td><label class="lbl">Дата показа:</label></td>
+            <td>
+                <MudDatePicker Style="background:#9F4FF9; width: 85%; border-radius: 20px; font-size: 20px; padding: 2px;" @bind-Date="@date" />
+            </td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><label class="lbl">Время:</label></td>
+            <td><input class="field" id="session_time" type="text" @bind-value="@time"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
             <td><label class="lbl">Название фильма:</label></td>
             <td><input class="field" id="movie_name" type="text" @bind-value="@movieName"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
-            <td><label class="lbl">Название зала:</label></td>
-            <td><input class="field" id="hall_name" type="text" @bind-value="@hallName"></td>
-        </tr>
-        <tr><td><label></label></td></tr>
-        <tr>
-            <td><label class="lbl">Дата показа:</label></td>
-            <td><input class="field" id="time"  type="datetime" @bind-value="@time"></td>
-        </tr>
-        <tr><td><label></label></td></tr>
-        <tr>
-            <td><button class="button" @onclick="Create">Создать киносеанс</button><br /></td>
+            <td><button class="button" @onclick="Create">Сохранить</button><br /></td>
         </tr>
     </table>
 </div>
 
-@code {
+@*<MudTextField Label="SelectedDate" @bind-Value="@StartDate" />
+<MudText Typo="Typo.h3">Selected Date is: @StartDate</MudText>*@
+
+@code
+{
     private Session session = new Session();
-    private DateTime time;
+    private DateTime? date { get; set; } = new DateTime(2023, 01, 01);
     private string movieName = "";
-    private string hallName = "";
+    private TimeSpan? time { get; set; } = new TimeSpan(00, 00, 00);
 
     public void Create()
     {
         session.Movie = dataBase.FindByMovieName(movieName);
-        session.Hall = dataBase.FindByHallName(hallName);
-        if (session.Movie != null && session.Hall != null)
+        DateTime date1 = (DateTime)date;
+        TimeSpan time1 = (TimeSpan)time;
+        DateTime dateTime = date1 + time1.Add(new TimeSpan(03, 00, 00));
+        if (session.Movie != null && time != null)
         {
             dataBase.CurrentSession = new Session()
             {
-                Time = time,
+                Time = dateTime,
                 Movie = session.Movie,
-                Hall = session.Hall,
             };
 
             dataBase.AddSessionToDataBase(dataBase.CurrentSession);
@@ -89,7 +97,6 @@
     protected override async Task OnInitializedAsync()
     {
         await GetPageName();
-        time = DateTime.Now;
     }
 
     public async Task GetPageName()

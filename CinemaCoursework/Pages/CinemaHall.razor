@@ -1,4 +1,4 @@
-﻿@page "/hall_one"
+﻿@page "/hall"
 @using CinemaCoursework.Data
 @using CinemaCoursework.Services
 @inject PagesList pageList
@@ -6,7 +6,7 @@
 @*@inject Session session*@
 @inject IJSRuntime JS
 
-<PageTitle>2D hall</PageTitle>
+<PageTitle>Hall</PageTitle>
 
 <style>
     .button {
@@ -62,13 +62,13 @@
         border-radius: 5px;
     }
 
-    .buttonOne:hover, .buttonTwo:hover, .buttonOne:focus, .buttonTwo:focus {
-        background: #6921BB;
-    }
+        .buttonOne:hover, .buttonTwo:hover, .buttonOne:focus, .buttonTwo:focus {
+            background: #6921BB;
+        }
 
-    .buttonOne:active, .buttonTwo:active {
-        background: none;
-    }
+        .buttonOne:active, .buttonTwo:active {
+            background: none;
+        }
 
     .block {
         position: absolute;
@@ -78,7 +78,7 @@
 </style>
 
 <div class="block">
-    @foreach (var p in dataBase.CurrentSession.Hall.Places)
+    @foreach (var p in dataBase.CurrentSession.Places)
     {
         @if (p.Value == "false")
         {
@@ -103,16 +103,16 @@
 <label>Ваше место: @place</label>
 
 @code {
-    int count = 0; 
+    int count = 0;
     string place = "";
 
     public void Buy()
     {
         if (place != "")
         {
-            dataBase.CurrentSession.Hall.Places[place] = "true";
+            dataBase.CurrentSession.Places[place] = "true";
         }
-        
+
         dataBase.SessionReplace(dataBase.CurrentSession.Id, dataBase.CurrentSession);
     }
 
@@ -128,13 +128,12 @@
 
     protected override async Task OnInitializedAsync()
     {
-        dataBase.CurrentSession = dataBase.FindSessionByMovieName(dataBase.CurrentMovie);
         await GetPageName();
     }
 
     public async Task GetPageName()
     {
-        pageList.PageName = "HallOne";
+        pageList.PageName = "Hall";
         await base.OnInitializedAsync();
     }
 }
