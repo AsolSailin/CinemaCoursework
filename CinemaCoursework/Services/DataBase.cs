@@ -9,8 +9,8 @@ namespace CinemaCoursework.Services
     public class DataBase
     {
         public User? CurrentUser { get; set; }
-        public Movie? CurrentMovie { get; set; }/*
-        public Hall? CurrentHall { get; set; }*/
+        public Movie? CurrentMovie { get; set; }
+        public Hall? CurrentHall { get; set; }
         public Session? CurrentSession { get; set; }
         public string? CurrentTime { get; set; }
         
@@ -69,7 +69,7 @@ namespace CinemaCoursework.Services
             return movie;
         }
 
-        /*public Hall FindByHallName(string name)
+        public Hall FindByHallName(string name)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
@@ -79,7 +79,7 @@ namespace CinemaCoursework.Services
             return hall;
         }
 
-        public Session FindSessionByMovieName(Movie movie)
+        /*public Session FindSessionByMovieName(Movie movie)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
@@ -87,14 +87,14 @@ namespace CinemaCoursework.Services
             var session = collection.Find(x => x.Movie == movie).FirstOrDefault();
 
             return session;
-        }*/ 
+        }*/
 
-        public Session FindSessionByDate(string date, Movie movie)
+        public Session FindSessionByDate(string date, Movie movie, string hallName)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
             var collection = database.GetCollection<Session>("SessionList");
-            var session = collection.Find(x => x.Movie == movie).ToList().Where(x => x.Time.ToString("g") == date).FirstOrDefault();
+            var session = collection.Find(x => x.Movie == movie).ToList().Where(x => x.Time.ToString("g") == date && x.Hall.Name == hallName).FirstOrDefault();
 
             return session;
         }
@@ -141,12 +141,12 @@ namespace CinemaCoursework.Services
             return movieList;
         }
 
-        public List<Session> GetSessionList(Movie movie)
+        public List<Session> GetSessionList(Movie movie, string hallName)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
             var collection = database.GetCollection<Session>("SessionList");
-            var sessions = collection.Find(x => x.Movie == movie).ToList();
+            var sessions = collection.Find(x => x.Movie == movie).ToList().Where(x => x.Hall.Name == hallName);
             var sessionList = new List<Session>();
 
             foreach (var s in sessions)
@@ -157,12 +157,12 @@ namespace CinemaCoursework.Services
             return sessionList;
         }
 
-        public List<string> GetSessionTimeList(string date)
+        public List<string> GetSessionTimeList(string date, string hallName)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
             var collection = database.GetCollection<Session>("SessionList");
-            var sessions = collection.Find(x => true).ToList().Where(x => x.Time.ToString("d") == date);
+            var sessions = collection.Find(x => true).ToList().Where(x => x.Time.ToString("d") == date && x.Hall.Name == hallName);
             var timeList = new List<string>();
 
             foreach (var s in sessions)
@@ -171,6 +171,22 @@ namespace CinemaCoursework.Services
             }
 
             return timeList;
+        }
+
+        public List<string> GetHallList()
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("CinemaCourseworkDatabase");
+            var collection = database.GetCollection<Hall>("HallList");
+            var halls = collection.Find(x => true).ToList();
+            var hallList = new List<string>();
+
+            foreach (var h in halls)
+            {
+                hallList.Add(h.Name);
+            }
+
+            return hallList;
         }
     }
 }

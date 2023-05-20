@@ -47,14 +47,14 @@ namespace CinemaCoursework.Data
 
         [BsonIgnoreIfDefault]
         [BsonIgnoreIfNull]
-        public int Price2D { get; set; }
+        public string? Price2D { get; set; }
 
         [BsonIgnoreIfDefault]
         [BsonIgnoreIfNull]
-        public int Price3D { get; set; }
+        public string? Price3D { get; set; }
 
         [BsonIgnoreIfDefault]
         [BsonIgnoreIfNull]
-        public int PriceVIP { get; set; }
+        public string? PriceVIP { get; set; }
     }
 }

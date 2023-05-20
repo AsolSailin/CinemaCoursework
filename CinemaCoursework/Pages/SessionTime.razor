@@ -26,17 +26,38 @@
     <table>
         <tr>
             <td>
-                @foreach (var d in dates.Distinct().ToList())
-                {
-                    <label>@d</label> <br/>
-                    <MudButtonGroup Style="background:#9F4FF9;" Size="Size.Small" Variant="Variant.Outlined">
-                    @foreach (var t in dataBase.GetSessionTimeList(d))
-                    {
-                        <MudButton @onclick="() => GetHall(t, d)">@t</MudButton>
-                    }
-                    </MudButtonGroup>
-                    <br/><br/>
-                }
+                <table>
+                    <tr>
+                        <td>
+                            <MudButtonGroup Size="Size.Large" Variant="Variant.Outlined">
+                                @foreach (var h in halls)
+                                {
+                                    <MudButton @onclick="() => GetSessions(h)">@h</MudButton>
+                                }
+                            </MudButtonGroup>
+                        </td>
+                    </tr>
+                    <tr><td><label></label></td></tr>
+                    <tr>
+                        <td><label style="font-size: 25px;">@hallPrice.ToString()</label></td>
+                    </tr>
+                    <tr><td><label></label></td></tr>
+                    <tr>
+                        <td>
+                            @foreach (var d in dates.Distinct().ToList())
+                            {
+                                <label>@d</label> <br />
+                                <MudButtonGroup Style="background:#9F4FF9;" Size="Size.Small" Variant="Variant.Outlined">
+                                    @foreach (var t in dataBase.GetSessionTimeList(d, currentHallName))
+                                    {
+                                        <MudButton @onclick="() => GetHall(t, d, currentHallName)">@t</MudButton>
+                                    }
+                                </MudButtonGroup>
+                                <br /><br />
+                            }
+                        </td>
+                    </tr>
+                </table>
             </td>
             <td><img src="images/@dataBase.CurrentMovie?.Poster" /></td>
         </tr>
@@ -45,30 +66,48 @@
 
 @code {
     public List<Session> sessions = new List<Session>();
+    public List<string> halls = new List<string>();
     public List<string> dates = new List<string>();
     public List<string> times = new List<string>();
+    public string currentHallName = "";
+    public string hallPrice = "";
 
-    public void GetTime(string date)
-    {
-        times = dataBase.GetSessionTimeList(date);
-    }
-
-    public void GetHall(string time, string date)
+    public void GetHall(string time, string date, string hallName)
     {
         string dateTime = date + " " + time;
-        dataBase.CurrentSession = dataBase.FindSessionByDate(dateTime, dataBase.CurrentMovie);
+        dataBase.CurrentSession = dataBase.FindSessionByDate(dateTime, dataBase.CurrentMovie, hallName);
         navigation.NavigateTo("/hall");
+    }
+
+    public void GetSessions(string hallName)
+    {
+        dates = new List<string>();
+        currentHallName = hallName;
+
+        switch(currentHallName)
+        {
+            case "2D":
+                hallPrice = dataBase.CurrentMovie.Price2D;
+                break;
+            case "3D":
+                hallPrice = dataBase.CurrentMovie.Price3D;
+                break;
+            case "VIP":
+                hallPrice = dataBase.CurrentMovie.PriceVIP;
+                break;
+        }
+
+        sessions = dataBase.GetSessionList(dataBase.CurrentMovie, hallName);
+
+        foreach (var s in sessions)
+        {
+            dates.Add(s.Time.ToString("d"));
+        }
     }
 
     protected override async Task OnInitializedAsync()
     {
-        sessions = dataBase.GetSessionList(dataBase.CurrentMovie);
-
-        foreach(var s in sessions)
-        {
-            dates.Add(s.Time.ToString("d"));
-        }
-
+        halls = dataBase.GetHallList();
         await GetPageName();
     }
 

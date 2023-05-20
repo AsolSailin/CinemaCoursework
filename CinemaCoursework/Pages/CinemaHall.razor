@@ -78,7 +78,7 @@
 </style>
 
 <div class="block">
-    @foreach (var p in dataBase.CurrentSession.Places)
+    @foreach (var p in dataBase.CurrentSession.Hall.Places)
     {
         @if (p.Value == "false")
         {
@@ -110,7 +110,7 @@
     {
         if (place != "")
         {
-            dataBase.CurrentSession.Places[place] = "true";
+            dataBase.CurrentSession.Hall.Places[place] = "true";
         }
 
         dataBase.SessionReplace(dataBase.CurrentSession.Id, dataBase.CurrentSession);

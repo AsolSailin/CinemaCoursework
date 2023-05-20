@@ -122,15 +122,6 @@
 </div>
 
 @code {
-    public List<Session> sessions = new List<Session>();
-    public List<string> dates = new List<string>();
-    public List<string> times = new List<string>();
-
-    public void GetTime(string date)
-    {
-        times = dataBase.GetSessionTimeList(date);
-    }
-
     public void Buy()
     {
         navigation.NavigateTo("/session_time");
@@ -138,13 +129,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        sessions = dataBase.GetSessionList(dataBase.CurrentMovie);
-
-        foreach (var s in sessions)
-        {
-            dates.Add(s.Time.ToString("dd.MM.yy"));
-        }
-
         await GetPageName();
     }
 

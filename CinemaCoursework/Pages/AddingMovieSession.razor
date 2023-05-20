@@ -52,6 +52,11 @@
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
+            <td><label class="lbl">Название зала (2D, 3D, VIP):</label></td>
+            <td><input class="field" id="hall_name" type="text" @bind-value="@hallName"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
             <td><label class="lbl">Название фильма:</label></td>
             <td><input class="field" id="movie_name" type="text" @bind-value="@movieName"></td>
         </tr>
@@ -62,19 +67,18 @@
     </table>
 </div>
 
-@*<MudTextField Label="SelectedDate" @bind-Value="@StartDate" />
-<MudText Typo="Typo.h3">Selected Date is: @StartDate</MudText>*@
-
 @code
 {
     private Session session = new Session();
     private DateTime? date { get; set; } = new DateTime(2023, 01, 01);
     private string movieName = "";
+    private string hallName = "";
     private TimeSpan? time { get; set; } = new TimeSpan(00, 00, 00);
 
     public void Create()
     {
         session.Movie = dataBase.FindByMovieName(movieName);
+        session.Hall = dataBase.FindByHallName(hallName);
         DateTime date1 = (DateTime)date;
         TimeSpan time1 = (TimeSpan)time;
         DateTime dateTime = date1 + time1.Add(new TimeSpan(03, 00, 00));
@@ -84,6 +88,7 @@
             {
                 Time = dateTime,
                 Movie = session.Movie,
+                Hall = session.Hall
             };
 
             dataBase.AddSessionToDataBase(dataBase.CurrentSession);
