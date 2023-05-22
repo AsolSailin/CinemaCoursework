@@ -6,7 +6,7 @@
 @inject IJSRuntime JS
 @inject NavigationManager navigation
 
-<PageTitle>Admin account</PageTitle>
+<PageTitle>Аккаунт администратора</PageTitle>
 
 <style type="text/css">
     .lblOne {
@@ -45,7 +45,7 @@
 
     .button {
         position: absolute;
-        right: 30%;
+        right: 10%;
         height: 50px;
         width: 200px;
         background: #9F4FF9;
@@ -101,6 +101,12 @@
             <td><input class="field" style="color: @color" id="password" type="password" @bind-value="@dataBase.CurrentUser.Password" disabled="@isDisable"></td>
         </tr>
         <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
         <tr>
             <td><button class="button" @onclick="Red">Редактировать</button><br /></td>
         </tr>
@@ -128,9 +134,9 @@
 
         if (count == 2)
         {
+            count = 0;
             dataBase.UserReplace(dataBase.CurrentUser.Id, dataBase.CurrentUser);
             JS.InvokeVoidAsync("alert", "Пользователь был изменен");
-            count = 0;
         }
     }
 

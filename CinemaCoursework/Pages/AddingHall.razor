@@ -5,7 +5,7 @@
 @inject DataBase dataBase 
 @inject IJSRuntime JS 
 
-<PageTitle>Adding hall</PageTitle> 
+<PageTitle>Добавление кинозала</PageTitle> 
 
 <style type="text/css"> 
     .lbl { 
@@ -67,7 +67,7 @@
         }
         else
         {
-            JS.InvokeVoidAsync("alert", "Данные введены неверно!");
+            JS.InvokeVoidAsync("alert", "Для создания нового кинозала все поля должны быть заполнены!");
         }
     }
 

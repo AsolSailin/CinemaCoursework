@@ -6,7 +6,7 @@
 @inject NavigationManager navigation
 @inject IJSRuntime JS
 
-<PageTitle>Hall</PageTitle>
+<PageTitle>Кинозал</PageTitle>
 
 <style>
     .button {
@@ -111,11 +111,14 @@
         if (place != "")
         {
             dataBase.CurrentSession.Hall.Places[place] = "true";
+            dataBase.SessionReplace(dataBase.CurrentSession.Id, dataBase.CurrentSession);
+            dataBase.CurrentPlace = place;
+            navigation.NavigateTo("/ticket_buy");
         }
-
-        dataBase.SessionReplace(dataBase.CurrentSession.Id, dataBase.CurrentSession);
-        dataBase.CurrentPlace = place;
-        navigation.NavigateTo("/ticket_buy");
+        else
+        {
+            JS.InvokeVoidAsync("alert", "Для перехода на следующую страницу ннеобходимо выбрать место в кинозале!");
+        }
     }
 
     public void Place(string placeNumber)
@@ -125,7 +128,7 @@
 
     public void OccupiedPlace()
     {
-        JS.InvokeVoidAsync("alert", "Вы не можете выбрать это место, так как оно уже занято");
+        JS.InvokeVoidAsync("alert", "Вы не можете выбрать это место, так как оно уже занято!");
     }
 
     protected override async Task OnInitializedAsync()

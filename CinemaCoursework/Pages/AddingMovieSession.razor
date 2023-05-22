@@ -5,7 +5,7 @@
 @inject DataBase dataBase
 @inject IJSRuntime JS
 
-<PageTitle>Adding movie session</PageTitle>
+<PageTitle>Добавление киносеанса</PageTitle>
 
 <style type="text/css">
     .lbl {
@@ -75,18 +75,20 @@
 
     public void Create()
     {
-        session.Movie = dataBase.FindByMovieName(movieName);
-        session.Hall = dataBase.FindByHallName(hallName);
-        DateTime date1 = (DateTime)date;
-        TimeSpan time1 = (TimeSpan)time;
-        DateTime dateTime = date1 + time1.Add(new TimeSpan(03, 00, 00));
-        if (session.Movie != null && time != null)
+        if (date != null && time != null && hallName != null && movieName != null)
         {
+            session.Movie = dataBase.FindByMovieName(movieName);
+            session.Hall = dataBase.FindByHallName(hallName);
+
+            DateTime date1 = (DateTime)date;
+            TimeSpan time1 = (TimeSpan)time;
+            DateTime dateTime = date1 + time1.Add(new TimeSpan(03, 00, 00));
+
             dataBase.CurrentSession = new Session()
             {
-                Time = dateTime,
                 Movie = session.Movie,
-                Hall = session.Hall
+                Hall = session.Hall,
+                Time = dateTime
             };
 
             dataBase.AddSessionToDataBase(dataBase.CurrentSession);
@@ -94,7 +96,7 @@
         }
         else
         {
-            JS.InvokeVoidAsync("alert", "Для создания нового сеанса все поля должны быть заполнены!");
+            JS.InvokeVoidAsync("alert", "Для создания нового киносеанса все поля должны быть заполнены!");
         }
     }
 

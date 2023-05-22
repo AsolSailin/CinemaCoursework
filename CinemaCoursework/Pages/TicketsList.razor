@@ -97,7 +97,7 @@ else
 
         dataBase.CurrentTicket = dataBase.FindTicketByName(id);
         dataBase.DeleteTicket(dataBase.CurrentTicket.Id);
-        JS.InvokeVoidAsync("alert", "Билет возврещен");
+        JS.InvokeVoidAsync("alert", "Билет возвращен");
         navigation.NavigateTo("/ticket_list");
     }
 

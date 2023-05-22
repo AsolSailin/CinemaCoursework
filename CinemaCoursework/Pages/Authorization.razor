@@ -7,7 +7,7 @@
 @inject NavigationManager navigation
 @inject ILocalStorageService localStorageService
 
-<PageTitle>Authorization</PageTitle>
+<PageTitle>Авторизация</PageTitle>
 
 <style type="text/css">
     .lbl {
@@ -94,12 +94,12 @@
             }
             else
             {
-                JS.InvokeVoidAsync("alert", "Неверный логин или пароль");
+                JS.InvokeVoidAsync("alert", "Неверный логин или пароль!");
             }
         }
         else
         {
-            JS.InvokeVoidAsync("alert", "Для входа введите логин и пароль");
+            JS.InvokeVoidAsync("alert", "Для входа введите логин и пароль!");
         }
     }
 

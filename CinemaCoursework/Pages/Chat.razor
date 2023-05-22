@@ -7,7 +7,7 @@
 @inject DataBase dataBase
 @implements IAsyncDisposable
 
-<PageTitle>Chat</PageTitle>
+<PageTitle>Чат</PageTitle>
 
 <style type="text/css">
     .lblTwo, .message {
@@ -36,7 +36,7 @@
     <table>
         <tr>
             <td>
-                <label class="lblTwo"> Message:</label>
+                <label class="lblTwo"> Сообщение:</label>
                 <br/>
                 <textarea rows="10" class="field" id="description" type="text" @bind="messageInput" />
             </td>
@@ -45,7 +45,7 @@
     </table>
 </div>
 
-<button @onclick="Send" disabled="@(!IsConnected)">Send</button>
+<button @onclick="Send" disabled="@(!IsConnected)">Отправить</button>
 <br/><br/>
 
 <ul id="messagesList">
