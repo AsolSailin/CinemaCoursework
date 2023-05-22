@@ -54,34 +54,36 @@
     }
 </style>
 
-<div class="tableOne">
+@if (dataBase.CurrentUser != null)
+{
+    <div class="tableOne">
     <table>
         <tr>
             <td><label class="lblOne">ЛИЧНЫЕ ДАННЫЕ:</label></td>
         </tr>
         <tr>
             <td><label class="lblTwo">Фамилия:</label></td>
-            <td><input class="field" style="color: @color" id="surname" type="text" value="@dataBase.CurrentUser?.Surname" disabled="@isDisable"></td>
+            <td><input class="field" style="color: @color" id="surname" type="text" @bind-value="@dataBase.CurrentUser.Surname" disabled="@isDisable"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Имя:</label></td>
-            <td><input class="field" style="color: @color" id="name" type="text" value="@dataBase.CurrentUser?.Name" disabled="@isDisable"></td>
+            <td><input class="field" style="color: @color" id="name" type="text" @bind-value="@dataBase.CurrentUser.Name" disabled="@isDisable"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Отчество:</label></td>
-            <td><input class="field" style="color: @color" id="patronymic" type="text" value="@dataBase.CurrentUser?.Patronymic" disabled="@isDisable"></td>
+            <td><input class="field" style="color: @color" id="patronymic" type="text" @bind-value="@dataBase.CurrentUser.Patronymic" disabled="@isDisable"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Номер телефона:</label></td>
-            <td><input class="field" style="color: @color" id="phone_number" type="text" value="@dataBase.CurrentUser?.PhoneNumber" disabled="@isDisable"></td>
+            <td><input class="field" style="color: @color" id="phone_number" type="text" @bind-value="@dataBase.CurrentUser.PhoneNumber" disabled="@isDisable"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">E-mail:</label></td>
-            <td><input class="field" style="color: @color" id="mail" type="text" value="@dataBase.CurrentUser?.EMail" disabled="@isDisable"></td>
+            <td><input class="field" style="color: @color" id="mail" type="text" @bind-value="@dataBase.CurrentUser.EMail" disabled="@isDisable"></td>
         </tr>
     </table>
 </div>
@@ -93,16 +95,13 @@
         </tr>
         <tr>
             <td><label class="lblTwo">Логин:</label></td>
-            <td><input class="field" style="color: @color" id="login" type="text" value="@dataBase.CurrentUser?.Login" disabled="@isDisable"></td>
+            <td><input class="field" style="color: @color" id="login" type="text" @bind-value="@dataBase.CurrentUser.Login" disabled="@isDisable"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Пароль:</label></td>
-            <td><input class="field" style="color: @color" id="password" type="password" value="@dataBase.CurrentUser?.Password" disabled="@isDisable"></td>
+            <td><input class="field" style="color: @color" id="password" type="password" @bind-value="@dataBase.CurrentUser.Password" disabled="@isDisable"></td>
         </tr>
-        <tr><td><label></label></td></tr>
-        <tr><td><label></label></td></tr>
-        <tr><td><label></label></td></tr>
         <tr><td><label></label></td></tr>
         <tr><td><label></label></td></tr>
         <tr><td><label></label></td></tr>
@@ -110,18 +109,48 @@
         <tr>
             <td><button class="button" @onclick="Red">Редактировать</button><br /></td>
         </tr>
+        <tr><td><label></label></td></tr>
+        <tr><td><label></label></td></tr>
+        <tr>
+            <td><button class="button" @onclick="Delete">Удалить</button><br /></td>
+        </tr>
     </table>
 </div>
+}
 
 @code {
-    private User user = new User();
     private bool isDisable = true;
     private string color = "";
+    private int count = 0;
 
     public void Red()
     {
-        isDisable = false;
-        color = "#cccccc";
+        if (isDisable)
+            isDisable = false;
+        else
+            isDisable = true;
+
+        if (color == "")
+            color = "#cccccc";
+        else
+            color = "";
+
+        count++;
+
+        if (count == 2)
+        {
+            dataBase.UserReplace(dataBase.CurrentUser.Id, dataBase.CurrentUser);
+            JS.InvokeVoidAsync("alert", "Пользователь был изменен");
+            count = 0;
+        }
+    }
+
+    public void Delete()
+    {
+        dataBase.DeleteUser(dataBase.CurrentUser.Id);
+        JS.InvokeVoidAsync("alert", "Пользователь был удален");
+        navigation.NavigateTo("/");
+        dataBase.CurrentUser = null;
     }
 
     protected override async Task OnInitializedAsync()

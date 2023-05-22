@@ -97,6 +97,7 @@
                 break;
         }
 
+        dataBase.CurrentHall = dataBase.FindByHallName(currentHallName);
         sessions = dataBase.GetSessionList(dataBase.CurrentMovie, hallName);
 
         foreach (var s in sessions)

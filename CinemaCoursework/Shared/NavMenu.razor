@@ -16,7 +16,9 @@
         pageList.PageName == "MovieInfo" || 
         pageList.PageName == "SessionTime" || 
         pageList.PageName == "TicketBuy" || 
-        pageList.PageName == "TicketRefund")
+        pageList.PageName == "TicketRefund" || 
+        pageList.PageName == "EditinMovie" || 
+        pageList.PageName == "TicketList")
         {
             <div class="nav-item px-3">
                 <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
@@ -132,8 +134,8 @@
         else if (pageList.PageName == "ClientAccount")
         {
             <div class="nav-item px-3">
-                <NavLink class="nav-link" href="/ticket_refund" Match="NavLinkMatch.All">
-                    <span class="oi oi-credit-card" aria-hidden="true"></span> Возврат билетов
+                <NavLink class="nav-link" href="/ticket_list" Match="NavLinkMatch.All">
+                    <span class="oi oi-credit-card" aria-hidden="true"></span> Мои билеты
                 </NavLink>
             </div>
             <div class="nav-item px-3">

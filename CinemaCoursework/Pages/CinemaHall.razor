@@ -114,7 +114,7 @@
         }
 
         dataBase.SessionReplace(dataBase.CurrentSession.Id, dataBase.CurrentSession);
-
+        dataBase.CurrentPlace = place;
         navigation.NavigateTo("/ticket_buy");
     }
 

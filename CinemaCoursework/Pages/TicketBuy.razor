@@ -86,7 +86,19 @@
 
     public void Buy()
     {
+        dataBase.CurrentTicket = new Ticket()
+        {
+            MovieName = dataBase.CurrentMovie.Name,
+            Poster = dataBase.CurrentMovie.Poster,
+            HallName = dataBase.CurrentHall.Name,
+            PlaceNumber = dataBase.CurrentPlace,
+            Date = dataBase.CurrentSession.Time.ToString("d"),
+            Time = dataBase.CurrentSession.Time.ToString("t"),
+            User = dataBase.CurrentUser
+        };
 
+        dataBase.AddTicketToDataBase(dataBase.CurrentTicket);
+        JS.InvokeVoidAsync("alert", "Билет добавлен в список Ваших билетов");
     }
 
     protected override async Task OnInitializedAsync()

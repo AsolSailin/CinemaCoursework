@@ -51,6 +51,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        movies = new List<Movie>();
         movies = dataBase.GetMovieList();
         await GetPageName();
     }

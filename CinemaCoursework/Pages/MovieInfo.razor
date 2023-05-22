@@ -4,6 +4,7 @@
 @inject PagesList pageList
 @inject DataBase dataBase
 @inject Movie movie
+@inject IJSRuntime JS
 @inject NavigationManager navigation
 
 <PageTitle>Movie info</PageTitle>
@@ -111,7 +112,12 @@
             {
                 @if (dataBase.CurrentUser.Role == "Admin")
                 {
-                    <td><button class="button" @onclick="Buy">Сеансы</button><br /></td>
+                    <td>
+                        <button class="button" @onclick="Buy">Сеансы</button>
+                        <button class="button" @onclick="Red">Изменить</button> 
+                        <button class="button" @onclick="Delete">Удалить</button>
+                    </td>
+                    <br/><br/>
                 }
                 else
                 {
@@ -133,6 +139,18 @@
     public void Buy()
     {
         navigation.NavigateTo("/session_time");
+    }
+
+    public void Red()
+    {
+        navigation.NavigateTo("/editing_movie");
+    }
+
+    public void Delete()
+    {
+        dataBase.DeleteMovie(dataBase.CurrentMovie.Id);
+        JS.InvokeVoidAsync("alert", "Фильм был удален");
+        navigation.NavigateTo("/");
     }
 
     protected override async Task OnInitializedAsync()

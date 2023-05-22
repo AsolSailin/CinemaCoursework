@@ -1,0 +1,115 @@
+﻿@page "/ticket_list"
+@using CinemaCoursework.Data
+@using CinemaCoursework.Services
+@using MongoDB.Bson;
+@inject PagesList pageList
+@inject DataBase dataBase
+@inject IJSRuntime JS
+@inject NavigationManager navigation
+
+<PageTitle>Ticket refund</PageTitle>
+
+<style type="text/css">
+    img {
+        width: 26em;
+        height: 33em;
+    }
+
+    .button {
+        position: absolute;
+        right: 22%;
+        height: 50px;
+        width: 200px;
+        background: #9F4FF9;
+        border-radius: 15px;
+        font-size: 23px;
+    }
+
+    .card
+    {
+        width: 26em;
+        height: 33em;
+        background: #e3ccfc;
+    }
+
+    table{
+        margin: 20px;
+        margin-left: 170px;
+    }
+</style>
+
+@if (tickets != null)
+{
+    @foreach (var t in tickets)
+    {
+        <div>
+            <table>
+                <tr>
+                    <td>
+                        <img src="images/@t.Poster" />
+                    </td>
+                    <td>
+                        <MudGrid Spacing="@spacing" Justify="Justify.Center">
+                            <MudCard Class="card">
+                                <MudCardContent>
+                                    <MudText Typo="Typo.h5">Билет номер</MudText>
+                                    <MudText Typo="Typo.h5">@t.Id</MudText>
+                                    <MudText Typo="Typo.body2">Название показа: @t.MovieName</MudText>
+                                    <MudText Typo="Typo.body2">Зал: @t.HallName</MudText>
+                                    <MudText Typo="Typo.body2">Номер места: @t.PlaceNumber</MudText>
+                                    <MudText Typo="Typo.body2">Дата: @t.Date</MudText>
+                                    <MudText Typo="Typo.body2">Время: @t.Time</MudText>
+                                    <button class="button" @onclick="() => GetMovie(t.MovieName)">О фильме</button>
+                                    <br/><br/><br/>
+                                    <button class="button" @onclick="() => GetRefund(t.Date, t.Time, t.MovieName, t.HallName, t.Id, t.PlaceNumber)">Вернуть билет</button>
+                                </MudCardContent>
+                            </MudCard>
+                        </MudGrid>
+                    </td>
+
+                </tr>
+            </table>
+        </div>
+    }
+}
+else
+{
+    @JS.InvokeVoidAsync("alert", "У Вас пока еще нет билетов");
+}
+
+@code {
+    private List<Ticket> tickets = new List<Ticket>();
+    public int spacing { get; set; } = 5;
+
+    public void GetMovie(string movieName)
+    {
+        dataBase.CurrentMovie = dataBase.FindByMovieName(movieName);
+        navigation.NavigateTo("/movie_info");
+    }
+
+    public void GetRefund(string date, string time, string movieName, string hallName, ObjectId id, string placeNumber)
+    {
+        dataBase.CurrentMovie = dataBase.FindByMovieName(movieName);
+        string dateTime = date + " " + time;
+        dataBase.CurrentSession = dataBase.FindSessionByDate(dateTime, dataBase.CurrentMovie, hallName);
+        dataBase.CurrentSession.Hall.Places[placeNumber] = "false";
+        dataBase.SessionReplace(dataBase.CurrentSession.Id, dataBase.CurrentSession);
+
+        dataBase.CurrentTicket = dataBase.FindTicketByName(id);
+        dataBase.DeleteTicket(dataBase.CurrentTicket.Id);
+        JS.InvokeVoidAsync("alert", "Билет возврещен");
+        navigation.NavigateTo("/ticket_list");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        tickets = dataBase.GetTicketList(dataBase.CurrentUser);
+        await GetPageName();
+    }
+
+    public async Task GetPageName()
+    {
+        pageList.PageName = "TicketList";
+        await base.OnInitializedAsync();
+    }
+}

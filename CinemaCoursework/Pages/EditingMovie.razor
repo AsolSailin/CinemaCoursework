@@ -1,4 +1,4 @@
-﻿@page "/adding_movie"
+﻿@page "/editing_movie"
 @using CinemaCoursework.Data
 @using CinemaCoursework.Services
 @inject PagesList pageList
@@ -50,62 +50,66 @@
         </tr>
         <tr >
             <td><label class="lblTwo">Название:</label></td>
-            <td><input class="field" id="movie_name" type="text" @bind-value="@movie.Name"></td>
+            <td><input class="field" id="movie_name" type="text" @bind-value="@dataBase.CurrentMovie.Name"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Жанр:</label></td>
-            <td><input class="field" id="genre" type="text" @bind-value="@movie.Genre"></td>
+            <td><input class="field" id="genre" type="text" @bind-value="@dataBase.CurrentMovie.Genre"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Режиссер:</label></td>
-            <td><input class="field" id="regisseur" type="text" @bind-value="@movie.Regisseur"></td>
+            <td><input class="field" id="regisseur" type="text" @bind-value="@dataBase.CurrentMovie.Regisseur"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Продюсер:</label></td>
-            <td><input class="field" id="roles" type="text" @bind-value="@movie.Producer"></td>
+            <td><input class="field" id="roles" type="text" @bind-value="@dataBase.CurrentMovie.Producer"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Сценарий:</label></td>
-            <td><input class="field" id="roles" type="text" @bind-value="@movie.Script"></td>
+            <td><input class="field" id="roles" type="text" @bind-value="@dataBase.CurrentMovie.Script"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Страна:</label></td>
-            <td><input class="field" id="country" type="text" @bind-value="@movie.Country"></td>
+            <td><input class="field" id="country" type="text" @bind-value="@dataBase.CurrentMovie.Country"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Продолжительность:</label></td>
-            <td><input class="field" id="duration" type="text" @bind-value="@movie.Duration"></td>
+            <td><input class="field" id="duration" type="text" @bind-value="@dataBase.CurrentMovie.Duration"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Цена билета 2D:</label></td>
-            <td><input class="field" id="price_2D" type="text" @bind-value="@movie.Price2D"></td>
+            <td><input class="field" id="price_2D" type="text" @bind-value="@dataBase.CurrentMovie.Price2D"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Цена билета 3D:</label></td>
-            <td><input class="field" id="price_3D" type="text" @bind-value="@movie.Price3D"></td>
+            <td><input class="field" id="price_3D" type="text" @bind-value="@dataBase.CurrentMovie.Price3D"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Цена билета VIP:</label></td>
-            <td><input class="field" id="price_VIP" type="text" @bind-value="@movie.PriceVIP"></td>
+            <td><input class="field" id="price_VIP" type="text" @bind-value="@dataBase.CurrentMovie.PriceVIP"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr >
             <td><label class="lblTwo">Описание:</label></td>
-            <td><textarea rows="10" class="field" id="description" type="text" @bind="@movie.Description" /></td>
+            <td><textarea rows="10" class="field" id="description" type="text" @bind="@dataBase.CurrentMovie.Description" /></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Постер:</label></td>
             <InputFile OnChange="@(async(e) => await LoadFiles(e))" multiple />
+        </tr>
+        <tr>
+            <td><label></label></td>
+            <td><label>@dataBase.CurrentMovie.Poster</label></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
@@ -116,7 +120,6 @@
 </div>
 
 @code {
-    private Movie movie = new Movie();
     List<IBrowserFile> loadedFiles = new List<IBrowserFile>();
 
     private async Task LoadFiles(InputFileChangeEventArgs e)
@@ -126,7 +129,7 @@
             loadedFiles.Add(file);
             Stream stream = file.OpenReadStream(5000000000);
             await fss.UploadImageToDbAsync(stream, file.Name);
-            movie.Poster = file.Name;
+            dataBase.CurrentMovie.Poster = file.Name;
             fss.DownloadToLocal(file.Name);
             stream.Dispose();
         }
@@ -134,29 +137,13 @@
 
     public void Save()
     {
-        if (movie.Name != null && movie.Genre != null && movie.Regisseur != null && 
-        movie.Producer != null && movie.Script != null && movie.Country != null && 
-        movie.Duration != null && movie.Price2D != null && movie.Price3D != null && 
-        movie.PriceVIP != null && movie.Description != null && movie.Poster != "")
+        if (dataBase.CurrentMovie.Name != null && dataBase.CurrentMovie.Genre != null && dataBase.CurrentMovie.Regisseur != null &&
+        dataBase.CurrentMovie.Producer != null && dataBase.CurrentMovie.Script != null && dataBase.CurrentMovie.Country != null &&
+        dataBase.CurrentMovie.Duration != null && dataBase.CurrentMovie.Price2D != null && dataBase.CurrentMovie.Price3D != null &&
+        dataBase.CurrentMovie.PriceVIP != null && dataBase.CurrentMovie.Description != null && dataBase.CurrentMovie.Poster != "")
         {
-            dataBase.CurrentMovie = new Movie()
-                {
-                    Name = movie.Name,
-                    Genre = movie.Genre,
-                    Regisseur = movie.Regisseur,
-                    Producer = movie.Producer,
-                    Script = movie.Script,
-                    Country = movie.Country,
-                    Duration = movie.Duration,
-                    Description = movie.Description,
-                    Price2D = movie.Price2D,
-                    Price3D = movie.Price3D,
-                    PriceVIP = movie.PriceVIP,
-                    Poster = movie.Poster
-                };
-
-            dataBase.AddMovieToDataBase(dataBase.CurrentMovie);
-            JS.InvokeVoidAsync("alert", "Фильм был добавлен в базу данных");
+            dataBase.MovieReplace(dataBase.CurrentMovie.Id, dataBase.CurrentMovie);
+            JS.InvokeVoidAsync("alert", "Фильм был изменен");
         }
         else
         {
@@ -171,7 +158,7 @@
 
     public async Task GetPageName()
     {
-        pageList.PageName = "AddingMovie";
+        pageList.PageName = "EditingMovie";
         await base.OnInitializedAsync();
     }
 }

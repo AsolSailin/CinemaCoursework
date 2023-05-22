@@ -93,12 +93,12 @@
         </tr>
         <tr>
             <td><label class="lblTwo">Логин:</label></td>
-            <td><input class="field" style="color: @color" id="login" type="text" value="@dataBase.CurrentUser?.Login" disabled="@isDisable"></td>
+            <td><input class="field" style="color: @color" id="login" type="text" @bind-value="@dataBase.CurrentUser.Login" disabled="@isDisable"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Пароль:</label></td>
-            <td><input class="field" style="color: @color" id="password" type="password" value="@dataBase.CurrentUser?.Password" disabled="@isDisable"></td>
+            <td><input class="field" style="color: @color" id="password" type="password" @bind-value="@dataBase.CurrentUser.Password" disabled="@isDisable"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
@@ -108,19 +108,30 @@
 </div>
 
 @code {
-    private User user = new User();
     private bool isDisable = true;
     private string color = "";
+    private int count = 0;
 
     public void Red()
     {
-        isDisable = false;
-        color = "#cccccc";
-    }
+        if (isDisable)
+            isDisable = false;
+        else
+            isDisable = true;
 
-    public void Color()
-    {
-        color = "#cccccc";
+        if (color == "")
+            color = "#cccccc";
+        else
+            color = "";
+
+        count++;
+
+        if (count == 2)
+        {
+            dataBase.UserReplace(dataBase.CurrentUser.Id, dataBase.CurrentUser);
+            JS.InvokeVoidAsync("alert", "Пользователь был изменен");
+            count = 0;
+        }
     }
 
     protected override async Task OnInitializedAsync()

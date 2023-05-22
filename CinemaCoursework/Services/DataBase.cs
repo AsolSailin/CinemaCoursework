@@ -12,7 +12,8 @@ namespace CinemaCoursework.Services
         public Movie? CurrentMovie { get; set; }
         public Hall? CurrentHall { get; set; }
         public Session? CurrentSession { get; set; }
-        public string? CurrentTime { get; set; }
+        public Ticket? CurrentTicket { get; set; }
+        public string? CurrentPlace { get; set; }
         
 
         //Add
@@ -48,6 +49,14 @@ namespace CinemaCoursework.Services
             collection.InsertOne(session);
         }
 
+        public void AddTicketToDataBase(Ticket ticket)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("CinemaCourseworkDatabase");
+            var collection = database.GetCollection<Ticket>("TicketList");
+            collection.InsertOne(ticket);
+        }
+
         //Find
         public User FindByUserLogin(string login)
         {
@@ -79,41 +88,51 @@ namespace CinemaCoursework.Services
             return hall;
         }
 
-        /*public Session FindSessionByMovieName(Movie movie)
-        {
-            var client = new MongoClient("mongodb://localhost");
-            var database = client.GetDatabase("CinemaCourseworkDatabase");
-            var collection = database.GetCollection<Session>("SessionList");
-            var session = collection.Find(x => x.Movie == movie).FirstOrDefault();
-
-            return session;
-        }*/
-
         public Session FindSessionByDate(string date, Movie movie, string hallName)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
             var collection = database.GetCollection<Session>("SessionList");
-            var session = collection.Find(x => x.Movie == movie).ToList().Where(x => x.Time.ToString("g") == date && x.Hall.Name == hallName).FirstOrDefault();
+            var session = collection.Find(x => x.Movie.Id == movie.Id).ToList().Where(x => x.Time.ToString("g") == date && x.Hall.Name == hallName).FirstOrDefault();
 
             return session;
         }
 
+        public Hall FindHallByName(string hallName)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("CinemaCourseworkDatabase");
+            var collection = database.GetCollection<Hall>("HallList");
+            var hall = collection.Find(x => x.Name == hallName).FirstOrDefault();
+
+            return hall;
+        }
+
+        public Ticket FindTicketByName(ObjectId id)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("CinemaCourseworkDatabase");
+            var collection = database.GetCollection<Ticket>("TicketList");
+            var ticket = collection.Find(x => x.Id == id).FirstOrDefault();
+
+            return ticket;
+        }
+
         //Replace
-        public void UserReplace(string login, User user)
+        public void UserReplace(ObjectId id, User user)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
             var collection = database.GetCollection<User>("UserList");
-            collection.ReplaceOne(x => x.Login == login, user);
+            collection.ReplaceOne(x => x.Id == id, user);
         }
 
-        public void MovieReplace(string poster, Movie movie)
+        public void MovieReplace(ObjectId id, Movie movie)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
             var collection = database.GetCollection<Movie>("MovieList");
-            collection.ReplaceOne(x => x.Poster == poster, movie);
+            collection.ReplaceOne(x => x.Id == id, movie);
         }
 
         public void SessionReplace(ObjectId id, Session session)
@@ -122,6 +141,31 @@ namespace CinemaCoursework.Services
             var database = client.GetDatabase("CinemaCourseworkDatabase");
             var collection = database.GetCollection<Session>("SessionList");
             collection.ReplaceOne(x => x.Id == id, session);
+        }
+
+        //Delete
+        public void DeleteUser(ObjectId id)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("CinemaCourseworkDatabase");
+            var collection = database.GetCollection<User>("UserList");
+            collection.DeleteOne(x => x.Id == id);
+        }
+
+        public void DeleteMovie(ObjectId id)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("CinemaCourseworkDatabase");
+            var collection = database.GetCollection<Movie>("MovieList");
+            collection.DeleteOne(x => x.Id == id);
+        }
+
+        public void DeleteTicket(ObjectId id)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("CinemaCourseworkDatabase");
+            var collection = database.GetCollection<Ticket>("TicketList");
+            collection.DeleteOne(x => x.Id == id);
         }
 
         //Get
@@ -146,7 +190,7 @@ namespace CinemaCoursework.Services
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
             var collection = database.GetCollection<Session>("SessionList");
-            var sessions = collection.Find(x => x.Movie == movie).ToList().Where(x => x.Hall.Name == hallName);
+            var sessions = collection.Find(x => x.Movie.Id == movie.Id).ToList().Where(x => x.Hall.Name == hallName);
             var sessionList = new List<Session>();
 
             foreach (var s in sessions)
@@ -187,6 +231,22 @@ namespace CinemaCoursework.Services
             }
 
             return hallList;
+        }
+
+        public List<Ticket> GetTicketList(User user)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("CinemaCourseworkDatabase");
+            var collection = database.GetCollection<Ticket>("TicketList");
+            var tickets = collection.Find(x => x.User == user).ToList();
+            var ticketList = new List<Ticket>();
+
+            foreach (var t in tickets)
+            {
+                ticketList.Add(t);
+            }
+
+            return ticketList;
         }
     }
 }

@@ -90,10 +90,11 @@
             };
 
             dataBase.AddSessionToDataBase(dataBase.CurrentSession);
+            JS.InvokeVoidAsync("alert", "Киносеанс был добавлен в базу данных");
         }
         else
         {
-            JS.InvokeVoidAsync("alert", "Для создания нового сеанса все поля должны быть заполнены");
+            JS.InvokeVoidAsync("alert", "Для создания нового сеанса все поля должны быть заполнены!");
         }
     }
 

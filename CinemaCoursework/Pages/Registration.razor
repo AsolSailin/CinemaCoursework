@@ -135,10 +135,11 @@
         if (dataBase.CurrentUser.Password == dataBase.CurrentUser.PasswordRepeat)
         {
             dataBase.AddUserToDataBase(dataBase.CurrentUser);
+            JS.InvokeVoidAsync("alert", "Вы были зарегистрированы");
         }
         else
         {
-            JS.InvokeVoidAsync("alert", "Пароли не совпадают");
+            JS.InvokeVoidAsync("alert", "Пароли не совпадают!");
         }
     }
 
