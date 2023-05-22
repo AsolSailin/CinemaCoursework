@@ -6,7 +6,7 @@
 @inject FileSystemService fss
 @inject IJSRuntime JS
 
-<PageTitle>Adding movie</PageTitle>
+<PageTitle>Редактирование кинофильма</PageTitle>
 
 <style type="text/css">
     .lblOne {
@@ -147,7 +147,7 @@
         }
         else
         {
-            JS.InvokeVoidAsync("alert", "Для добавления нового фильма все поля должны быть заполнены!");
+            JS.InvokeVoidAsync("alert", "Для изменения кинофильма все поля должны быть заполнены!");
         }
     }
 

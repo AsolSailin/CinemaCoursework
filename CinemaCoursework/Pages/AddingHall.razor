@@ -48,7 +48,7 @@
     </table> 
 </div> 
 
-@code { 
+@code {
     private Hall hall = new Hall();
     private string hallName = "";
 
@@ -62,8 +62,8 @@
                 };
 
             dataBase.AddHallToDataBase(dataBase.CurrentHall);
-
             JS.InvokeVoidAsync("alert", "Кинозал был добавлен в базу данных");
+            hallName = "";
         }
         else
         {

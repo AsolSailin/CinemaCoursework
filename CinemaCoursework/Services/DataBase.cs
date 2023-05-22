@@ -98,16 +98,6 @@ namespace CinemaCoursework.Services
             return session;
         }
 
-        public Hall FindHallByName(string hallName)
-        {
-            var client = new MongoClient("mongodb://localhost");
-            var database = client.GetDatabase("CinemaCourseworkDatabase");
-            var collection = database.GetCollection<Hall>("HallList");
-            var hall = collection.Find(x => x.Name == hallName).FirstOrDefault();
-
-            return hall;
-        }
-
         public Ticket FindTicketByName(ObjectId id)
         {
             var client = new MongoClient("mongodb://localhost");

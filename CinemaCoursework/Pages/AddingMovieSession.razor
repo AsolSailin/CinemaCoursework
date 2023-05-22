@@ -93,6 +93,7 @@
 
             dataBase.AddSessionToDataBase(dataBase.CurrentSession);
             JS.InvokeVoidAsync("alert", "Киносеанс был добавлен в базу данных");
+            session = new Session();
         }
         else
         {

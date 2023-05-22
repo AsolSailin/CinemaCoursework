@@ -7,7 +7,7 @@
 @inject NavigationManager navigation
 @inject ILocalStorageService localStorageService
 
-<PageTitle>Ticket buy</PageTitle>
+<PageTitle>Покупка билета</PageTitle>
 
 <style type="text/css">
     .lblOne {
@@ -57,7 +57,7 @@
         </tr>
         <tr>
             <td><label class="lblTwo">Номер карты:</label></td>
-            <td><input class="field" id="card_number" type="text"></td>
+            <td><input class="field" id="card_number" type="text" @bind-value="cardNumber"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
@@ -82,23 +82,35 @@
 </div>
 
 @code {
-    private User user = new User();
+    public int cardNumber;
+    public string name;
+    public string validityPeriod;
+    public int cvc;
 
     public void Buy()
     {
-        dataBase.CurrentTicket = new Ticket()
+        if (cardNumber != null && name != null &&
+        validityPeriod != null && cvc != null)
         {
-            MovieName = dataBase.CurrentMovie.Name,
-            Poster = dataBase.CurrentMovie.Poster,
-            HallName = dataBase.CurrentHall.Name,
-            PlaceNumber = dataBase.CurrentPlace,
-            Date = dataBase.CurrentSession.Time.ToString("d"),
-            Time = dataBase.CurrentSession.Time.ToString("t"),
-            User = dataBase.CurrentUser
-        };
+            dataBase.CurrentTicket = new Ticket()
+                {
+                    MovieName = dataBase.CurrentMovie.Name,
+                    Poster = dataBase.CurrentMovie.Poster,
+                    HallName = dataBase.CurrentHall.Name,
+                    PlaceNumber = dataBase.CurrentPlace,
+                    Date = dataBase.CurrentSession.Time.ToString("d"),
+                    Time = dataBase.CurrentSession.Time.ToString("t"),
+                    User = dataBase.CurrentUser
+                };
 
-        dataBase.AddTicketToDataBase(dataBase.CurrentTicket);
-        JS.InvokeVoidAsync("alert", "Билет добавлен в список Ваших билетов");
+            dataBase.AddTicketToDataBase(dataBase.CurrentTicket);
+            JS.InvokeVoidAsync("alert", "Билет добавлен в список Ваших билетов");
+            navigation.NavigateTo("/");
+        }
+        else
+        {
+            JS.InvokeVoidAsync("alert", "Для завершения покупки билета все поля должны быть заполнены!");
+        }
     }
 
     protected override async Task OnInitializedAsync()

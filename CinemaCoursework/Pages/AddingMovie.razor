@@ -157,6 +157,11 @@
 
             dataBase.AddMovieToDataBase(dataBase.CurrentMovie);
             JS.InvokeVoidAsync("alert", "Фильм был добавлен в базу данных");
+            movie = new Movie();
+            //movie.Name = null; movie.Genre = null; movie.Regisseur = null;
+            //movie.Producer = null; movie.Script = null; movie.Country = null;
+            //movie.Duration = null; movie.Price2D = null; movie.Price3D = null;
+            //movie.PriceVIP = null;movie.Description = null;
         }
         else
         {
