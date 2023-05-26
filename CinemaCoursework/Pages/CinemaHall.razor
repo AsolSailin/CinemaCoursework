@@ -82,7 +82,7 @@
     {
         @if (p.Value == "false")
         {
-            <button class="buttonOne" @onclick="() => Place(p.Key)">@p.Key</button>
+            <button class="buttonOne" @onclick="() => Place(p.Key)" disabled="@disabledBtn">@p.Key</button>
         }
         else
         {
@@ -98,13 +98,22 @@
     }
 </div>
 
-<button class="button" @onclick="Buy">Купить билет</button>
+@if (dataBase.CurrentUser.Role == "Client")
+{
+    <button class="button" @onclick="Buy">Купить билет</button>
+    <label style="font-size: 30px">Ваше место: @place</label>
+}
+else
+{
+    <button class="button" @onclick="Delete">Удалить сеанс</button>
+}
 
-<label style="font-size: 30px">Ваше место: @place</label>
+
 
 @code {
     int count = 0;
     string place = "";
+    bool disabledBtn = false;
 
     public void Buy()
     {
@@ -117,8 +126,15 @@
         }
         else
         {
-            JS.InvokeVoidAsync("alert", "Для перехода на следующую страницу ннеобходимо выбрать место в кинозале!");
+            JS.InvokeVoidAsync("alert", "Для перехода на следующую страницу необходимо выбрать место в кинозале!");
         }
+    }
+
+    public void Delete()
+    {
+        dataBase.DeleteSession(dataBase.CurrentSession.Id);
+        JS.InvokeVoidAsync("alert", "Киносеанс был удален");
+        navigation.NavigateTo("/movie_info");
     }
 
     public void Place(string placeNumber)
@@ -128,11 +144,18 @@
 
     public void OccupiedPlace()
     {
-        JS.InvokeVoidAsync("alert", "Вы не можете выбрать это место, так как оно уже занято!");
+        if (dataBase.CurrentUser.Role == "Client")
+        {
+            JS.InvokeVoidAsync("alert", "Вы не можете выбрать это место, так как оно уже занято!");
+        }
     }
 
     protected override async Task OnInitializedAsync()
     {
+        if (dataBase.CurrentUser.Role == "Admin")
+        {
+            disabledBtn = true;
+        }
         await GetPageName();
     }
 

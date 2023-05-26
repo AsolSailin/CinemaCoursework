@@ -4,6 +4,7 @@
 @inject PagesList pageList
 @inject DataBase dataBase
 @inject IJSRuntime JS
+@inject NavigationManager navigation
 
 <PageTitle>Регистрация</PageTitle>
 
@@ -123,7 +124,9 @@
         user.PhoneNumber != null && user.EMail != null && user.Login != null &&
         user.Password != null && user.PasswordRepeat != null)
         {
-            dataBase.CurrentUser = new User()
+            if (dataBase.FindByUserLogin(user.Login) == null)
+            {
+                User createUser = new User()
                     {
                         Login = user.Login,
                         Password = user.Password,
@@ -136,15 +139,20 @@
                         Role = "Client"
                     };
 
-            if (dataBase.CurrentUser.Password == dataBase.CurrentUser.PasswordRepeat)
-            {
-                dataBase.AddUserToDataBase(dataBase.CurrentUser);
-                JS.InvokeVoidAsync("alert", "Вы были зарегистрированы");
-                navigation.NavigateTo("/authorization");
+                if (user.Password == user.PasswordRepeat)
+                {
+                    dataBase.AddUserToDataBase(createUser);
+                    JS.InvokeVoidAsync("alert", "Вы были зарегистрированы");
+                    navigation.NavigateTo("/authorization");
+                }
+                else
+                {
+                    JS.InvokeVoidAsync("alert", "Пароли не совпадают!");
+                }
             }
             else
             {
-                JS.InvokeVoidAsync("alert", "Пароли не совпадают!");
+                JS.InvokeVoidAsync("alert", "Пользователь с таким логином уже существует!");
             }
         }
         else

@@ -124,6 +124,10 @@
                     <td><button class="button" @onclick="Buy">Купить билет</button><br /></td>
                 }
             }
+            else
+            {
+                <td><button class="button" @onclick="GetMessage">Купить билет</button><br /></td>
+            }
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
@@ -151,6 +155,11 @@
         dataBase.DeleteMovie(dataBase.CurrentMovie.Id);
         JS.InvokeVoidAsync("alert", "Фильм был удален");
         navigation.NavigateTo("/");
+    }
+
+    public void GetMessage()
+    {
+        JS.InvokeVoidAsync("alert", "Для покупки билета необходимо авторизоваться");
     }
 
     protected override async Task OnInitializedAsync()

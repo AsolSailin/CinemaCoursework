@@ -62,17 +62,17 @@
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Имя владельца карты:</label></td>
-            <td><input class="field" id="owner_name" type="text"></td>
+            <td><input class="field" id="owner_name" type="text" @bind-value="name"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">Срок действия карты:</label></td>
-            <td><input class="field" id="validity_period" type="text"></td>
+            <td><input class="field" id="validity_period" type="text" @bind-value="validityPeriod"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
             <td><label class="lblTwo">CVC:</label></td>
-            <td><input class="field" id="cvc" type="text"></td>
+            <td><input class="field" id="cvc" type="text" @bind-value="cvc"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
@@ -89,8 +89,8 @@
 
     public void Buy()
     {
-        if (cardNumber != null && name != null &&
-        validityPeriod != null && cvc != null)
+        if (cardNumber != 0 && name != null &&
+        validityPeriod != null && cvc != 0)
         {
             dataBase.CurrentTicket = new Ticket()
                 {
@@ -100,7 +100,8 @@
                     PlaceNumber = dataBase.CurrentPlace,
                     Date = dataBase.CurrentSession.Time.ToString("d"),
                     Time = dataBase.CurrentSession.Time.ToString("t"),
-                    User = dataBase.CurrentUser
+                    User = dataBase.CurrentUser,
+                    DateTimeCreate = dataBase.CurrentSession.Time
                 };
 
             dataBase.AddTicketToDataBase(dataBase.CurrentTicket);

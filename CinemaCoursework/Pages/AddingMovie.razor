@@ -54,6 +54,11 @@
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
+            <td><label class="lblTwo">Страна:</label></td>
+            <td><input class="field" id="country" type="text" @bind-value="@movie.Country"></td>
+        </tr>
+        <tr><td><label></label></td></tr>
+        <tr>
             <td><label class="lblTwo">Жанр:</label></td>
             <td><input class="field" id="genre" type="text" @bind-value="@movie.Genre"></td>
         </tr>
@@ -64,18 +69,13 @@
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
-            <td><label class="lblTwo">Продюсер:</label></td>
-            <td><input class="field" id="roles" type="text" @bind-value="@movie.Producer"></td>
-        </tr>
-        <tr><td><label></label></td></tr>
-        <tr>
             <td><label class="lblTwo">Сценарий:</label></td>
             <td><input class="field" id="roles" type="text" @bind-value="@movie.Script"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
-            <td><label class="lblTwo">Страна:</label></td>
-            <td><input class="field" id="country" type="text" @bind-value="@movie.Country"></td>
+            <td><label class="lblTwo">Продюсер:</label></td>
+            <td><input class="field" id="roles" type="text" @bind-value="@movie.Producer"></td>
         </tr>
         <tr><td><label></label></td></tr>
         <tr>
@@ -139,29 +139,32 @@
         movie.Duration != null && movie.Price2D != null && movie.Price3D != null && 
         movie.PriceVIP != null && movie.Description != null && movie.Poster != "")
         {
-            dataBase.CurrentMovie = new Movie()
-                {
-                    Name = movie.Name,
-                    Genre = movie.Genre,
-                    Regisseur = movie.Regisseur,
-                    Producer = movie.Producer,
-                    Script = movie.Script,
-                    Country = movie.Country,
-                    Duration = movie.Duration,
-                    Description = movie.Description,
-                    Price2D = movie.Price2D,
-                    Price3D = movie.Price3D,
-                    PriceVIP = movie.PriceVIP,
-                    Poster = movie.Poster
-                };
+            if (dataBase.FindByMovieName(movie.Name) == null)
+            {
+                dataBase.CurrentMovie = new Movie()
+                    {
+                        Name = movie.Name,
+                        Genre = movie.Genre,
+                        Regisseur = movie.Regisseur,
+                        Producer = movie.Producer,
+                        Script = movie.Script,
+                        Country = movie.Country,
+                        Duration = movie.Duration,
+                        Description = movie.Description,
+                        Price2D = movie.Price2D,
+                        Price3D = movie.Price3D,
+                        PriceVIP = movie.PriceVIP,
+                        Poster = movie.Poster
+                    };
 
-            dataBase.AddMovieToDataBase(dataBase.CurrentMovie);
-            JS.InvokeVoidAsync("alert", "Фильм был добавлен в базу данных");
-            movie = new Movie();
-            //movie.Name = null; movie.Genre = null; movie.Regisseur = null;
-            //movie.Producer = null; movie.Script = null; movie.Country = null;
-            //movie.Duration = null; movie.Price2D = null; movie.Price3D = null;
-            //movie.PriceVIP = null;movie.Description = null;
+                dataBase.AddMovieToDataBase(dataBase.CurrentMovie);
+                JS.InvokeVoidAsync("alert", "Фильм был добавлен в базу данных");
+                movie = new Movie();
+            }
+            else
+            {
+                JS.InvokeVoidAsync("alert", "Данный фильм уже существует!");
+            }
         }
         else
         {

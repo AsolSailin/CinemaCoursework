@@ -17,44 +17,44 @@ namespace CinemaCoursework.Services
         
 
         //Add
-        public void AddUserToDataBase(User user)
+        public async Task AddUserToDataBase(User user)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
             var collection = database.GetCollection<User>("UserList");
-            collection.InsertOne(user);
+            await collection.InsertOneAsync(user);
         }
 
-        public void AddMovieToDataBase(Movie movie)
+        public async Task AddMovieToDataBase(Movie movie)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
             var collection = database.GetCollection<Movie>("MovieList");
-            collection.InsertOne(movie);
+            await collection.InsertOneAsync(movie);
         }
 
-        public void AddHallToDataBase(Hall hall)
+        public async Task AddHallToDataBase(Hall hall)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
             var collection = database.GetCollection<Hall>("HallList");
-            collection.InsertOne(hall);
+            await collection.InsertOneAsync(hall);
         }
 
-        public void AddSessionToDataBase(Session session)
+        public async void AddSessionToDataBase(Session session)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
             var collection = database.GetCollection<Session>("SessionList");
-            collection.InsertOne(session);
+            await collection.InsertOneAsync(session);
         }
 
-        public void AddTicketToDataBase(Ticket ticket)
+        public async Task AddTicketToDataBase(Ticket ticket)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
             var collection = database.GetCollection<Ticket>("TicketList");
-            collection.InsertOne(ticket);
+            await collection.InsertOneAsync(ticket);
         }
 
         //Find
@@ -109,54 +109,70 @@ namespace CinemaCoursework.Services
         }
 
         //Replace
-        public void UserReplace(ObjectId id, User user)
+        public async Task UserReplace(ObjectId id, User user)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
             var collection = database.GetCollection<User>("UserList");
-            collection.ReplaceOne(x => x.Id == id, user);
+            await collection.ReplaceOneAsync(x => x.Id == id, user);
         }
 
-        public void MovieReplace(ObjectId id, Movie movie)
+        public async Task MovieReplace(ObjectId id, Movie movie)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
             var collection = database.GetCollection<Movie>("MovieList");
-            collection.ReplaceOne(x => x.Id == id, movie);
+            await collection.ReplaceOneAsync(x => x.Id == id, movie);
         }
 
-        public void SessionReplace(ObjectId id, Session session)
+        public async Task SessionReplace(ObjectId id, Session session)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
             var collection = database.GetCollection<Session>("SessionList");
-            collection.ReplaceOne(x => x.Id == id, session);
+            await collection.ReplaceOneAsync(x => x.Id == id, session);
         }
 
         //Delete
-        public void DeleteUser(ObjectId id)
+        public async Task DeleteUser(ObjectId id)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
             var collection = database.GetCollection<User>("UserList");
-            collection.DeleteOne(x => x.Id == id);
+            await collection.DeleteOneAsync(x => x.Id == id);
         }
 
-        public void DeleteMovie(ObjectId id)
+        public async Task DeleteMovie(ObjectId id)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
             var collection = database.GetCollection<Movie>("MovieList");
-            collection.DeleteOne(x => x.Id == id);
+            await collection.DeleteOneAsync(x => x.Id == id);
         }
 
-        public void DeleteTicket(ObjectId id)
+        public async Task DeleteTicket(ObjectId id)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
             var collection = database.GetCollection<Ticket>("TicketList");
-            collection.DeleteOne(x => x.Id == id);
+            await collection.DeleteOneAsync(x => x.Id == id);
         }
+
+        public async Task DeleteSession(ObjectId id)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("CinemaCourseworkDatabase");
+            var collection = database.GetCollection<Session>("SessionList");
+            await collection.DeleteOneAsync(x => x.Id == id);
+        }
+
+        /*public void DeleteExpiredTicket()
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("CinemaCourseworkDatabase");
+            var collection = database.GetCollection<Ticket>("TicketList");
+            collection.DeleteMany(x => DateTime.Now > x.DateTimeCreate);
+        }*/
 
         //Get
         public List<Movie> GetMovieList()
@@ -171,6 +187,8 @@ namespace CinemaCoursework.Services
             {
                 movieList.Add(m);
             }
+
+            movieList.Reverse();
 
             return movieList;
         }
@@ -191,12 +209,12 @@ namespace CinemaCoursework.Services
             return sessionList;
         }
 
-        public List<string> GetSessionTimeList(string date, string hallName)
+        public List<string> GetSessionTimeList(string date, string hallName, Movie movie)
         {
             var client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("CinemaCourseworkDatabase");
             var collection = database.GetCollection<Session>("SessionList");
-            var sessions = collection.Find(x => true).ToList().Where(x => x.Time.ToString("d") == date && x.Hall.Name == hallName);
+            var sessions = collection.Find(x => x.Movie.Id == movie.Id).ToList().Where(x => x.Time.ToString("d") == date && x.Hall.Name == hallName);
             var timeList = new List<string>();
 
             foreach (var s in sessions)
@@ -235,6 +253,8 @@ namespace CinemaCoursework.Services
             {
                 ticketList.Add(t);
             }
+
+            ticketList.Reverse();
 
             return ticketList;
         }

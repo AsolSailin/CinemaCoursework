@@ -5,6 +5,7 @@
 @inject DataBase dataBase
 @inject FileSystemService fss
 @inject IJSRuntime JS
+@inject NavigationManager navigation
 
 <PageTitle>Редактирование кинофильма</PageTitle>
 
@@ -144,6 +145,7 @@
         {
             dataBase.MovieReplace(dataBase.CurrentMovie.Id, dataBase.CurrentMovie);
             JS.InvokeVoidAsync("alert", "Фильм был изменен");
+            navigation.NavigateTo("/");
         }
         else
         {

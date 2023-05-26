@@ -68,7 +68,8 @@
 @code
 {
     private Session session = new Session();
-    private DateTime? date { get; set; } = new DateTime(2023, 01, 01);
+    private DateTime dateTime { get; set; } 
+    private DateTime? date { get; set; }
     private string movieName = "";
     private string hallName = "";
     private TimeSpan? time { get; set; } = new TimeSpan(00, 00, 00);
@@ -77,23 +78,37 @@
     {
         if (date != null && time != null && hallName != null && movieName != null)
         {
-            session.Movie = dataBase.FindByMovieName(movieName);
-            session.Hall = dataBase.FindByHallName(hallName);
-
             DateTime date1 = (DateTime)date;
             TimeSpan time1 = (TimeSpan)time;
-            DateTime dateTime = date1 + time1.Add(new TimeSpan(03, 00, 00));
-
-            dataBase.CurrentSession = new Session()
+            DateTime dateTime1 = date1 + time1;
+            DateTime dateTime2 = date1 + time1.Add(TimeSpan.FromHours(3)); //For correct loading into the database 
+            string dateTime3 = dateTime1.ToString("d") + " " + dateTime1.ToString("t");
+            session.Movie = dataBase.FindByMovieName(movieName);
+            session.Hall = dataBase.FindByHallName(hallName);
+            if (dateTime1 >= DateTime.Now && session.Movie != null && session.Hall != null)
             {
-                Movie = session.Movie,
-                Hall = session.Hall,
-                Time = dateTime
-            };
+                if (dataBase.FindSessionByDate(dateTime3, session.Movie, hallName) == null)
+                {
+                    dataBase.CurrentSession = new Session()
+                        {
+                            Movie = session.Movie,
+                            Hall = session.Hall,
+                            Time = dateTime2
+                            };
 
-            dataBase.AddSessionToDataBase(dataBase.CurrentSession);
-            JS.InvokeVoidAsync("alert", "Киносеанс был добавлен в базу данных");
-            session = new Session();
+                    dataBase.AddSessionToDataBase(dataBase.CurrentSession);
+                    //JS.InvokeVoidAsync("alert", "Киносеанс был добавлен в базу данных");
+                    session = new Session();
+                }
+                else
+                {
+                    JS.InvokeVoidAsync("alert", "Данная сессия уже существует!");
+                }
+            }
+            else
+            {
+                JS.InvokeVoidAsync("alert", "Ошибка данных!");
+            }
         }
         else
         {
@@ -103,6 +118,8 @@
 
     protected override async Task OnInitializedAsync()
     {
+        dateTime = DateTime.Now;
+        date = dateTime.Date;
         await GetPageName();
     }
 

@@ -35,6 +35,10 @@ namespace CinemaCoursework.Data
 
         [BsonIgnoreIfDefault]
         [BsonIgnoreIfNull]
+        public DateTime? DateTimeCreate { get; set; }
+
+        [BsonIgnoreIfDefault]
+        [BsonIgnoreIfNull]
         public User? User { get; set; }
     }
 }

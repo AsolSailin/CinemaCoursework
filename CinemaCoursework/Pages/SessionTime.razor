@@ -48,7 +48,7 @@
                             {
                                 <label>@d</label> <br />
                                 <MudButtonGroup Style="background:#9F4FF9;" Size="Size.Small" Variant="Variant.Outlined">
-                                    @foreach (var t in dataBase.GetSessionTimeList(d, currentHallName))
+                                    @foreach (var t in dataBase.GetSessionTimeList(d, currentHallName, dataBase.CurrentMovie))
                                     {
                                         <MudButton @onclick="() => GetHall(t, d, currentHallName)">@t</MudButton>
                                     }

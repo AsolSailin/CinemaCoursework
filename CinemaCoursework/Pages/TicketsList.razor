@@ -52,16 +52,23 @@
                         <MudGrid Spacing="@spacing" Justify="Justify.Center">
                             <MudCard Class="card">
                                 <MudCardContent>
-                                    <MudText Typo="Typo.h5">Билет номер</MudText>
-                                    <MudText Typo="Typo.h5">@t.Id</MudText>
-                                    <MudText Typo="Typo.body2">Название показа: @t.MovieName</MudText>
-                                    <MudText Typo="Typo.body2">Зал: @t.HallName</MudText>
-                                    <MudText Typo="Typo.body2">Номер места: @t.PlaceNumber</MudText>
-                                    <MudText Typo="Typo.body2">Дата: @t.Date</MudText>
-                                    <MudText Typo="Typo.body2">Время: @t.Time</MudText>
-                                    <button class="button" @onclick="() => GetMovie(t.MovieName)">О фильме</button>
-                                    <br/><br/><br/>
-                                    <button class="button" @onclick="() => GetRefund(t.Date, t.Time, t.MovieName, t.HallName, t.Id, t.PlaceNumber)">Вернуть билет</button>
+                                    @if (dataBase.FindByMovieName(t.MovieName) != null)
+                                    {
+                                        <MudText Typo="Typo.h5">Билет номер</MudText>
+                                        <MudText Typo="Typo.h5">@t.Id</MudText>
+                                        <MudText Typo="Typo.body2">Название показа: @t.MovieName</MudText>
+                                        <MudText Typo="Typo.body2">Зал: @t.HallName</MudText>
+                                        <MudText Typo="Typo.body2">Номер места: @t.PlaceNumber</MudText>
+                                        <MudText Typo="Typo.body2">Дата: @t.Date</MudText>
+                                        <MudText Typo="Typo.body2">Время: @t.Time</MudText>
+                                        <button class="button" @onclick="() => GetMovie(t.MovieName)">О фильме</button>
+                                        <br/><br/><br/>
+                                        <button class="button" @onclick="() => GetRefund(t.Date, t.Time, t.MovieName, t.HallName, t.Id, t.PlaceNumber)">Вернуть билет</button>
+                                    }
+                                    else
+                                    {
+                                        <MudText Typo="Typo.h6">Фильм был удален из базы данных кинотеатра</MudText>
+                                    }
                                 </MudCardContent>
                             </MudCard>
                         </MudGrid>
@@ -89,12 +96,14 @@ else
 
     public void GetRefund(string date, string time, string movieName, string hallName, ObjectId id, string placeNumber)
     {
+        //Freeing up a seat in the hall
         dataBase.CurrentMovie = dataBase.FindByMovieName(movieName);
         string dateTime = date + " " + time;
         dataBase.CurrentSession = dataBase.FindSessionByDate(dateTime, dataBase.CurrentMovie, hallName);
         dataBase.CurrentSession.Hall.Places[placeNumber] = "false";
         dataBase.SessionReplace(dataBase.CurrentSession.Id, dataBase.CurrentSession);
 
+        //Deleting a ticket from the database
         dataBase.CurrentTicket = dataBase.FindTicketByName(id);
         dataBase.DeleteTicket(dataBase.CurrentTicket.Id);
         JS.InvokeVoidAsync("alert", "Билет возвращен");
@@ -103,6 +112,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        //dataBase.DeleteExpiredTicket();
         tickets = dataBase.GetTicketList(dataBase.CurrentUser);
         await GetPageName();
     }
